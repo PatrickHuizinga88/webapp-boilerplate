@@ -13,10 +13,24 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif']
+      },
+      // Generate color palettes with https://www.tints.dev
       colors: {
-        'primary': '#2f27ce',
-        'secondary': '#dedcff',
-        'accent': '#433bff',
+        'primary': {
+          50: "#E0FFF1",
+          100: "#C2FFE3",
+          200: "#80FFC6",
+          300: "#42FFAA",
+          400: "#00FF8C",
+          500: "#00C16A",
+          600: "#009954",
+          700: "#007541",
+          800: "#004D2A",
+          900: "#002916",
+          950: "#00140B"
+        },
       },
       strokeWidth: {
         '3': '3px'
@@ -33,5 +47,8 @@ export default {
       },
     },
   },
+  plugins: [
+      require('@tailwindcss/forms')
+  ],
 }
 

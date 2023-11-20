@@ -1,9 +1,18 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-  modules: [
-      '@nuxtjs/tailwindcss',
-      '@pinia/nuxt',
-      'nuxt-headlessui',
-  ],
+    app: {
+        head: {
+            title: 'Nuxt boilerplate',
+            link: [
+                { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }
+            ],
+        },
+    },
+    css: ['../assets/css/main.css'],
+    devtools: { enabled: true },
+    modules: [
+        '@nuxtjs/tailwindcss',
+        '@pinia/nuxt',
+        'nuxt-headlessui',
+    ],
 })

@@ -1,6 +1,7 @@
 <template>
-  <header>
-    <h1 class="text-3xl font-semibold mb-4">Nuxt boilerplate</h1>
+  <header class="mb-10">
+    <h1 class="text-3xl font-semibold mb-1">Dashboard</h1>
+    <p class="text-gray-500">This is a subtitle</p>
   </header>
   <main>
     <section class="h-screen">
@@ -27,19 +28,17 @@
               :options="['Front-end', 'Back-end', 'Full-stack']"
           />
         </FormField>
-        <FormButton type="submit" class="bg-primary text-white hover:bg-accent mt-2">Submit</FormButton>
+        <FormButton type="submit" class="bg-primary-500 hover:bg-primary-600 text-white hover:bg-accent mt-2">Submit</FormButton>
       </form>
-      <Tooltip :onHover="true">
-        <template #button>
-          <Icon name="QuestionMarkCircle" class="h-5 w-5 m-1 text-gray-400 stroke-2"/>
-        </template>
-        Hallo...
-      </Tooltip>
     </section>
   </main>
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: 'default-sidebar'
+})
+
 const email = ref<string>('')
 
 const errors = reactive({

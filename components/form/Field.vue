@@ -3,7 +3,7 @@
     <label
         :for="props.id"
         class="inline-block font-medium text-sm mb-1">
-      {{ label }}<span v-if="props.required" class="inline text-primary">*</span>
+      {{ label }}<span v-if="props.required" class="inline text-primary-500">*</span>
     </label>
 
     <slot/>

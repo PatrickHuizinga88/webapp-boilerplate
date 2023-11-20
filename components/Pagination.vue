@@ -10,7 +10,7 @@
       <button
           v-for="page in pagination"
           @click="emit('changePage', page - 1)"
-          :class="[currentPage === page - 1 ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300', 'inline-flex items-center border-t-2 px-4 py-4 text-sm font-medium']"
+          :class="[currentPage === page - 1 ? 'border-primary-500 text-primary-500' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300', 'inline-flex items-center border-t-2 px-4 py-4 text-sm font-medium']"
           aria-current="page">{{ page }}</button>
     </div>
     <div class="-mt-px flex w-0 flex-1 justify-end mr-4">

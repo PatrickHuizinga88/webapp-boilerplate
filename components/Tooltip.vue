@@ -1,8 +1,6 @@
 <template>
   <Popover v-slot="{ open, close }" class="relative inline">
-    <PopoverButton class="leading-none focus-visible:outline-none"
-                   @mouseover="show = true"
-                   @mouseleave="show = false">
+    <PopoverButton class="leading-none focus-visible:outline-none">
       <slot name="button"/>
     </PopoverButton>
     <transition
@@ -13,14 +11,10 @@
         leave-from-class="translate-y-0 opacity-100"
         leave-to-class="translate-y-1 opacity-0"
     >
-      <div v-if="show">
-        <PopoverPanel
-            static
-            class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm dark:bg-gray-700" :class="[checkPosition, 'left-1/2 -translate-x-1/2 bottom-10']">
+        <PopoverPanel class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm dark:bg-gray-700" :class="[checkPosition, 'left-1/2 -translate-x-1/2 bottom-10']">
           <slot/>
           <div :class="`tooltip-arrow tooltip-arrow--${position} absolute rounded-sm bg-inherit h-3 w-3`"></div>
         </PopoverPanel>
-      </div>
     </transition>
   </Popover>
 </template>
@@ -32,29 +26,8 @@ const props = defineProps({
   position: {
     type: String,
     default: 'top'
-  },
-  onHover: {
-    type: Boolean,
-    default: false
-  },
-  dark: Boolean
+  }
 })
-
-const show = ref<boolean>(false)
-const popoverTimeout = ref(null)
-
-const hoverPopover = () => {
-  // show.value = true
-  // if (!open) e.target.click()
-}
-
-// const closePopover = () => {
-//   popoverHover.value = false
-//   if (popoverTimeout.value) clearTimeout(popoverHover.value)
-//   popoverTimeout.value = setTimeout(() => {
-//     if (!popoverHover.value) close()
-//   }, 100)
-// }
 
 const checkPosition = computed(() => {
   switch (props.position) {
@@ -100,7 +73,7 @@ const checkPosition = computed(() => {
 }
 
 @media (max-width: 639px) {
-  .tooltip-arrow:not(.tooltip-arrow-top) {
+  .tooltip-arrow:not(.tooltip-arrow--top) {
     top: calc(100% - 2px);
     right: 50%;
     transform: translate(50%, -50%) rotate(45deg);
