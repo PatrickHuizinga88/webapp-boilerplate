@@ -23,6 +23,8 @@ definePageMeta({
   layout: 'default-sidebar'
 })
 
+const notificationStore = useNotificationStore()
+
 const form = reactive({
   preferredMode: 'System default'
 })
@@ -32,7 +34,13 @@ const errors = reactive({
 })
 
 const submit = () => {
-  console.log(form)
+  notificationStore.createNotification({
+    title: 'Settings saved',
+    message: 'Your settings have been saved successfully.',
+    type: 'success',
+    icon: 'CheckCircle',
+  })
+  navigateTo('/')
 }
 </script>
 

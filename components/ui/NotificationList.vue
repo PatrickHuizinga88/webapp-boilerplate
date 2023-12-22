@@ -8,14 +8,14 @@
           leave-active-class="transition ease-in duration-100"
           leave-from-class="opacity-100"
           leave-to-class="opacity-0">
-        <Notification
+        <UiNotification
             v-for="(notification, index) in notifications"
             :type="notification.type"
             :icon="notification.icon"
             :title="notification.title"
             :key="index">
           {{ notification.message }}
-        </Notification>
+        </UiNotification>
       </transition-group>
     </div>
   </div>

@@ -1,8 +1,6 @@
 <template>
-  <UiBreadcrumbs v-if="breadcrumbs" class="mb-4"/>
-
-  <header class="mb-10">
-    <h1 class="text-3xl font-semibold mb-1">{{ pageTitle }}</h1>
+  <header v-if="title" class="mb-10">
+    <h1 class="text-3xl font-semibold mb-1">{{ title }}</h1>
     <p v-if="subtitle" class="text-gray-500">{{ subtitle }}</p>
   </header>
 
@@ -19,11 +17,6 @@ const props = defineProps({
     type: Boolean,
     default: true
   }
-})
-
-const pageTitle = computed(() => {
-  const title = props.title || (useRoute().name === 'index' ? 'Dashboard' : useRoute().name)
-  return capitalize(title)
 })
 </script>
 

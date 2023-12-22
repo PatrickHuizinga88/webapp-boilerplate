@@ -5,13 +5,20 @@
   <LayoutSidebar ref="sidebar"/>
 
   <div class="lg:pl-72">
-<!--    <header class="bg-white border-b shadow">-->
-<!--      <div class="px-6 sm:px-8 lg:px-10">-->
-<!--        &lt;!&ndash; Nav menu content &ndash;&gt;-->
-<!--      </div>-->
-<!--    </header>-->
+    <header class="py-8 px-6 sm:px-8 lg:px-10">
+      <div class="flex justify-between items-center">
+        <div>
+          <UiBreadcrumbs/>
+        </div>
+        <div>
+          <UiFormIconInput type="search" class="!w-64" placeholder="Search...">
+            <UiIcon name="MagnifyingGlass" class="h-5 w-5 stroke-2" aria-hidden="true"/>
+          </UiFormIconInput>
+        </div>
+      </div>
+    </header>
 
-    <div class="py-12">
+    <div class="py-4">
       <div class="px-6 sm:px-8 lg:px-10">
         <slot/>
       </div>

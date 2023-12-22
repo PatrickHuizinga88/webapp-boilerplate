@@ -1,16 +1,41 @@
 <template>
-  <LayoutPage title="Users">
-    <ul>
-      <li>
-        <NuxtLink to="/users/1">User 1</NuxtLink>
-      </li>
-      <li>
-        <NuxtLink to="/users/2">User 2</NuxtLink>
-      </li>
-      <li>
-        <NuxtLink to="/users/3">User 3</NuxtLink>
-      </li>
-    </ul>
+  <LayoutPage>
+    <div class="flow-root">
+      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-xl">
+            <table class="min-w-full divide-y divide-gray-300 dark:divide-zinc-700">
+              <thead class="bg-zinc-800">
+              <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-6">Name</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Email</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Role</th>
+                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                  <span class="sr-only">Edit</span>
+                </th>
+              </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 dark:divide-zinc-800 bg-white dark:bg-zinc-900">
+              <tr v-for="user in users" :key="user.email">
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
+                  <NuxtLink :to="`/users/${user.id}`">{{ user.name }}</NuxtLink>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <a :href="`mailto:${user.email}`">{{ user.email }}</a>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ user.role }}</td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                  <a href="#" class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+                    Edit<span class="sr-only">, {{ user.name }}</span>
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </LayoutPage>
 </template>
 
@@ -18,6 +43,21 @@
 definePageMeta({
   layout: 'default-sidebar',
 })
+
+const users = [
+  {
+    id: 1,
+    name: 'Jane Cooper',
+    email: 'jane.cooper@outlook.com',
+    role: 'Admin'
+  },
+  {
+    id: 2,
+    name: 'John Cooper',
+    email: 'john.cooper@gmail.com',
+    role: 'Admin'
+  }
+]
 </script>
 
 <style scoped>

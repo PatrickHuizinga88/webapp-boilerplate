@@ -29,7 +29,7 @@
                         <div class="text-xs font-medium leading-6 text-gray-400 uppercase">{{ category.name }}</div>
                         <ul role="list" class="-mx-2 mt-2 space-y-1">
                           <li v-for="link in category.links" :key="link.name">
-                            <NuxtLink :href="link.url" @click="sidebarOpen = false" active-class="bg-gray-100 dark:bg-zinc-800" class="hover:bg-gray-100 dark:hover:bg-zinc-800 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                            <NuxtLink :href="link.url" @click="sidebarOpen = false" active-class="bg-gray-100 dark:bg-white/10" class="hover:bg-gray-100 dark:hover:bg-white/10 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                               <Icon :name="link.icon" class="h-5 w-5 shrink-0" aria-hidden="true" solid/>
                               {{ link.name }}
                             </NuxtLink>
@@ -50,13 +50,14 @@
   <!-- Static sidebar for desktop -->
   <div class="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-72 lg:flex-col">
     <!-- Sidebar component, swap this element with another sidebar if you like -->
-    <div class="flex grow flex-col overflow-y-auto border-r border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-6 pb-4">
-      <div class="flex shrink-0 items-center justify-center py-12">
+    <div class="flex grow flex-col overflow-y-auto border-r border-gray-200 dark:border-zinc-800 px-6 pb-4">
+      <div class="flex shrink-0 items-center pt-8 pb-12">
         <NuxtLink to="/">
-<!--          <img src="../public/favicon.ico" alt="Logo">-->
-          <span class="text-2xl font-bold">
-            <span class="text-primary-500">Nuxt</span>
-            boilerplate</span>
+          <img src="~/public/favicon.ico" alt="Logo">
+<!--          <span class="text-2xl font-bold">-->
+<!--            <span class="text-primary-500">Nuxt</span>-->
+<!--            boilerplate-->
+<!--          </span>-->
         </NuxtLink>
       </div>
       <nav class="flex flex-1 flex-col">
@@ -65,7 +66,7 @@
             <div class="text-xs leading-6 text-gray-500">{{ category.name }}</div>
             <ul role="list" class="-mx-2 mt-4 space-y-1">
               <li v-for="link in category.links" :key="link.name">
-                <NuxtLink :href="link.url" active-class="bg-gray-100 dark:bg-zinc-800" class="hover:bg-gray-100 dark:hover:bg-zinc-800 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium" disabled>
+                <NuxtLink :href="link.url" active-class="bg-gray-100 dark:bg-white/10" class="hover:bg-gray-100 dark:hover:bg-white/10 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium" disabled>
                   <Icon :name="link.icon" class="h-5 w-5 shrink-0 stroke-2" aria-hidden="true"/>
                   {{ link.name }}
                 </NuxtLink>
@@ -79,9 +80,9 @@
 
   <div class="sticky top-0 z-40 flex items-center gap-x-6 bg-white dark:bg-black py-4 shadow-sm dark:border-b dark:border-zinc-800 sm:px-6 lg:hidden">
     <div class="container">
-      <button type="button" class="-my-2.5 p-2.5 text-gray-700 lg:hidden" @click="sidebarOpen = true">
+      <button type="button" class="-my-2.5 p-2.5 text-gray-700 dark:text-gray-400 lg:hidden" @click="sidebarOpen = true">
         <span class="sr-only">Open sidebar</span>
-        <Icon name="Bars3" class="h-6 w-6" aria-hidden="true" />
+        <Icon name="Bars3" class="h-6 w-6 stroke-2" aria-hidden="true" />
       </button>
     </div>
   </div>

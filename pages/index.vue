@@ -1,6 +1,6 @@
 <template>
   <LayoutPage>
-    <section class="h-screen">
+    <section>
       <UiCard>
         <template #header>
           <h3 class="text-base font-semibold leading-6">
