@@ -18,7 +18,7 @@ export default {
       },
       // Generate color palettes with https://www.tints.dev
       colors: {
-        'primary': {
+        primary: {
           50: "#E0FFF1",
           100: "#C2FFE3",
           200: "#80FFC6",

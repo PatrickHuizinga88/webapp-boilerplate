@@ -1,6 +1,6 @@
 <template>
   <NuxtLoadingIndicator color="#505084"/>
-  <header class="bg-white border-b shadow">
+  <header class="bg-white dark:bg-gray-900 border-b dark:border-gray-700 shadow">
     <div class="container">
       <nav class="flex justify-between items-center">
         <NuxtLink to="/">

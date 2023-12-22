@@ -5,7 +5,7 @@
         :value="props.modelValue"
         @input="emit( 'update:modelValue', $event.target.value)"
         :required="field.required"
-        :class="[invalid ? 'ring-red-500' : 'ring-gray-300', 'block w-full rounded-md border-0 py-1.5 pr-10 pl-3 ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:leading-6 sm:text-sm']"
+        :class="[invalid ? 'ring-red-500' : 'ring-gray-300 dark:ring-gray-600', 'block w-full rounded-md dark:bg-gray-700 border-0 py-1.5 pr-10 pl-3 ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:leading-6 sm:text-sm']"
         v-bind="$attrs"/>
     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
       <slot aria-hidden="true"/>

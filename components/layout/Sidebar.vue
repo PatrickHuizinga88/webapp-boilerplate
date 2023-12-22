@@ -16,8 +16,8 @@
                 </button>
               </div>
             </TransitionChild>
-            <!-- Sidebar component, swap this element with another sidebar if you like -->
-            <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
+
+            <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white dark:bg-zinc-950 px-6 pb-4">
               <div class="flex h-16 shrink-0 items-center">
                 <span class="text-2xl font-bold">Nuxt boilerplate</span>
               </div>
@@ -29,7 +29,7 @@
                         <div class="text-xs font-medium leading-6 text-gray-400 uppercase">{{ category.name }}</div>
                         <ul role="list" class="-mx-2 mt-2 space-y-1">
                           <li v-for="link in category.links" :key="link.name">
-                            <NuxtLink :href="link.url" @click="sidebarOpen = false" active-class="bg-primary-50 text-primary-500" class="text-gray-500 hover:text-primary-500 hover:bg-primary-50 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                            <NuxtLink :href="link.url" @click="sidebarOpen = false" active-class="bg-gray-100 dark:bg-zinc-800" class="hover:bg-gray-100 dark:hover:bg-zinc-800 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                               <Icon :name="link.icon" class="h-5 w-5 shrink-0" aria-hidden="true" solid/>
                               {{ link.name }}
                             </NuxtLink>
@@ -50,7 +50,7 @@
   <!-- Static sidebar for desktop -->
   <div class="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-72 lg:flex-col">
     <!-- Sidebar component, swap this element with another sidebar if you like -->
-    <div class="flex grow flex-col overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+    <div class="flex grow flex-col overflow-y-auto border-r border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-6 pb-4">
       <div class="flex shrink-0 items-center justify-center py-12">
         <NuxtLink to="/">
 <!--          <img src="../public/favicon.ico" alt="Logo">-->
@@ -62,11 +62,11 @@
       <nav class="flex flex-1 flex-col">
         <ul role="list" class="flex flex-1 flex-col divide-y divide-gray-200">
           <li v-for="category in navigation" :key="category.name" class="py-7 first:pt-0">
-            <div class="text-xs leading-6 text-gray-400 uppercase">{{ category.name }}</div>
+            <div class="text-xs leading-6 text-gray-500">{{ category.name }}</div>
             <ul role="list" class="-mx-2 mt-4 space-y-1">
               <li v-for="link in category.links" :key="link.name">
-                <NuxtLink :href="link.url" active-class="bg-primary-50 text-primary-500" class="text-gray-500 hover:text-primary-500 hover:bg-primary-50 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium" disabled>
-                  <Icon :name="link.icon" class="h-5 w-5 shrink-0" aria-hidden="true" solid/>
+                <NuxtLink :href="link.url" active-class="bg-gray-100 dark:bg-zinc-800" class="hover:bg-gray-100 dark:hover:bg-zinc-800 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium" disabled>
+                  <Icon :name="link.icon" class="h-5 w-5 shrink-0 stroke-2" aria-hidden="true"/>
                   {{ link.name }}
                 </NuxtLink>
               </li>
@@ -77,11 +77,13 @@
     </div>
   </div>
 
-  <div class="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:hidden">
-    <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden" @click="sidebarOpen = true">
-      <span class="sr-only">Open sidebar</span>
-      <Icon name="Bars3" class="h-6 w-6" aria-hidden="true" />
-    </button>
+  <div class="sticky top-0 z-40 flex items-center gap-x-6 bg-white dark:bg-black py-4 shadow-sm dark:border-b dark:border-zinc-800 sm:px-6 lg:hidden">
+    <div class="container">
+      <button type="button" class="-my-2.5 p-2.5 text-gray-700 lg:hidden" @click="sidebarOpen = true">
+        <span class="sr-only">Open sidebar</span>
+        <Icon name="Bars3" class="h-6 w-6" aria-hidden="true" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -92,17 +94,21 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue'
-import Icon from "~/components/Icon.vue";
+import Icon from "~/components/ui/Icon.vue";
+
+definePageMeta({
+  layout: 'default-sidebar'
+})
 
 const sidebarOpen = ref<boolean>(false)
 
 const navigation = [
   {
-    name: 'Algemeen',
+    name: 'General',
     links: [
       { name: 'Dashboard', url: '/', icon: 'Home' },
-      { name: 'Users', url: '', icon: 'Users' },
-      { name: 'Settings', url: '', icon: 'Cog6Tooth' },
+      { name: 'Users', url: '/users', icon: 'Users' },
+      { name: 'Settings', url: '/settings', icon: 'Cog6Tooth' },
     ]
   }
 ]

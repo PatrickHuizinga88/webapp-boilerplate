@@ -2,14 +2,14 @@
 
   <NuxtLoadingIndicator color="#505084"/>
 
-  <Sidebar ref="sidebar"/>
+  <LayoutSidebar ref="sidebar"/>
 
   <div class="lg:pl-72">
-    <header class="bg-white border-b shadow">
-      <div class="px-6 sm:px-8 lg:px-10">
-        <!-- Nav menu content -->
-      </div>
-    </header>
+<!--    <header class="bg-white border-b shadow">-->
+<!--      <div class="px-6 sm:px-8 lg:px-10">-->
+<!--        &lt;!&ndash; Nav menu content &ndash;&gt;-->
+<!--      </div>-->
+<!--    </header>-->
 
     <div class="py-12">
       <div class="px-6 sm:px-8 lg:px-10">
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <NotificationList :notifications="notificationStore.notifications"/>
+  <UiNotificationList :notifications="notificationStore.notifications"/>
 
 </template>
 
