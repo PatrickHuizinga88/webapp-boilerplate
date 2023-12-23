@@ -1,12 +1,14 @@
 <template>
-  <header v-if="title" class="mb-10">
-    <h1 class="text-3xl font-semibold mb-1">{{ title }}</h1>
-    <p v-if="subtitle" class="text-gray-500">{{ subtitle }}</p>
-  </header>
+  <LayoutContainer>
+    <header v-if="title" class="mb-10">
+      <h1 class="text-3xl font-semibold mb-1">{{ title }}</h1>
+      <p v-if="subtitle" class="text-gray-500">{{ subtitle }}</p>
+    </header>
 
-  <main>
-    <slot/>
-  </main>
+    <main>
+        <slot/>
+    </main>
+  </LayoutContainer>
 </template>
 
 <script setup lang="ts">
