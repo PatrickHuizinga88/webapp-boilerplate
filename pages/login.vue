@@ -26,7 +26,7 @@
                     <div class="flex items-center justify-between">
                         <label for="password" class="block text-sm font-medium leading-6">Password</label>
                         <div class="text-sm">
-                            <a href="#" class="font-semibold text-primary-500 hover:text-primary-400">Forgot password?</a>
+                            <a href="#" class="font-semibold text-primary-500 dark:text-primary-400 hover:text-primary-400 dark:hover:text-primary-300">Forgot password?</a>
                         </div>
                     </div>
                     <div class="mt-2">
@@ -50,7 +50,7 @@
         <p class="mt-10 text-center text-sm text-gray-500">
             Don't have an account?
             {{ ' ' }}
-            <a href="#" class="font-semibold leading-6 text-primary-500 hover:text-primary-400">Sign up</a>
+            <a href="#" class="font-semibold leading-6 text-primary-500 dark:text-primary-400 hover:text-primary-400 dark:hover:text-primary-300">Sign up</a>
         </p>
     </div>
 </template>
