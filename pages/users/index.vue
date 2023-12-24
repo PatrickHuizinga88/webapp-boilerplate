@@ -1,11 +1,11 @@
 <template>
   <LayoutPage>
     <div class="flex justify-end">
-      <UiButton class="text-white bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover:bg-primary-500 mb-4">
-        <NuxtLink to="/users/edit">
+      <NuxtLink to="/users/create">
+        <UiButton class="text-white bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover:bg-primary-500 mb-4">
           Add user
-        </NuxtLink>
-      </UiButton>
+        </UiButton>
+      </NuxtLink>
     </div>
     
     <div class="flow-root">
@@ -33,9 +33,9 @@
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ user.role }}</td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                  <a href="#" class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+                  <NuxtLink :to="`/users/${user.id}/edit`" class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                     Edit<span class="sr-only">, {{ user.name }}</span>
-                  </a>
+                  </NuxtLink>
                 </td>
               </tr>
               </tbody>
@@ -52,18 +52,5 @@ definePageMeta({
   layout: 'default-sidebar',
 })
 
-const users = [
-  {
-    id: 1,
-    name: 'Jane Cooper',
-    email: 'jane.cooper@outlook.com',
-    role: 'Admin'
-  },
-  {
-    id: 2,
-    name: 'John Cooper',
-    email: 'john.cooper@gmail.com',
-    role: 'Admin'
-  }
-]
+const { data: users } = useFetch('/api/users')
 </script>

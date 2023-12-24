@@ -1,18 +1,19 @@
 <template>
   <LayoutPage>
     <section>
-      <form @submit.prevent="submit" class="space-y-4">
+      <form @submit.prevent="submit" class="space-y-6">
         <UiFormField
             id="role"
-            label="System theme"
-            :error="errors.preferredMode"
+            label="Application theme"
+            :error="errors.theme"
         >
           <UiFormSelect
-              v-model="form.preferredMode"
-              :options="['Light', 'Dark', 'System default']"
+              v-model="theme"
+              @change="toggleTheme"
+              :options="themeOptions"
           />
         </UiFormField>
-        <UiButton type="submit" class="bg-primary-500 hover:bg-primary-600 text-white hover:bg-accent mt-2">Save settings</UiButton>
+        <UiButton type="submit" class="text-white bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover-bg-primary-500">Save settings</UiButton>
       </form>
     </section>
   </LayoutPage>
@@ -23,14 +24,27 @@ definePageMeta({
   layout: 'default-sidebar'
 })
 
+const { theme, toggleTheme } = useTheme()
+
 const notificationStore = useNotificationStore()
 
+const themeOptions = [{
+  value: 'light',
+  label: 'Light'
+}, {
+  value: 'dark',
+  label: 'Dark'
+}, {
+  value: '',
+  label: 'System default'
+}]
+
 const form = reactive({
-  preferredMode: 'System default'
+  theme: ''
 })
 
 const errors = reactive({
-  preferredMode: ''
+  theme: ''
 })
 
 const submit = () => {
@@ -40,7 +54,6 @@ const submit = () => {
     type: 'success',
     icon: 'CheckCircle',
   })
-  navigateTo('/')
 }
 </script>
 

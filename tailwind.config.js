@@ -11,6 +11,7 @@ export default {
     'Error.{js,ts,vue}',
     'error.{js,ts,vue}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {

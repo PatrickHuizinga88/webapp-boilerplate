@@ -1,6 +1,6 @@
 <template>
   <NuxtLoadingIndicator color="#505084"/>
-  <header class="bg-white dark:bg-zinc-950 border-b dark:border-gray-700 shadow">
+  <header class="bg-white dark:bg-zinc-950 border-b dark:border-zinc-700 shadow">
     <div class="container">
       <nav class="flex justify-between items-center">
         <NuxtLink to="/">
@@ -30,10 +30,21 @@ import { useNotificationStore } from "~/stores/notificationStore";
 
 const notificationStore = useNotificationStore()
 
+useHead({
+  script: [{ 
+    children:
+      `if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }`
+  }]
+})
+
 const navItems = [
-  { name: 'Home', url: '/' },
-  { name: 'About us', url: '' },
-  { name: 'Contact', url: '' },
+  { name: 'Dashboard', url: '/' },
+  { name: 'Users', url: '/users' },
+  { name: 'Settings', url: '/settings' },
 ]
 
 </script>

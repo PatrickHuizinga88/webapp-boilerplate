@@ -6,7 +6,7 @@
             :to="crumb.link"
             :class="[
                 {'hover:text-gray-600 hover:dark:text-gray-300' : crumb.link},
-                {'font-medium text-gray-900 dark:text-white' : index === breadcrumbs.length - 1},
+                {'font-medium text-gray-900 dark:text-gray-200' : index === breadcrumbs.length - 1},
                 {'mr-3': breadcrumbs.length > 1}
             ]">
           {{ crumb.title }}

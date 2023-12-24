@@ -2,7 +2,7 @@
   <TransitionRoot as="template" :show="sidebarOpen">
     <Dialog as="div" class="relative z-40 lg:hidden" @close="sidebarOpen = false">
       <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100" leave-to="opacity-0">
-        <div class="fixed inset-0 bg-gray-900/80" />
+        <div class="fixed inset-0 bg-zinc-900/80" />
       </TransitionChild>
 
       <div class="fixed inset-0 flex">
@@ -21,10 +21,6 @@
               <div class="flex h-16 shrink-0 items-center">
                 <NuxtLink to="/">
                   <img src="~/public/favicon.ico" alt="Logo">
-        <!--          <span class="text-2xl font-bold">-->
-        <!--            <span class="text-primary-500">Nuxt</span>-->
-        <!--            boilerplate-->
-        <!--          </span>-->
                 </NuxtLink>
               </div>
               <nav class="flex flex-1 flex-col">
@@ -53,17 +49,11 @@
     </Dialog>
   </TransitionRoot>
 
-  <!-- Static sidebar for desktop -->
   <div class="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-72 lg:flex-col">
-    <!-- Sidebar component, swap this element with another sidebar if you like -->
     <div class="flex grow flex-col overflow-y-auto border-r border-gray-200 dark:border-zinc-800 px-6 pb-4">
       <div class="flex shrink-0 items-center pt-8 pb-12">
         <NuxtLink to="/">
           <img src="~/public/favicon.ico" alt="Logo">
-<!--          <span class="text-2xl font-bold">-->
-<!--            <span class="text-primary-500">Nuxt</span>-->
-<!--            boilerplate-->
-<!--          </span>-->
         </NuxtLink>
       </div>
       <nav class="flex flex-1 flex-col">
@@ -84,10 +74,10 @@
     </div>
   </div>
 
-  <div class="sticky top-0 z-40 bg-white dark:bg-black py-4 shadow-sm dark:border-b dark:border-zinc-800 sm:px-6 lg:hidden">
+  <div class="sticky top-0 z-40 bg-white dark:bg-black py-4 shadow-sm dark:border-b dark:border-zinc-800 lg:hidden">
     <LayoutContainer>
       <div class="flex items-center gap-x-6">
-        <button type="button" class="-my-2.5 p-2.5 text-gray-700 dark:text-gray-400 lg:hidden" @click="sidebarOpen = true">
+        <button type="button" class="-m-2.5 p-2.5 text-gray-700 dark:text-gray-400 lg:hidden" @click="sidebarOpen = true">
           <span class="sr-only">Open sidebar</span>
           <Icon name="Bars3" class="h-6 w-6 stroke-2" aria-hidden="true" />
         </button>
@@ -104,10 +94,6 @@ import {
   TransitionRoot,
 } from '@headlessui/vue'
 import Icon from "~/components/ui/Icon.vue";
-
-definePageMeta({
-  layout: 'default-sidebar'
-})
 
 const sidebarOpen = ref<boolean>(false)
 
