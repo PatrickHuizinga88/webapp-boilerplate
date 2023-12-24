@@ -20,7 +20,7 @@
             <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white dark:bg-zinc-950 px-6 pb-4">
               <div class="flex h-16 shrink-0 items-center">
                 <NuxtLink to="/">
-                  <img src="~/public/favicon.ico" alt="Logo">
+                  <img src="~/assets/images/logo.svg" alt="Logo">
                 </NuxtLink>
               </div>
               <nav class="flex flex-1 flex-col">
@@ -53,7 +53,7 @@
     <div class="flex grow flex-col overflow-y-auto border-r border-gray-200 dark:border-zinc-800 px-6 pb-4">
       <div class="flex shrink-0 items-center pt-8 pb-12">
         <NuxtLink to="/">
-          <img src="~/public/favicon.ico" alt="Logo">
+          <img src="~/assets/images/logo.svg" alt="Logo">
         </NuxtLink>
       </div>
       <nav class="flex flex-1 flex-col">
@@ -62,7 +62,7 @@
             <div class="text-xs leading-6 text-gray-500">{{ category.name }}</div>
             <ul role="list" class="-mx-2 mt-4 space-y-1">
               <li v-for="link in category.links" :key="link.name">
-                <NuxtLink :href="link.url" active-class="bg-primary-900/10 dark:bg-white/10" class="hover:bg-primary-900/10 dark:hover:bg-white/10 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium" disabled>
+                <NuxtLink :href="link.url" active-class="bg-gray-900/10 dark:bg-white/10" class="hover:bg-gray-900/10 dark:hover:bg-white/10 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium" disabled>
                   <Icon :name="link.icon" class="h-5 w-5 shrink-0 stroke-2" aria-hidden="true"/>
                   {{ link.name }}
                 </NuxtLink>

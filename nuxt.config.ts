@@ -14,5 +14,6 @@ export default defineNuxtConfig({
         '@nuxtjs/tailwindcss',
         '@pinia/nuxt',
         'nuxt-headlessui',
+        '@nuxtjs/supabase',
     ],
 })

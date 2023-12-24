@@ -3,12 +3,14 @@
     <template #buttons>
       <UiButton
           class="text-white bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover:bg-primary-500"
+          size="sm"
           @click="navigateTo(`/users/${user.id}/edit`)"
       >
         Delete
       </UiButton>
       <UiButton
           class="text-white bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover:bg-primary-500"
+          size="sm"
           @click="navigateTo(`/users/${user.id}/edit`)"
       >
         Edit

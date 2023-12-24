@@ -5,7 +5,7 @@
         <h1 class="text-3xl font-semibold">{{ title }}</h1>
         <p v-if="subtitle" class="text-gray-500 mt-1">{{ subtitle }}</p>
       </header>
-      <div class="flex gap-4">
+      <div class="flex gap-4 items-center">
         <slot name="buttons"/>
       </div>
     </div>
