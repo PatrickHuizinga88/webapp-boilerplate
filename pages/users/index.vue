@@ -2,7 +2,7 @@
   <LayoutPage>
     <div class="flex justify-end">
       <NuxtLink to="/users/create">
-        <UiButton class="text-white bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover:bg-primary-500 mb-4">
+        <UiButton size="sm" class="text-white bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover:bg-primary-500 mb-4">
           Add user
         </UiButton>
       </NuxtLink>

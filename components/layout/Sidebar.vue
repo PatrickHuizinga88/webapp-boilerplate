@@ -12,15 +12,16 @@
               <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
                 <button type="button" class="flex -m-2.5 p-2.5" @click="sidebarOpen = false">
                   <span class="sr-only">Close sidebar</span>
-                  <Icon name="XMark" class="h-6 w-6 text-white" aria-hidden="true" />
+                  <UiIcon name="XMark" class="h-6 w-6 text-white" aria-hidden="true" />
                 </button>
               </div>
             </TransitionChild>
 
-            <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white dark:bg-zinc-950 px-6 pb-4">
-              <div class="flex h-16 shrink-0 items-center">
-                <NuxtLink to="/">
-                  <img src="~/assets/images/logo.svg" alt="Logo">
+            <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white dark:bg-zinc-950 px-6 py-4">
+              <div class="flex h-10 shrink-0 items-center -mx-2.5">
+                <NuxtLink to="/" class="h-full">
+                  <img src="~/assets/images/logo.svg" alt="Logo" class="dark:hidden h-full">
+                  <img src="~/assets/images/logo-dark.svg" alt="Logo" class="hidden dark:block h-full">
                 </NuxtLink>
               </div>
               <nav class="flex flex-1 flex-col">
@@ -32,7 +33,7 @@
                         <ul role="list" class="-mx-2 mt-2 space-y-1">
                           <li v-for="link in category.links" :key="link.name">
                             <NuxtLink :href="link.url" @click="sidebarOpen = false" active-class="bg-gray-100 dark:bg-white/10" class="hover:bg-gray-100 dark:hover:bg-white/10 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                              <Icon :name="link.icon" class="h-5 w-5 shrink-0" aria-hidden="true" solid/>
+                              <UiIcon :name="link.icon" class="h-5 w-5 shrink-0" aria-hidden="true" solid/>
                               {{ link.name }}
                             </NuxtLink>
                           </li>
@@ -51,9 +52,10 @@
 
   <div class="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-72 lg:flex-col">
     <div class="flex grow flex-col overflow-y-auto border-r border-gray-200 dark:border-zinc-800 px-6 pb-4">
-      <div class="flex shrink-0 items-center pt-8 pb-12">
+      <div class="flex shrink-0 items-center pt-8 pb-10">
         <NuxtLink to="/">
-          <img src="~/assets/images/logo.svg" alt="Logo">
+          <img src="~/assets/images/logo.svg" alt="Logo" class="dark:hidden h-10">
+          <img src="~/assets/images/logo-dark.svg" alt="Logo" class="hidden dark:block h-10">
         </NuxtLink>
       </div>
       <nav class="flex flex-1 flex-col">
@@ -63,11 +65,20 @@
             <ul role="list" class="-mx-2 mt-4 space-y-1">
               <li v-for="link in category.links" :key="link.name">
                 <NuxtLink :href="link.url" active-class="bg-gray-900/10 dark:bg-white/10" class="hover:bg-gray-900/10 dark:hover:bg-white/10 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium" disabled>
-                  <Icon :name="link.icon" class="h-5 w-5 shrink-0 stroke-2" aria-hidden="true"/>
+                  <UiIcon :name="link.icon" class="h-5 w-5 shrink-0 stroke-2" aria-hidden="true"/>
                   {{ link.name }}
                 </NuxtLink>
               </li>
             </ul>
+          </li>
+        </ul>
+
+        <ul role="list" class="-mx-2 mt-auto space-y-1">
+          <li>
+            <button @click="signOut" class="w-full hover:bg-gray-900/10 dark:hover:bg-white/10 flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium">
+              <UiIcon name="ArrowLeftOnRectangle" class="h-5 w-5 shrink-0 stroke-2" aria-hidden="true"/>
+              Logout
+            </button>
           </li>
         </ul>
       </nav>
@@ -79,7 +90,7 @@
       <div class="flex items-center gap-x-6">
         <button type="button" class="-m-2.5 p-2.5 text-gray-700 dark:text-gray-400 lg:hidden" @click="sidebarOpen = true">
           <span class="sr-only">Open sidebar</span>
-          <Icon name="Bars3" class="h-6 w-6 stroke-2" aria-hidden="true" />
+          <UiIcon name="Bars3" class="h-6 w-6 stroke-2" aria-hidden="true" />
         </button>
       </div>
     </LayoutContainer>
@@ -93,7 +104,11 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue'
-import Icon from "~/components/ui/Icon.vue";
+import { useNotificationStore } from "~/stores/notificationStore";
+
+const supabase = useSupabaseClient()
+
+const notificationStore = useNotificationStore()
 
 const sidebarOpen = ref<boolean>(false)
 
@@ -107,6 +122,18 @@ const navigation = [
     ]
   }
 ]
+
+const signOut = async () => {
+  const { error } = await supabase.auth.signOut()
+  if (!error) {
+    navigateTo('/login')
+    notificationStore.createNotification({
+      type: 'success',
+      icon: 'CheckCircle',
+      title: 'Succesfully logged out'
+    })
+  }
+}
 
 defineExpose({ sidebarOpen })
 </script>

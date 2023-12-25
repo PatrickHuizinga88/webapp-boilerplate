@@ -34,9 +34,9 @@ const props = defineProps({
 })
 
 const form = ref({
-    name: props.user.name || '',
-    email: props.user.email || '',
-    role: props.user.role || ''
+    name: props.user?.name || '',
+    email: props.user?.email || '',
+    role: props.user?.role || ''
 })
 
 defineEmits(['submit'])

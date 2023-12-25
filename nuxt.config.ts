@@ -4,7 +4,7 @@ export default defineNuxtConfig({
         head: {
             title: 'Nuxt boilerplate',
             link: [
-                { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }
+                { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
             ],
         },
     },
