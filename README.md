@@ -7,6 +7,7 @@ This project provides a solid front-end foundation for webapps. Made with Nuxt 3
 - User CRUD functionalities
 - UI components using Tailwind CSS
 - Multilayout
+- Dynamic breadcrumbs
 - Global notifications using Pinia
 - Dark & light mode switch
 
