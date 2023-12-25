@@ -1,14 +1,14 @@
 <template>
   <LayoutPage>
-    <div class="flex justify-end">
+    <template #buttons>
       <NuxtLink to="/users/create">
-        <UiButton size="sm" class="text-white bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover:bg-primary-500 mb-4">
+        <UiButton size="sm" class="text-white bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover:bg-primary-500">
           Add user
         </UiButton>
       </NuxtLink>
-    </div>
+    </template>
     
-    <div class="flow-root">
+    <div v-if="users.length" class="flow-root">
       <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-xl">
@@ -44,6 +44,7 @@
         </div>
       </div>
     </div>
+    <div v-else>No users found</div>
   </LayoutPage>
 </template>
 
@@ -52,5 +53,5 @@ definePageMeta({
   layout: 'default-sidebar',
 })
 
-const { data: users } = useFetch('/api/users')
+const { data: users } = await useFetch('/api/users')
 </script>

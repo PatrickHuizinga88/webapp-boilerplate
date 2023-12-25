@@ -1,8 +1,8 @@
 <template>
   <LayoutContainer>
-    <div v-if="title" class="flex justify-between items-center mb-10">
+    <div v-if="title || $slots.buttons" class="flex justify-between items-center mb-10">
       <header>
-        <h1 class="text-3xl font-semibold">{{ title }}</h1>
+        <h1 v-if="title" class="text-2xl font-semibold">{{ title }}</h1>
         <p v-if="subtitle" class="text-gray-500 mt-1">{{ subtitle }}</p>
       </header>
       <div class="flex gap-4 items-center">

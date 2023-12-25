@@ -51,8 +51,8 @@
   </TransitionRoot>
 
   <div class="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-72 lg:flex-col">
-    <div class="flex grow flex-col overflow-y-auto border-r border-gray-200 dark:border-zinc-800 px-6 pb-4">
-      <div class="flex shrink-0 items-center pt-8 pb-10">
+    <div class="flex grow flex-col overflow-y-auto border-r border-gray-300 dark:border-zinc-700 px-6 pb-4">
+      <div class="flex shrink-0 items-center pt-6 pb-10">
         <NuxtLink to="/">
           <img src="~/assets/images/logo.svg" alt="Logo" class="dark:hidden h-10">
           <img src="~/assets/images/logo-dark.svg" alt="Logo" class="hidden dark:block h-10">

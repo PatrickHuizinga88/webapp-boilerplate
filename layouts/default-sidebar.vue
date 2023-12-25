@@ -1,11 +1,11 @@
 <template>
 
-  <NuxtLoadingIndicator color="#505084"/>
+  <NuxtLoadingIndicator color="#2E994A"/>
 
   <LayoutSidebar ref="sidebar"/>
 
   <div class="lg:pl-72">
-    <header class="py-8">
+    <header class="py-7">
       <LayoutContainer>
         <div class="flex justify-between items-center">
           <UiBreadcrumbs/>
@@ -23,7 +23,7 @@
       </LayoutContainer>
     </header>
 
-    <div class="py-4">
+    <div class="pt-4 pb-6">
       <slot/>
     </div>
   </div>
