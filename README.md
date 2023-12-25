@@ -1,6 +1,14 @@
-# Nuxt 3 Minimal Starter
+# Webapp boilerplate
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This project provides a solid front-end foundation for webapps. Made with Nuxt 3 + Tailwind CSS + Supabase.
+
+## Features
+- Authentication by Supabase
+- User CRUD functionalities
+- UI components using Tailwind CSS
+- Multilayout
+- Global notifications using Pinia
+- Dark & light mode switch
 
 ## Setup
 
