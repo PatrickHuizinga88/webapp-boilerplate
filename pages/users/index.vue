@@ -26,12 +26,12 @@
               <tbody class="divide-y divide-gray-200 dark:divide-zinc-800 bg-white dark:bg-zinc-900">
               <tr v-for="user in users" :key="user.email">
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
-                  <NuxtLink :to="`/users/${user.id}`">{{ user.name }}</NuxtLink>
+                  <NuxtLink :to="`/users/${user.id}`">{{ user.name || '-' }}</NuxtLink>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  <a :href="`mailto:${user.email}`">{{ user.email }}</a>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                  <a :href="`mailto:${user.email}`">{{ user.email || '-' }}</a>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ user.role }}</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ user.role || '-' }}</td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                   <NuxtLink :to="`/users/${user.id}/edit`" class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                     Edit<span class="sr-only">, {{ user.name }}</span>

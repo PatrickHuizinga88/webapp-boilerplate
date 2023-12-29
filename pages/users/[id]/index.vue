@@ -18,6 +18,38 @@
         Edit
       </UiButton>
     </template>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="col-span-2">
+        <UiCard>
+          <template #header>
+            <h3 class="font-medium">
+              General information
+            </h3>
+          </template>
+          <div class="mt-6 border-t border-gray-200 dark:border-zinc-800">
+            <dl class="divide-y divide-gray-200 dark:divide-zinc-800">
+              <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium leading-6">Full name</dt>
+                <dd class="mt-1 text-sm leading-6 text-gray-700 dark:text-gray-300 sm:col-span-2 sm:mt-0">{{ user.name || '-' }}</dd>
+              </div>
+              <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium leading-6">Email</dt>
+                <dd class="mt-1 text-sm leading-6 text-gray-700 dark:text-gray-300 sm:col-span-2 sm:mt-0">{{ user.email || '-' }}</dd>
+              </div>
+              <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium leading-6">Role</dt>
+                <dd class="mt-1 text-sm leading-6 text-gray-700 dark:text-gray-300 sm:col-span-2 sm:mt-0">{{ user.role || '-' }}</dd>
+              </div>
+            </dl>
+          </div>
+        </UiCard>
+      </div>
+      <div>
+        
+      </div>
+    </div>
+
   </LayoutPage>
 
   <UiConfirmationModal

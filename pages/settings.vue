@@ -5,7 +5,6 @@
         <UiFormField
             id="role"
             label="Application theme"
-            :error="errors.theme"
         >
           <UiFormSelect
               v-model="theme"
@@ -40,11 +39,11 @@ const themeOptions = [{
 }]
 
 const form = reactive({
-  theme: ''
+  
 })
 
 const errors = reactive({
-  theme: ''
+
 })
 
 const submit = () => {

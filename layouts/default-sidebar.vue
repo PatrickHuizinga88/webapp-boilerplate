@@ -24,7 +24,9 @@
     </header>
 
     <div class="pt-4 pb-6">
-      <slot/>
+      <LayoutContainer>
+        <slot/>
+      </LayoutContainer>
     </div>
   </div>
 
