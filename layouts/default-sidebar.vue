@@ -50,7 +50,6 @@ useHead({
   }]
 })
 
-
 const navItems = [
   { name: 'Home', url: '/' },
   { name: 'About us', url: '' },

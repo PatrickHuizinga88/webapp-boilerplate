@@ -3,14 +3,25 @@
   <header class="bg-white dark:bg-zinc-950 border-b dark:border-zinc-700 shadow">
     <div class="container">
       <nav class="flex justify-between items-center">
-        <NuxtLink to="/">
-          <img src="../public/favicon.ico" alt="Logo">
-        </NuxtLink>
-        <ul class="flex gap-8">
-          <li v-for="item in navItems">
-            <NuxtLink :to="item.url" activeClass="text-primary-500 font-medium" class="inline-block px-2 py-4 hover:text-accent duration-150">{{ item.name }}</NuxtLink>
-          </li>
-        </ul>
+        <div class="flex gap-8 items-center">
+          <NuxtLink to="/">
+            <img src="../assets/images/logo.svg" alt="Logo" class="h-9">
+          </NuxtLink>
+          <ul class="flex gap-6">
+            <li v-for="item in mainNavItems">
+              <NuxtLink :to="item.url" activeClass="text-primary-500 font-medium" class="inline-block px-2 py-4 text-sm hover:text-accent duration-150">{{ item.name }}</NuxtLink>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul class="flex gap-4">
+            <li v-for="item in userNavItems">
+              <NuxtLink :to="item.url" class="inline-block p-2 duration-150">
+                <UiIcon :name=item.icon class="h-5 w-5"/>
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
       </nav>
     </div>
   </header>
@@ -41,10 +52,13 @@ useHead({
   }]
 })
 
-const navItems = [
+const mainNavItems = [
   { name: 'Dashboard', url: '/' },
   { name: 'Users', url: '/users' },
-  { name: 'Settings', url: '/settings' },
 ]
 
+const userNavItems = [
+  { name: 'Settings', url: '/settings', icon: 'Cog6Tooth' },
+  { name: 'Logout', url: '/logout', icon: 'ArrowRightOnRectangle' },
+]
 </script>

@@ -1,3 +1,11 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: 'default-sidebar',
+})
+
+const { data: users } = await useFetch('/api/users')
+</script>
+
 <template>
   <LayoutPage>
     <template #buttons>
@@ -47,11 +55,3 @@
     <div v-else>No users found</div>
   </LayoutPage>
 </template>
-
-<script setup lang="ts">
-definePageMeta({
-  layout: 'default-sidebar',
-})
-
-const { data: users } = await useFetch('/api/users')
-</script>

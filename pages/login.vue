@@ -1,3 +1,36 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: 'authentication'
+})
+
+const supabase = useSupabaseClient()
+
+const form = reactive({
+  email: 'patrickhuizinga44@gmail.com',
+  password: ''
+})
+const errorMessage = ref<string>('')
+const loading = ref<boolean>(false)
+
+const signIn = async () => {
+  try {
+    loading.value = true
+    const { error } = await supabase.auth.signInWithPassword({
+      email:    form.email,
+      password: form.password
+    })
+    if (error) {
+      loading.value = false
+      throw error;
+    }
+    navigateTo('/')
+  } catch (error) {
+    errorMessage.value = 'Inloggen mislukt'
+    console.error(error)
+  }
+}
+</script>
+
 <template>
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img src="~/assets/images/logo.svg" alt="Logo" class="mx-auto h-12 w-auto">
@@ -52,6 +85,9 @@
                       Sign in
                     </UiButton>
                 </div>
+
+              <p class="text-sm text-red-500">{{ errorMessage }}</p>
+
             </form>
         </div>
         
@@ -62,36 +98,6 @@
         </p>
     </div>
 </template>
-
-<script setup lang="ts">
-definePageMeta({
-  layout: 'authentication'
-})
-
-const supabase = useSupabaseClient()
-
-const form = reactive({
-  email: 'patrickhuizinga44@gmail.com',
-  password: ''
-})
-const loading = ref<boolean>(false)
-
-const signIn = async () => {
-  try {
-    loading.value = true
-    const { error } = await supabase.auth.signInWithPassword({
-      email:    form.email,
-      password: form.password
-    })
-    if (error) throw error;
-    navigateTo('/')
-  } catch (error) {
-    alert(error.message)
-  } finally {
-    loading.value = false
-  }
-}
-</script>
 
 <style scoped>
 
