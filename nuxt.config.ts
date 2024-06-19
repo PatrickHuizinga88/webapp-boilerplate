@@ -13,7 +13,12 @@ export default defineNuxtConfig({
     modules: [
         '@nuxtjs/tailwindcss',
         '@pinia/nuxt',
-        'nuxt-headlessui',
         '@nuxtjs/supabase',
+        "shadcn-nuxt",
+        '@vueuse/nuxt',
     ],
+    shadcn: {
+        prefix: '',
+        componentDir: './components/ui'
+    }
 })

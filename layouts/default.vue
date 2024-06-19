@@ -1,3 +1,28 @@
+<script setup lang="ts">
+import { Settings, LogOut } from 'lucide-vue-next'
+
+useHead({
+  script: [{
+    children:
+        `if (localStorage.theme === 'dark' || localStorage.theme === '' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }`
+  }]
+})
+
+const mainNavItems = [
+  { name: 'Dashboard', url: '/' },
+  { name: 'Users', url: '/users' },
+]
+
+const userNavItems = [
+  { name: 'Settings', url: '/settings', icon: Settings },
+  { name: 'Logout', url: '/logout', icon: LogOut },
+]
+</script>
+
 <template>
   <NuxtLoadingIndicator color="#505084"/>
   <header class="bg-white dark:bg-zinc-950 border-b dark:border-zinc-700 shadow">
@@ -17,7 +42,7 @@
           <ul class="flex gap-4">
             <li v-for="item in userNavItems">
               <NuxtLink :to="item.url" class="inline-block p-2 duration-150">
-                <UiIcon :name=item.icon class="h-5 w-5"/>
+                <component :is="item.icon" class="h-5 w-5"/>
               </NuxtLink>
             </li>
           </ul>
@@ -32,33 +57,6 @@
     </div>
   </div>
 
-  <UiNotificationList :notifications="notificationStore.notifications"/>
+  <Toaster />
 
 </template>
-
-<script setup lang="ts">
-import { useNotificationStore } from "~/stores/notificationStore";
-
-const notificationStore = useNotificationStore()
-
-useHead({
-  script: [{
-    children:
-        `if (localStorage.theme === 'dark' || localStorage.theme === '' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark')
-        } else {
-          document.documentElement.classList.remove('dark')
-        }`
-  }]
-})
-
-const mainNavItems = [
-  { name: 'Dashboard', url: '/' },
-  { name: 'Users', url: '/users' },
-]
-
-const userNavItems = [
-  { name: 'Settings', url: '/settings', icon: 'Cog6Tooth' },
-  { name: 'Logout', url: '/logout', icon: 'ArrowRightOnRectangle' },
-]
-</script>

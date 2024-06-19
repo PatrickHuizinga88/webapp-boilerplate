@@ -8,15 +8,22 @@
     <header class="py-7">
       <LayoutContainer>
         <div class="flex justify-between items-center">
-          <UiBreadcrumbs/>
+          <div></div>
+          <!--          <Breadcrumb>-->
+          <!--            <BreadcrumbList>-->
+          <!--              <BreadcrumbItem v-for="item in breadcrumbs" :key="item.url">-->
+          <!--                <NuxtLink :to="item.url">{{ item.name }}</NuxtLink>-->
+          <!--              </BreadcrumbItem>-->
+          <!--            </BreadcrumbList>-->
+          <!--          </Breadcrumb>-->
           <div class="flex">
             <div class="hidden sm:block">
-              <UiFormIconInput type="search" class="!w-64" placeholder="Search...">
-              <UiIcon name="MagnifyingGlass" class="h-5 w-5 stroke-2" aria-hidden="true"/>
-            </UiFormIconInput>
+              <IconInput type="search" class="!w-64" placeholder="Search...">
+                <Search class="size-5" aria-hidden="true" />
+              </IconInput>
             </div>
             <button>
-              <UiIcon name="MagnifyingGlass" class="sm:hidden h-6 w-6 stroke-2"/>
+              <Search class="sm:hidden size-6" />
             </button>
           </div>
         </div>
@@ -25,19 +32,18 @@
 
     <div class="pt-4 pb-6">
       <LayoutContainer>
-        <slot/>
+        <slot />
       </LayoutContainer>
     </div>
   </div>
 
-  <UiNotificationList :notifications="notificationStore.notifications"/>
+  <Toaster/>
 
 </template>
 
 <script setup lang="ts">
-import { useNotificationStore } from "~/stores/notificationStore";
-
-const notificationStore = useNotificationStore()
+import IconInput from "~/components/ui/IconInput.vue";
+import {Search} from "lucide-vue-next";
 
 useHead({
   script: [{
@@ -51,8 +57,8 @@ useHead({
 })
 
 const navItems = [
-  { name: 'Home', url: '/' },
-  { name: 'About us', url: '' },
-  { name: 'Contact', url: '' },
+  {name: 'Home', url: '/'},
+  {name: 'About us', url: ''},
+  {name: 'Contact', url: ''},
 ]
 </script>

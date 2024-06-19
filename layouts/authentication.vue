@@ -1,17 +1,4 @@
-<template>
-    <div class="min-h-screen flex flex-col justify-center px-6 py-12 lg:px-8">
-        <slot/>
-    </div>
-  
-    <UiNotificationList :notifications="notificationStore.notifications"/>
-  
-</template>
-  
 <script setup lang="ts">
-import { useNotificationStore } from "~/stores/notificationStore";
-
-const notificationStore = useNotificationStore()
-
 useHead({
   script: [{
     children:
@@ -24,6 +11,15 @@ useHead({
 })
 </script>
 
-<style type="postcss">
+<template>
+  <div class="min-h-screen flex flex-col justify-center px-6 py-12 lg:px-8">
+    <slot/>
+  </div>
+
+  <Toaster/>
+
+</template>
+
+<style>
 
 </style>
