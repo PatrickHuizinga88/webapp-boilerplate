@@ -3,8 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 type Notification = {
     id?: string,
-    type: 'success' | 'warning' | 'danger'
-    icon: string,
+    type?: 'info' | 'success' | 'warning' | 'destructive'
     title: string,
     message?: string,
 }
@@ -14,13 +13,12 @@ export const useNotificationStore = defineStore('notificationStore', {
         notifications: [] as Notification[]
     }),
     actions: {
-        createNotification({type, icon, title, message}: Notification) {
+        createNotification({type, title, message}: Notification) {
             const id = uuid()
             this.notifications.push(
                 {
                     id: id,
                     type: type,
-                    icon: icon,
                     title: title,
                     message: message
                 }

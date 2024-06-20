@@ -1,16 +1,9 @@
 <script setup lang="ts">
 import { Settings, LogOut } from 'lucide-vue-next'
+import NotificationList from "~/components/ui/notification/NotificationList.vue";
+import { useNotificationStore } from "~/stores/notificationStore";
 
-useHead({
-  script: [{
-    children:
-        `if (localStorage.theme === 'dark' || localStorage.theme === '' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark')
-        } else {
-          document.documentElement.classList.remove('dark')
-        }`
-  }]
-})
+const notificationStore = useNotificationStore()
 
 const mainNavItems = [
   { name: 'Dashboard', url: '/' },
@@ -24,7 +17,7 @@ const userNavItems = [
 </script>
 
 <template>
-  <NuxtLoadingIndicator color="#505084"/>
+  <NuxtLoadingIndicator color="#4f46e5"/>
   <header class="bg-background border-b border-border shadow">
     <div class="container">
       <nav class="flex justify-between items-center">
@@ -57,6 +50,6 @@ const userNavItems = [
     </div>
   </div>
 
-<!--  <Toaster />-->
+  <NotificationList :notifications="notificationStore.notifications" />
 
 </template>

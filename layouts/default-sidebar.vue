@@ -1,6 +1,21 @@
+<script setup lang="ts">
+import IconInput from "~/components/ui/IconInput.vue";
+import {Search} from "lucide-vue-next";
+import NotificationList from "~/components/ui/notification/NotificationList.vue";
+import { useNotificationStore } from "~/stores/notificationStore";
+
+const notificationStore = useNotificationStore()
+
+const navItems = [
+  {name: 'Home', url: '/'},
+  {name: 'About us', url: ''},
+  {name: 'Contact', url: ''},
+]
+</script>
+
 <template>
 
-  <NuxtLoadingIndicator color="#2E994A"/>
+  <NuxtLoadingIndicator color="#4f46e5"/>
 
   <LayoutSidebar ref="sidebar"/>
 
@@ -18,13 +33,16 @@
           <!--          </Breadcrumb>-->
           <div class="flex">
             <div class="hidden sm:block">
-              <IconInput type="search" class="!w-64" placeholder="Search...">
-                <Search class="size-5" aria-hidden="true" />
-              </IconInput>
+              <div class="relative w-full max-w-sm items-center">
+                <Input id="search" type="text" placeholder="Search..." class="pl-9" />
+                <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                  <Search class="size-5 text-muted-foreground" />
+                </span>
+              </div>
             </div>
-            <button>
-              <Search class="sm:hidden size-6" />
-            </button>
+            <Button variant="ghost" size="icon">
+              <Search class="sm:hidden size-5" />
+            </Button>
           </div>
         </div>
       </LayoutContainer>
@@ -37,28 +55,6 @@
     </div>
   </div>
 
-<!--  <Toaster />-->
+  <NotificationList :notifications="notificationStore.notifications" />
 
 </template>
-
-<script setup lang="ts">
-import IconInput from "~/components/ui/IconInput.vue";
-import {Search} from "lucide-vue-next";
-
-useHead({
-  script: [{
-    children:
-        `if (localStorage.theme === 'dark' || localStorage.theme === '' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark')
-        } else {
-          document.documentElement.classList.remove('dark')
-        }`
-  }]
-})
-
-const navItems = [
-  {name: 'Home', url: '/'},
-  {name: 'About us', url: ''},
-  {name: 'Contact', url: ''},
-]
-</script>

@@ -79,16 +79,16 @@ const signIn = async () => {
           Sign in
         </Button>
 
-        <p v-if="errorMessage" class="text-sm text-red-500">{{ errorMessage }}</p>
+        <p v-if="errorMessage" class="text-sm text-destructive">{{ errorMessage }}</p>
 
       </form>
     </div>
 
-    <p class="mt-10 text-center text-sm text-gray-500">
+    <p class="mt-10 text-center text-sm text-muted-foreground">
       Don't have an account?
       {{ ' ' }}
       <a href="#"
-         class="font-semibold leading-6 text-primary-500 dark:text-primary-400 hover:text-primary-400 dark:hover:text-primary-300">Sign
+         class="font-semibold leading-6 text-primary hover:underline">Sign
         up</a>
     </p>
   </div>

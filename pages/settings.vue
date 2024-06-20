@@ -2,13 +2,13 @@
 import {toTypedSchema} from "@vee-validate/zod";
 import {z} from "zod";
 import {useForm} from "vee-validate";
-// import {toast} from "vue-sonner";
 
 definePageMeta({
   layout: 'default-sidebar'
 })
 
-const { theme, toggleTheme } = useTheme()
+const notificationStore = useNotificationStore()
+const colorMode = useColorMode()
 
 const themeOptions = [{
   value: 'light',
@@ -17,7 +17,7 @@ const themeOptions = [{
   value: 'dark',
   label: 'Dark'
 }, {
-  value: 'auto',
+  value: 'system',
   label: 'System default'
 }]
 
@@ -26,11 +26,19 @@ const formSchema = toTypedSchema(z.object({
 }))
 
 const form = useForm({
+  initialValues: {
+    theme: colorMode.preference
+  },
   validationSchema: formSchema,
 })
 
 const onSubmit = form.handleSubmit((values) => {
-  // toast('Your settings have been saved successfully.')
+  colorMode.preference = values.theme
+  notificationStore.createNotification({
+    title: 'Settings saved',
+    message: 'Your settings have been saved successfully.',
+    type: 'success'
+  })
 })
 </script>
 

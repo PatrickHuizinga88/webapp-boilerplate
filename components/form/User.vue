@@ -28,10 +28,12 @@
     </form>
 </template>
 
-<script setup>
-const props = defineProps({
-    user: Object
-})
+<script setup lang="ts">
+import type User from '~/types/User'
+
+const props = defineProps<{
+  user: User
+}>()
 
 const form = ref({
     name: props.user?.name || '',
@@ -39,5 +41,5 @@ const form = ref({
     role: props.user?.role || ''
 })
 
-defineEmits(['submit'])
+const emit = defineEmits(['submit'])
 </script>
