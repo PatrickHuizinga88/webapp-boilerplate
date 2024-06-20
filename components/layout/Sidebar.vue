@@ -2,10 +2,8 @@
 import {Sheet, SheetContent, SheetTrigger} from "~/components/ui/sheet";
 import {Menu, Package2, Home, LogOut, Users, Settings} from "lucide-vue-next";
 import {Button} from "~/components/ui/button";
-import {useToast} from "~/components/ui/toast";
 
 const supabase = useSupabaseClient()
-const { toast } = useToast()
 
 const sidebarOpen = ref<boolean>(false)
 
@@ -24,9 +22,9 @@ const signOut = async () => {
   const { error } = await supabase.auth.signOut()
   if (!error) {
     navigateTo('/login')
-    toast({
-      title: 'Succesfully logged out'
-    })
+    // toast({
+    //   title: 'Succesfully logged out'
+    // })
   }
 }
 

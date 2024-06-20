@@ -1,5 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    devtools: { enabled: true },
+    vite: {
+        optimizeDeps: {
+            exclude: ['vee-validate']
+        }
+    },
     app: {
         head: {
             title: 'Nuxt boilerplate',
@@ -9,7 +15,6 @@ export default defineNuxtConfig({
         },
     },
     css: ['../assets/css/main.css'],
-    devtools: { enabled: true },
     modules: [
         '@nuxtjs/tailwindcss',
         '@pinia/nuxt',

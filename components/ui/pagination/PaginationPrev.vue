@@ -5,7 +5,6 @@ import { ChevronLeft } from 'lucide-vue-next'
 import {
   Button,
 } from '@/components/ui/button'
-import { cn } from '@/utils'
 
 const props = withDefaults(defineProps<PaginationPrevProps & { class?: HTMLAttributes['class'] }>(), {
   asChild: true,

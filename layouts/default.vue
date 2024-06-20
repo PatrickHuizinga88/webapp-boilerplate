@@ -25,7 +25,7 @@ const userNavItems = [
 
 <template>
   <NuxtLoadingIndicator color="#505084"/>
-  <header class="bg-white dark:bg-zinc-950 border-b dark:border-zinc-700 shadow">
+  <header class="bg-background border-b border-border shadow">
     <div class="container">
       <nav class="flex justify-between items-center">
         <div class="flex gap-8 items-center">
@@ -34,7 +34,7 @@ const userNavItems = [
           </NuxtLink>
           <ul class="flex gap-6">
             <li v-for="item in mainNavItems">
-              <NuxtLink :to="item.url" activeClass="text-primary-500 font-medium" class="inline-block px-2 py-4 text-sm hover:text-accent duration-150">{{ item.name }}</NuxtLink>
+              <NuxtLink :to="item.url" activeClass="text-primary font-medium" class="inline-block px-2 py-4 text-sm hover:text-accent duration-150">{{ item.name }}</NuxtLink>
             </li>
           </ul>
         </div>
@@ -42,7 +42,7 @@ const userNavItems = [
           <ul class="flex gap-4">
             <li v-for="item in userNavItems">
               <NuxtLink :to="item.url" class="inline-block p-2 duration-150">
-                <component :is="item.icon" class="h-5 w-5"/>
+                <component :is="item.icon" class="size-5"/>
               </NuxtLink>
             </li>
           </ul>
@@ -57,6 +57,6 @@ const userNavItems = [
     </div>
   </div>
 
-  <Toaster />
+<!--  <Toaster />-->
 
 </template>

@@ -16,7 +16,7 @@ useHead({
     <slot/>
   </div>
 
-  <Toaster/>
+<!--  <Toaster/>-->
 
 </template>
 

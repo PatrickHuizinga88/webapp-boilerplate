@@ -43,14 +43,14 @@ const signIn = async () => {
     <div class="bg-background px-6 py-12 shadow-[0_10px_50px_-15px] shadow-primary/25 sm:rounded-xl sm:px-12">
       <form class="space-y-6" @submit.prevent="signIn">
         <div>
-          <label for="email" class="block text-sm font-medium leading-6">Email address</label>
+          <Label for="email" class="block text-sm font-medium leading-6">Email address</Label>
           <div class="mt-2">
             <Input
                 v-model="form.email"
                 id="email"
                 name="email"
                 type="email"
-                required/>
+                required />
           </div>
         </div>
 
@@ -79,7 +79,7 @@ const signIn = async () => {
           Sign in
         </Button>
 
-        <p class="text-sm text-red-500">{{ errorMessage }}</p>
+        <p v-if="errorMessage" class="text-sm text-red-500">{{ errorMessage }}</p>
 
       </form>
     </div>

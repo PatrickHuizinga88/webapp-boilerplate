@@ -1,31 +1,14 @@
-<template>
-  <LayoutPage>
-    <section>
-      <form @submit.prevent="submit" class="space-y-6">
-        <UiFormField
-            id="role"
-            label="Application theme"
-        >
-          <UiFormSelect
-              v-model="theme"
-              @change="toggleTheme"
-              :options="themeOptions"
-          />
-        </UiFormField>
-        <UiButton type="submit" class="text-white bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover-bg-primary-500">Save settings</UiButton>
-      </form>
-    </section>
-  </LayoutPage>
-</template>
-
 <script setup lang="ts">
+import {toTypedSchema} from "@vee-validate/zod";
+import {z} from "zod";
+import {useForm} from "vee-validate";
+// import {toast} from "vue-sonner";
+
 definePageMeta({
   layout: 'default-sidebar'
 })
 
 const { theme, toggleTheme } = useTheme()
-
-const notificationStore = useNotificationStore()
 
 const themeOptions = [{
   value: 'light',
@@ -34,27 +17,49 @@ const themeOptions = [{
   value: 'dark',
   label: 'Dark'
 }, {
-  value: '',
+  value: 'auto',
   label: 'System default'
 }]
 
-const form = reactive({
-  
+const formSchema = toTypedSchema(z.object({
+  theme: z.string(),
+}))
+
+const form = useForm({
+  validationSchema: formSchema,
 })
 
-const errors = reactive({
-
+const onSubmit = form.handleSubmit((values) => {
+  // toast('Your settings have been saved successfully.')
 })
-
-const submit = () => {
-  notificationStore.createNotification({
-    title: 'Settings saved',
-    message: 'Your settings have been saved successfully.',
-    type: 'success',
-    icon: 'CheckCircle',
-  })
-}
 </script>
+
+<template>
+  <LayoutPage>
+    <section>
+      <form @submit="onSubmit" class="space-y-6">
+        <FormField v-slot="{ componentField }" name="theme">
+          <FormItem>
+            <FormLabel>Theme</FormLabel>
+              <Select v-bind="componentField">
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a theme" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                    <SelectItem v-for="option in themeOptions" :value="option.value">
+                      {{ option.label }}
+                    </SelectItem>
+                </SelectContent>
+              </Select>
+          </FormItem>
+        </FormField>
+        <Button>Save settings</Button>
+      </form>
+    </section>
+  </LayoutPage>
+</template>
 
 <style scoped>
 
