@@ -2,6 +2,7 @@
 import { Trash, Pencil } from 'lucide-vue-next'
 import { useNotificationStore } from "~/stores/notificationStore";
 import Card from "~/components/ui/Card.vue";
+import type User from "~/types/User";
 
 definePageMeta({
   layout: 'default-sidebar',
@@ -9,22 +10,19 @@ definePageMeta({
 
 const notificationStore = useNotificationStore()
 
-const modal = ref(null)
+const dialogOpen = ref(false)
 
-const { data: user } = await useFetch('/api/users', {
+const { data: user } = await useFetch<User>('/api/users', {
   query: {
     id: useRoute().params.id
   }
 })
 
-const openModal = () => {
-  modal.value.toggle()
-}
-
 const deleteUser = async () => {
   try {
-    console.log('delete user')
-    modal.value.toggle()
+
+    // Delete user
+
     notificationStore.createNotification({
       type: 'success',
       title: `Deleted ${ user.value.name }`
@@ -39,14 +37,39 @@ const deleteUser = async () => {
 <template>
   <LayoutPage :title="user.name">
     <template #actions>
-      <Button
-          variant="outline"
-          size="sm"
-          @click="openModal"
-      >
-        <Trash class="size-4 mr-2" aria-hidden="true"/>
-        Delete
-      </Button>
+      <Dialog v-model:open="dialogOpen">
+        <DialogTrigger as-child>
+          <Button
+              variant="outline"
+              size="sm"
+          >
+            <Trash class="size-4 mr-2" aria-hidden="true"/>
+            Delete
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete {{ user.name }}</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this user? It will be permanently removed.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+                variant="outline"
+                @click="dialogOpen = false"
+            >
+              Cancel
+            </Button>
+            <Button
+                variant="destructive"
+                @click="deleteUser"
+            >
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <Button
           size="sm"
           @click="navigateTo(`/users/${user.id}/edit`)"
@@ -88,7 +111,6 @@ const deleteUser = async () => {
     </div>
 
   </LayoutPage>
-
 <!--  <UiConfirmationModal-->
 <!--      :title="`Delete ${user.name}`"-->
 <!--      message="Are you sure you want to delete this user? All of your data will be permanently removed."-->

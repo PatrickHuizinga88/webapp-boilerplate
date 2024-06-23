@@ -38,16 +38,16 @@ const onSubmit = form.handleSubmit(async (values) => {
   try {
     loading.value = true
     await $fetch('/api/users', {
-      method: 'PUT',
+      method: props.user ? 'PUT' : 'POST',
       body: {
-        id: useRoute().params.id,
+        id: props.user?.id,
         ...values
       }
     })
 
     notificationStore.createNotification({
       title: `User ${values.name} saved`,
-      description: 'Your settings have been saved successfully.',
+      description: 'User has been saved successfully.',
       type: 'success'
     })
     navigateTo(`/users/${useRoute().params.id}`)
