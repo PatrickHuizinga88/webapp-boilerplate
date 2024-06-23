@@ -5,7 +5,7 @@ type Notification = {
     id?: string,
     type?: 'info' | 'success' | 'warning' | 'destructive'
     title: string,
-    message?: string,
+    description?: string,
 }
 
 export const useNotificationStore = defineStore('notificationStore', {
@@ -13,15 +13,10 @@ export const useNotificationStore = defineStore('notificationStore', {
         notifications: [] as Notification[]
     }),
     actions: {
-        createNotification({type, title, message}: Notification) {
+        createNotification({type, title, description}: Notification) {
             const id = uuid()
             this.notifications.push(
-                {
-                    id: id,
-                    type: type,
-                    title: title,
-                    message: message
-                }
+                { id, type, title, description }
             )
 
             this.updateState(id)
