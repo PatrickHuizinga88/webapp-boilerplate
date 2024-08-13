@@ -7,7 +7,7 @@ const notificationStore = useNotificationStore()
 
 <template>
 
-  <NuxtLoadingIndicator color="#4f46e5" />
+  <NuxtLoadingIndicator :color="`hsl(var(--primary))`" />
 
   <LayoutSidebar ref="sidebar" />
 

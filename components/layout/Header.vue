@@ -25,7 +25,7 @@
 						</span>
 					</div>
 				</div>
-				<Button variant="ghost" size="icon" class="sm:hidden">
+				<Button variant="ghost" size="icon" class="sm:hidden" aria-label="Search">
 					<Search class="size-5" />
 				</Button>
 			</div>
