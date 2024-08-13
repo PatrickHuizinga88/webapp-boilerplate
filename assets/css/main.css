@@ -11,6 +11,6 @@
         @apply bg-background text-foreground;
     }
     body {
-        @apply bg-gradient-to-br from-primary/20 to-20% to-background bg-cover bg-no-repeat bg-left-top;
+        @apply bg-gradient-to-br from-primary/20 to-20% to-background bg-left-top bg-[length:840px_840px] bg-no-repeat;
     }
 }

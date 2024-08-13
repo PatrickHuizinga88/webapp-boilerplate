@@ -38,11 +38,16 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
   ],
+  supabase: {
+		redirectOptions: {
+      exclude: ['/register'],
+    }
+  },
   shadcn: {
     prefix: '',
-    componentDir: './components/ui'
+    componentDir: './components/ui',
   },
   colorMode: {
-    classSuffix: ''
+    classSuffix: '',
   },
 })

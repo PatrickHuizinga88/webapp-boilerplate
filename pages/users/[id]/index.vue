@@ -25,7 +25,7 @@ const deleteUser = async () => {
 
     notificationStore.createNotification({
       type: 'success',
-      title: `Deleted ${ user.value.name }`
+      title: `Deleted ${ user.value?.name || 'user'}`
     })
     navigateTo('/users')
   } catch (error) {
