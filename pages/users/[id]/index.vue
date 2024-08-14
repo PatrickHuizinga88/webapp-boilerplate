@@ -80,33 +80,26 @@ const deleteUser = async () => {
     </template>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="col-span-2">
-        <Card>
-          <template #header>
-            <h3 class="font-medium">
-              General information
-            </h3>
-          </template>
-          <div class="mt-5 border-t border-border">
-            <dl class="divide-y divide-border">
-              <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium leading-6">Full name</dt>
-                <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ user.name || '-' }}</dd>
-              </div>
-              <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium leading-6">Email</dt>
-                <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ user.email || '-' }}</dd>
-              </div>
-              <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium leading-6">Role</dt>
-                <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ user.role || '-' }}</dd>
-              </div>
-            </dl>
-          </div>
+      <div class="col-span-1">
+        <Card title="General information">
+          <dl class="space-y-4">
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4">
+              <dt class="text-sm font-medium leading-6">Full name</dt>
+              <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ user.name || '-' }}</dd>
+            </div>
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4">
+              <dt class="text-sm font-medium leading-6">Email</dt>
+              <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ user.email || '-' }}</dd>
+            </div>
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4">
+              <dt class="text-sm font-medium leading-6">Role</dt>
+              <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ user.role || '-' }}</dd>
+            </div>
+          </dl>
         </Card>
       </div>
       <div>
-        
+
       </div>
     </div>
 

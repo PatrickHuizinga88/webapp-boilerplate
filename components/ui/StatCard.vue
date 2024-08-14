@@ -16,7 +16,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="border rounded-2xl p-6">
+    <div class="border rounded-2xl shadow-md shadow-black/5 p-6">
         <h3 class="font-semibold mb-4">
           {{ title }}
         </h3>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type User from '~/types/User'
+import { PlusCircle } from 'lucide-vue-next'
 
 definePageMeta({
   layout: 'default-sidebar',
@@ -11,8 +12,9 @@ const { data: users } = await useFetch<User[]>('/api/users')
 <template>
   <LayoutPage>
     <template #actions>
-        <Button size="sm" as-child>
+        <Button as-child>
           <NuxtLink to="/users/create">
+            <PlusCircle class="size-5 mr-1.5" />
             Add user
           </NuxtLink>
         </Button>
@@ -21,7 +23,7 @@ const { data: users } = await useFetch<User[]>('/api/users')
     <div v-if="users?.length" class="flow-root">
       <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          <div class="overflow-hidden shadow border border-border sm:rounded-xl">
+          <div class="overflow-hidden shadow-md shadow-black/5 border border-border sm:rounded-2xl">
             <table class="min-w-full divide-y divide-border">
               <thead class="bg-muted">
               <tr>
