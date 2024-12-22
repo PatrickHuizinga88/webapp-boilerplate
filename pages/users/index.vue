@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type User from '~/types/User'
-import { PlusCircle } from 'lucide-vue-next'
+import { PlusCircle, LoaderCircle } from 'lucide-vue-next'
 
 definePageMeta({
   layout: 'default-sidebar',
 })
 
-const { data: users } = await useFetch<User[]>('/api/users')
+const { data: users, status } = useFetch<User[]>('/api/users')
 </script>
 
 <template>
@@ -56,6 +56,9 @@ const { data: users } = await useFetch<User[]>('/api/users')
         </div>
       </div>
     </div>
-    <div v-else>No users found</div>
+    <div v-else-if="status === 'pending'" class="w-full text-center">
+      <LoaderCircle class="size-8 text-primary" />
+    </div>
+    <div class="w-full text-center" v-else>No users found</div>
   </LayoutPage>
 </template>

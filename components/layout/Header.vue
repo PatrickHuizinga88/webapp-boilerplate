@@ -20,7 +20,7 @@
 				<div class="hidden sm:block">
 					<div class="relative w-full max-w-sm items-center">
 						<Input id="search" type="text" placeholder="Search..." class="pl-9" />
-						<span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+						<span class="absolute start-0 inset-y-0 flex items-center justify-center px-2 pointer-events-none">
 							<Search class="size-5 text-muted-foreground" />
 						</span>
 					</div>

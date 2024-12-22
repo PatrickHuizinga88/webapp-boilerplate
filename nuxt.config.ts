@@ -1,11 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: {enabled: true},
+
   vite: {
     optimizeDeps: {
       exclude: ['vee-validate']
     }
   },
+
   app: {
     head: {
       title: 'Nuxt boilerplate',
@@ -29,7 +31,9 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   css: ['../assets/css/main.css'],
+
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
@@ -37,17 +41,29 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
+    '@unlok-co/nuxt-stripe',
   ],
+
   supabase: {
-		redirectOptions: {
+    redirectOptions: {
       exclude: ['/register'],
     }
   },
+
   shadcn: {
     prefix: '',
     componentDir: './components/ui',
   },
+
   colorMode: {
     classSuffix: '',
   },
+
+  stripe: {
+    server: {
+      key: process.env.STRIPE_SECRET_KEY,
+    },
+  },
+
+  compatibilityDate: '2024-12-17',
 })
