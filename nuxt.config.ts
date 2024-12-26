@@ -42,10 +42,13 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
     '@unlok-co/nuxt-stripe',
+    '@nuxtjs/i18n',
   ],
 
   supabase: {
     redirectOptions: {
+      login: '/login',
+      callback: '/confirm',
       exclude: ['/register'],
     }
   },
@@ -63,6 +66,15 @@ export default defineNuxtConfig({
     server: {
       key: process.env.STRIPE_SECRET_KEY,
     },
+  },
+
+  i18n: {
+    strategy: 'prefix_except_default',
+    locales: [
+      { code: 'en', name: 'English', language: 'en-US', file: 'en-US.ts' },
+      { code: 'nl', name: 'Nederlands', language: 'nl-NL', file: 'nl-NL.ts' }
+    ],
+    defaultLocale: 'en',
   },
 
   compatibilityDate: '2024-12-17',

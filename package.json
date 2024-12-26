@@ -20,6 +20,7 @@
     "vue-router": "^4.5.0"
   },
   "dependencies": {
+    "@nuxtjs/i18n": "^9.1.1",
     "@pinia/nuxt": "^0.5.5",
     "@types/uuid": "^9.0.8",
     "@unlok-co/nuxt-stripe": "^4.0.1",

@@ -1,18 +1,12 @@
 <script setup>
 import { ArrowUp, ArrowDown } from 'lucide-vue-next'
 
-const props = defineProps({
-  title: {
-    type: String,
-    required: true
-  },
-  stat: {
-    type: [String, Number],
-    required: true
-  },
-  difference: [String, Number],
-  subtitle: String
-})
+const props = defineProps<{
+  title: string
+  stat: string | number
+  difference?: string | number
+  subtitle?: string
+}>()
 </script>
 
 <template>

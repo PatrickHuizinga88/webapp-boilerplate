@@ -36,7 +36,7 @@ const signIn = async () => {
 <template>
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <img src="~/assets/images/logo.svg" alt="Logo" class="mx-auto h-12 w-auto">
-    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">Sign in to your account</h2>
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">{{ $t('sign_in_to_account') }}</h2>
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">

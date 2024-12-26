@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import StatCard from "~/components/ui/StatCard.vue";
-import Card from "~/components/ui/Card.vue";
+import StatCard from "~/components/ui/stat-card/StatCard.vue";
+import Card from "~/components/ui/card/Card.vue";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { ArrowRight } from 'lucide-vue-next';
 
