@@ -8,13 +8,13 @@ interface CardProps {
   class?: HTMLAttributes['class']
 }
 
-withDefaults(defineProps<CardProps>(), {
+const props = withDefaults(defineProps<CardProps>(), {
   bodyPadding: true
 })
 </script>
 
 <template>
-  <div class="overflow-hidden border border-border rounded-2xl shadow-md shadow-black/5 bg-card">
+  <div :class="cn('overflow-hidden border border-border rounded-2xl shadow-md shadow-black/5 bg-card', props.class)">
     <div class="flex items-start justify-between gap-4 px-4 py-5 sm:px-6">
       <slot name="header"/>
       <div v-if="!$slots.header">

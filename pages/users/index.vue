@@ -56,9 +56,9 @@ const { data: users, status } = useFetch<User[]>('/api/users')
         </div>
       </div>
     </div>
-    <div v-else-if="status === 'pending'" class="w-full text-center">
-      <LoaderCircle class="size-8 text-primary" />
+    <div v-else-if="status === 'pending'" class="flex justify-center">
+      <LoaderCircle class="size-8 text-primary animate-spin" />
     </div>
-    <div class="w-full text-center" v-else>No users found</div>
+    <div v-else class="w-full text-center">No users found</div>
   </LayoutPage>
 </template>

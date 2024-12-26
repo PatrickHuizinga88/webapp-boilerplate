@@ -34,6 +34,12 @@ export default defineNuxtConfig({
 
   css: ['../assets/css/main.css'],
 
+  runtimeConfig: {
+    public: {
+      baseUrl: process.env.BASE_URL || 'localhost:3000'
+    }
+  },
+
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
@@ -49,7 +55,7 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      exclude: ['/register'],
+      exclude: ['/register', '/password-recovery', '/update-password'],
     }
   },
 
@@ -71,8 +77,8 @@ export default defineNuxtConfig({
   i18n: {
     strategy: 'prefix_except_default',
     locales: [
-      { code: 'en', name: 'English', language: 'en-US', file: 'en-US.ts' },
-      { code: 'nl', name: 'Nederlands', language: 'nl-NL', file: 'nl-NL.ts' }
+      { code: 'en', name: 'English', files: ['en/common.ts', 'en/authentication.ts', 'en/settings', 'en/users'] },
+      { code: 'nl', name: 'Nederlands', files: ['nl/common.ts'] },
     ],
     defaultLocale: 'en',
   },

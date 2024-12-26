@@ -6,6 +6,7 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient()
+const {t} = useI18n()
 
 const form = reactive({
   email: '',
@@ -18,7 +19,7 @@ const loading = ref(false)
 
 const signUp = async () => {
 	if (form.password !== form.repeatedPassword) {
-    errorMessage.value = "Passwords don't match"
+    errorMessage.value = t('passwords_dont_match')
     return
   }
 
@@ -36,7 +37,7 @@ const signUp = async () => {
 
     success.value = true
   } catch (error) {
-    errorMessage.value = 'Registration failed'
+    errorMessage.value = t('sign_up_failed')
     console.error(error)
   }
 }
@@ -45,14 +46,14 @@ const signUp = async () => {
 <template>
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <img src="~/assets/images/logo.svg" alt="Logo" class="mx-auto h-12 w-auto">
-    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">Create your new account</h2>
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">{{$t('create_new_account')}}</h2>
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
     <div class="bg-background border px-6 py-12 shadow-[0_10px_50px_-15px] shadow-primary/25 sm:rounded-xl sm:px-12">
       <form v-if="!success" class="space-y-6" @submit.prevent="signUp">
         <div>
-          <Label for="email" class="block text-sm font-medium leading-6">Email</Label>
+          <Label for="email" class="block text-sm font-medium leading-6">{{$t('email')}}</Label>
           <div class="mt-2">
             <Input
                 v-model="form.email"
@@ -64,7 +65,7 @@ const signUp = async () => {
         </div>
 
         <div>
-          <Label for="password" class="block text-sm font-medium leading-6">Password</Label>
+          <Label for="password" class="block text-sm font-medium leading-6">{{$t('password')}}</Label>
           <div class="mt-2">
             <Input
                 v-model="form.password"
@@ -76,7 +77,7 @@ const signUp = async () => {
         </div>
 
 				<div>
-          <Label for="repeated-password" class="block text-sm font-medium leading-6">Repeat password</Label>
+          <Label for="repeated-password" class="block text-sm font-medium leading-6">{{$t('repeat_password')}}</Label>
           <div class="mt-2">
             <Input
                 v-model="form.repeatedPassword"
@@ -90,9 +91,9 @@ const signUp = async () => {
         <Button type="submit" :disabled="loading" class="w-full">
           <div v-if="loading" role="status" class="mr-2">
             <Loader2 class="size-5 animate-spin"/>
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{$t('loading')}}...</span>
           </div>
-          Sign up
+          {{$t('sign_up')}}
         </Button>
 
         <p v-if="errorMessage" class="text-sm text-destructive">{{ errorMessage }}</p>
@@ -100,22 +101,17 @@ const signUp = async () => {
       </form>
 
       <p v-else>
-        Thank you! A confirmation email had been sent to {{ form.email }}.
+        {{$t('confirmation_email_sent_to')}} {{ form.email }}.
       </p>
     </div>
 
     <p class="mt-10 text-center text-sm text-muted-foreground">
-      Already have an account?
-      {{ ' ' }}
+      {{$t('have_account') + ' '}}
       <Button variant="link" class="h-auto p-0 ml-1" as-child>
         <NuxtLink to="/login">
-          Log in
+          {{$t('sign_in')}}
         </NuxtLink>
       </Button>
     </p>
   </div>
 </template>
-
-<style scoped>
-
-</style>

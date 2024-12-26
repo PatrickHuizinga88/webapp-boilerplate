@@ -8,6 +8,8 @@ definePageMeta({
   layout: 'default-sidebar'
 })
 
+const user = useSupabaseUser()
+
 const recentUsers = [
   {
     id: 1,
@@ -37,7 +39,7 @@ const recentUsers = [
 </script>
 
 <template>
-  <LayoutPage title="Welcome, Patrick! 👋">
+  <LayoutPage :title="`${$t('welcome')}, ${user.id}! 👋`">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       <StatCard title="Customers" :stat="123" :difference="12.5" subtitle="compared to last week"/>
       <StatCard title="Users" :stat="10"/>
@@ -53,6 +55,9 @@ const recentUsers = [
         </template>
         <div class="mt-5">
           <!-- Graph -->
+          <div class="flex items-center justify-center h-40 text-muted-foreground text-sm">
+            Graph
+          </div>
         </div>
       </Card>
       <Card title="Recent registered users" description="In the last 30 days" class="col-span-1 md:col-span-2 2xl:col-span-1">

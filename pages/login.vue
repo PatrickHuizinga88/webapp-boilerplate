@@ -6,6 +6,7 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient()
+const {t} = useI18n()
 
 const form = reactive({
   email: '',
@@ -27,7 +28,7 @@ const signIn = async () => {
     }
     navigateTo('/')
   } catch (error) {
-    errorMessage.value = 'Login failed'
+    errorMessage.value = t('sign_in_failed')
     console.error(error)
   }
 }
@@ -43,23 +44,23 @@ const signIn = async () => {
     <div class="bg-background border px-6 py-12 shadow-[0_10px_50px_-15px] shadow-primary/25 sm:rounded-xl sm:px-12">
       <form class="space-y-6" @submit.prevent="signIn">
         <div>
-          <Label for="email" class="block text-sm font-medium leading-6">Email</Label>
+          <Label for="email" class="block text-sm font-medium leading-6">{{ $t('email') }}</Label>
           <div class="mt-2">
             <Input
                 v-model="form.email"
                 id="email"
                 name="email"
                 type="email"
-                required />
+                required/>
           </div>
         </div>
 
         <div>
           <div class="flex items-center justify-between">
-            <Label for="password" class="block text-sm font-medium leading-6">Password</Label>
+            <Label for="password" class="block text-sm font-medium leading-6">{{ $t('password') }}</Label>
             <Button variant="link" class="h-auto p-0" as-child>
-              <NuxtLink to="#">
-                Forgot password?
+              <NuxtLink to="/password-recovery">
+                {{ $t('forgot_password') }}
               </NuxtLink>
             </Button>
           </div>
@@ -76,9 +77,9 @@ const signIn = async () => {
         <Button type="submit" :disabled="loading" class="w-full">
           <div v-if="loading" role="status" class="mr-2">
             <Loader2 class="size-5 animate-spin"/>
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{ $t('loading') }}...</span>
           </div>
-          Sign in
+          {{ $t('sign_in') }}
         </Button>
 
         <p v-if="errorMessage" class="text-sm text-destructive">{{ errorMessage }}</p>
@@ -87,17 +88,13 @@ const signIn = async () => {
     </div>
 
     <p class="mt-10 text-center text-sm text-muted-foreground">
-      Don't have an account?
+      {{ $t('no_account') }}
       <Button variant="link" class="h-auto p-0 ml-1" as-child>
         <NuxtLink to="/register">
-          Register now
-          <ArrowRight class="size-4 ml-1" aria-hidden="true" />
+          {{ $t('register_now') }}
+          <ArrowRight class="size-4 ml-1" aria-hidden="true"/>
         </NuxtLink>
       </Button>
     </p>
   </div>
 </template>
-
-<style scoped>
-
-</style>

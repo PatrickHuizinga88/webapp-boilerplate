@@ -9,16 +9,17 @@ definePageMeta({
 
 const notificationStore = useNotificationStore()
 const colorMode = useColorMode()
+const {t} = useI18n()
 
 const themeOptions = [{
   value: 'light',
-  label: 'Light'
+  label: t('light')
 }, {
   value: 'dark',
-  label: 'Dark'
+  label: t('dark')
 }, {
   value: 'system',
-  label: 'System default'
+  label: t('system_default')
 }]
 
 const formSchema = toTypedSchema(z.object({
@@ -35,8 +36,8 @@ const form = useForm({
 const onSubmit = form.handleSubmit((values) => {
   colorMode.preference = values.theme
   notificationStore.createNotification({
-    title: 'Settings saved',
-    message: 'Your settings have been saved successfully.',
+    title: `${t('settings')} saved`,
+    description: 'Your settings have been saved successfully.',
     type: 'success'
   })
 })
@@ -48,27 +49,23 @@ const onSubmit = form.handleSubmit((values) => {
       <form @submit="onSubmit" class="space-y-6">
         <FormField v-slot="{ componentField }" name="theme">
           <FormItem>
-            <FormLabel>Theme</FormLabel>
-              <Select v-bind="componentField">
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a theme" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                    <SelectItem v-for="option in themeOptions" :value="option.value">
-                      {{ option.label }}
-                    </SelectItem>
-                </SelectContent>
-              </Select>
+            <FormLabel>{{ $t('theme') }}</FormLabel>
+            <Select v-bind="componentField">
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue :placeholder="$t('select_a_theme')"/>
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem v-for="option in themeOptions" :value="option.value">
+                  {{ option.label }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </FormItem>
         </FormField>
-        <Button>Save settings</Button>
+        <Button>{{ $t('save') + ' ' + lowercase($t('settings')) }}</Button>
       </form>
     </section>
   </LayoutPage>
 </template>
-
-<style scoped>
-
-</style>
