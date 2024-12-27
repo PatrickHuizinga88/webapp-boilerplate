@@ -10,9 +10,9 @@ const { data: users, status } = useFetch<User[]>('/api/users')
 </script>
 
 <template>
-  <LayoutPage>
+  <LayoutPage title="Users">
     <template #actions>
-        <Button as-child>
+        <Button size="sm" as-child>
           <NuxtLink to="/users/create">
             <PlusCircle class="size-5 mr-1.5" />
             Add user

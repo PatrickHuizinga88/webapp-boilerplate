@@ -44,7 +44,7 @@ const onSubmit = form.handleSubmit((values) => {
 </script>
 
 <template>
-  <LayoutPage>
+  <LayoutPage :title="$t('settings')">
     <section>
       <form @submit="onSubmit" class="space-y-6">
         <FormField v-slot="{ componentField }" name="theme">
