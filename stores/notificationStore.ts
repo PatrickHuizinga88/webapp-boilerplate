@@ -6,6 +6,7 @@ type Notification = {
     type?: 'info' | 'success' | 'warning' | 'destructive'
     title: string,
     description?: string,
+    duration?: number
 }
 
 export const useNotificationStore = defineStore('notificationStore', {
@@ -13,19 +14,19 @@ export const useNotificationStore = defineStore('notificationStore', {
         notifications: [] as Notification[]
     }),
     actions: {
-        createNotification({type, title, description}: Notification) {
+        createNotification({type, title, description, duration}: Notification) {
             const id = uuid()
             this.notifications.push(
-                { id, type, title, description }
+                { id, type, title, description, duration }
             )
 
-            this.updateState(id)
+            this.updateState(id, duration)
         },
 
-        updateState(id: string) {
+        updateState(id: string, duration?: number) {
             setTimeout(() => {
                 this.notifications = this.notifications.filter(notification => notification.id !== id)
-            }, 3000)
+            }, duration || 4000)
         }
     }
 })

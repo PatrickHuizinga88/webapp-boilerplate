@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import StatCard from "~/components/ui/stat-card/StatCard.vue";
-import Card from "~/components/ui/card/Card.vue";
+import { StatCard } from "~/components/ui/stat-card";
+import { Card } from "~/components/ui/card";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { ArrowRight } from 'lucide-vue-next';
 
@@ -39,7 +39,7 @@ const recentUsers = [
 </script>
 
 <template>
-  <LayoutPage :title="`${$t('welcome')}, ${user.id}! 👋`">
+  <LayoutPage :title="`${$t('welcome')}, ${user?.id || 'Guest'}! 👋`">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       <StatCard title="Customers" :stat="123" :difference="12.5" subtitle="compared to last week"/>
       <StatCard title="Users" :stat="10"/>

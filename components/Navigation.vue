@@ -2,6 +2,7 @@
 import { Home, LogOut, Users, Settings } from "lucide-vue-next";
 
 const supabase = useSupabaseClient()
+const notificationStore = useNotificationStore()
 
 const navigation = [
   {
@@ -17,10 +18,12 @@ const navigation = [
 const signOut = async () => {
   const { error } = await supabase.auth.signOut()
   if (!error) {
-    navigateTo('/login')
-    // toast({
-    //   title: 'Succesfully logged out'
-    // })
+    await navigateTo('/login')
+    notificationStore.createNotification({
+      title: 'Logged out successfully',
+      description: 'You have been logged out',
+      type: 'success'
+    })
   }
 }
 </script>
