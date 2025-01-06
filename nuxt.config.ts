@@ -9,11 +9,12 @@ export default defineNuxtConfig({
   },
 
   app: {
+    // TODO - Setup: Change meta tags and add favicon
     head: {
-      title: 'Nuxt boilerplate',
+      title: 'Webapp boilerplate',
       meta: [
         {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-        {name: 'og:title', content: 'Nuxt boilerplate'},
+        {name: 'og:title', content: 'Webapp boilerplate'},
         {name: 'description', content: 'Kickstart your Nuxt app.'},
         {name: 'og:description', content: 'Kickstart your Nuxt app.'},
         {name: 'msapplication-TileColor', content: '#ffffff'},
@@ -36,7 +37,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseUrl: process.env.BASE_URL || 'localhost:3000'
+      baseUrl: 'localhost:3000'
     }
   },
 
@@ -68,19 +69,19 @@ export default defineNuxtConfig({
     classSuffix: '',
   },
 
+  i18n: {
+    strategy: 'prefix_except_default',
+    locales: [
+      { code: 'en', name: 'English', files: ['en/common', 'en/authentication', 'en/settings', 'en/users'] },
+      { code: 'nl', name: 'Nederlands', files: ['nl/common', 'nl/authentication', 'nl/settings', 'nl/users'] },
+    ],
+    defaultLocale: 'en',
+  },
+
   stripe: {
     server: {
       key: process.env.STRIPE_SECRET_KEY,
     },
-  },
-
-  i18n: {
-    strategy: 'prefix_except_default',
-    locales: [
-      { code: 'en', name: 'English', files: ['en/common.ts', 'en/authentication.ts', 'en/settings', 'en/users'] },
-      { code: 'nl', name: 'Nederlands', files: ['nl/common.ts'] },
-    ],
-    defaultLocale: 'en',
   },
 
   compatibilityDate: '2024-12-17',

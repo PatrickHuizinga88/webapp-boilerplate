@@ -2,7 +2,8 @@
 import { StatCard } from "~/components/ui/stat-card";
 import { Card } from "~/components/ui/card";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
-import { ArrowRight } from 'lucide-vue-next';
+import { ArrowRight, TriangleAlert } from 'lucide-vue-next';
+import {Alert, AlertDescription, AlertTitle} from "~/components/ui/alert";
 
 definePageMeta({
   layout: 'default-sidebar'

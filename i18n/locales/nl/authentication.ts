@@ -17,14 +17,8 @@ export default {
   // Password recovery
   back_to_sign_in: "Back to sign in",
   confirmation_email_sent_to: "Thank you! A confirmation email has been sent to",
-  confirm_password: "Confirm password",
-  new_password: "New password",
   password: "Password",
   password_reset_email_sent: "If the email is registered, a password reset link has been sent to",
-  password_update_failed: "Updating password failed",
-  password_update_success: "Password has been updated",
   reset_password: "Reset password",
   reset_your_password: "Reset your password",
-  sign_in_with_new_password: "You can now sign in with your new password",
-  update_password: "Update password",
 }

@@ -9,14 +9,12 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient()
-const route = useRoute()
-const router = useRouter()
+const notificationStore = useNotificationStore()
 const { t } = useI18n()
 
 const newPassword = ref('')
 const confirmPassword = ref('')
 const errorMessage = ref('')
-const successMessage = ref('')
 const loading = ref(false)
 
 const updatePassword = async () => {
@@ -24,27 +22,39 @@ const updatePassword = async () => {
     errorMessage.value = t('passwords_dont_match')
     return
   }
+  errorMessage.value = ''
 
   try {
     loading.value = true
-    const accessToken = route.query.access_token as string
-    const { error } = await supabase.auth.updateUser(accessToken, { password: newPassword.value })
-    loading.value = false
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword.value
+    })
 
     if (error) {
-      errorMessage.value = t('password_update_failed')
+      notificationStore.createNotification({
+        title: t('password_update_failed'),
+        description: t('try_again_or_contact'),
+        type: 'destructive'
+      })
       console.error(error)
       return
     }
 
-    successMessage.value = t('password_update_success')
-    setTimeout(() => {
-      router.push('/login')
-    }, 3000)
+    notificationStore.createNotification({
+      title: t('password_update_success'),
+      description: t('sign_in_with_new_password'),
+      type: 'success'
+    })
+    navigateTo('/login')
   } catch (error) {
-    loading.value = false
-    errorMessage.value = t('password_update_failed')
+    notificationStore.createNotification({
+      title: t('password_update_failed'),
+      description: t('try_again_or_contact'),
+      type: 'destructive'
+    })
     console.error(error)
+  } finally {
+    loading.value = false
   }
 }
 </script>
@@ -91,7 +101,6 @@ const updatePassword = async () => {
         </Button>
 
         <p v-if="errorMessage" class="text-sm text-destructive">{{ errorMessage }}</p>
-        <p v-if="successMessage" class="text-sm text-success">{{ successMessage }}</p>
       </form>
     </div>
   </div>

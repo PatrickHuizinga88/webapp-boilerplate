@@ -6,31 +6,41 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient()
+const notificationStore = useNotificationStore()
+const { t } = useI18n()
+
 const email = ref('')
-const errorMessage = ref('')
 const success = ref(false)
 const loading = ref(false)
 
 const resetPassword = async () => {
   try {
-    const {baseUrl} = useRuntimeConfig()
     loading.value = true
+    const {public: {baseUrl}} = useRuntimeConfig()
     const {error} = await supabase.auth.resetPasswordForEmail(email.value, {
-      redirectTo: `${baseUrl}/update-password`
+      redirectTo: `${baseUrl}/update-password`,
     })
-    loading.value = false
 
     if (error) {
-      errorMessage.value = 'Password reset failed'
+      notificationStore.createNotification({
+        title: t('password_recovery_request_failed'),
+        description: t('try_again_or_contact'),
+        type: 'destructive'
+      })
       console.error(error)
       return
     }
 
     success.value = true
   } catch (error) {
-    loading.value = false
-    errorMessage.value = 'Password reset failed'
+    notificationStore.createNotification({
+      title: t('password_recovery_request_failed'),
+      description: t('try_again_or_contact'),
+      type: 'destructive'
+    })
     console.error(error)
+  } finally {
+    loading.value = false
   }
 }
 </script>
@@ -48,11 +58,11 @@ const resetPassword = async () => {
           <Label for="email" class="block text-sm font-medium leading-6">{{ $t('email') }}</Label>
           <div class="mt-2">
             <Input
-                v-model="email"
-                id="email"
-                name="email"
-                type="email"
-                required/>
+              v-model="email"
+              id="email"
+              name="email"
+              type="email"
+              required/>
           </div>
         </div>
 
@@ -63,12 +73,10 @@ const resetPassword = async () => {
           </div>
           {{ $t('reset_password') }}
         </Button>
-
-        <p v-if="errorMessage" class="text-sm text-destructive">{{ errorMessage }}</p>
       </form>
 
       <p v-else class="text-center">
-        {{ $t('password_reset_email_sent') }} {{ email }}.
+        {{ $t('password_reset_email_sent') }} <strong>{{ email }}</strong>.
       </p>
     </div>
 

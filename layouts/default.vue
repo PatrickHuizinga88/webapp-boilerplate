@@ -2,17 +2,19 @@
 import { Settings, LogOut } from 'lucide-vue-next'
 import NotificationList from "~/components/ui/notification/NotificationList.vue";
 import { useNotificationStore } from "~/stores/notificationStore";
+import {APP_NAME} from "~/constants";
 
 const notificationStore = useNotificationStore()
+const { t } = useI18n()
 
 const mainNavItems = [
-  { name: 'Dashboard', url: '/' },
-  { name: 'Users', url: '/users' },
+  { name: t('dashboard'), url: '/' },
+  { name: t('users'), url: '/users' },
 ]
 
 const userNavItems = [
-  { name: 'Settings', url: '/settings', icon: Settings },
-  { name: 'Logout', url: '/logout', icon: LogOut },
+  { name: t('settings'), url: '/settings', icon: Settings },
+  { name: t('logout'), url: '/logout', icon: LogOut },
 ]
 </script>
 
@@ -23,7 +25,7 @@ const userNavItems = [
       <nav class="flex justify-between items-center">
         <div class="flex gap-8 items-center">
           <NuxtLink to="/">
-            <img src="../assets/images/logo.svg" alt="Logo" class="h-9">
+            <img src="../assets/images/logo.svg" :alt="APP_NAME" class="h-9">
           </NuxtLink>
           <ul class="flex gap-6">
             <li v-for="item in mainNavItems">
