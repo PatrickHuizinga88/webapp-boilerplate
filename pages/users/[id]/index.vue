@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Trash, Pencil } from 'lucide-vue-next'
-import { useNotificationStore } from "~/stores/notificationStore";
-import { Card } from "~/components/ui/card";
+import {Trash, Pencil} from 'lucide-vue-next'
+import {useNotificationStore} from "~/stores/notificationStore";
+import {Card} from "~/components/ui/card";
 import type User from "~/types/User";
 
 definePageMeta({
@@ -9,10 +9,12 @@ definePageMeta({
 })
 
 const notificationStore = useNotificationStore()
+const {t} = useI18n()
 
 const dialogOpen = ref(false)
 
-const { data: user } = await useFetch<User>('/api/users', {
+// TODO: Get users from Supabase
+const {data: user} = await useFetch<User>('/api/users', {
   query: {
     id: useRoute().params.id
   }
@@ -25,11 +27,17 @@ const deleteUser = async () => {
 
     notificationStore.createNotification({
       type: 'success',
-      title: `Deleted ${ user.value?.name || 'user'}`
+      action: 'delete',
+      item: user.value?.name || t('users.users'),
     })
     navigateTo('/users')
   } catch (error) {
-    throw error
+    notificationStore.createNotification({
+      type: 'destructive',
+      action: 'delete',
+      item: user.value?.name || t('users.users'),
+    })
+    console.error(error)
   }
 }
 </script>
@@ -40,59 +48,64 @@ const deleteUser = async () => {
       <Dialog v-model:open="dialogOpen">
         <DialogTrigger as-child>
           <Button
-              variant="outline"
-              size="sm"
+            variant="outline"
+            size="sm"
           >
-            <Trash class="size-4 mr-2" aria-hidden="true"/>
-            Delete
+            <Trash class="size-4" aria-hidden="true"/>
+            {{ $t('common.actions.delete') }}
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete {{ user.name }}</DialogTitle>
+            <DialogTitle>{{ $t('common.actions.delete', {item: user.name || $t('users.users')}) }}</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete this user? It will be permanently removed.
+              {{ $t('common.actions.delete_confirmation', {item: $t('users.users')}) }}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button
-                variant="outline"
-                @click="dialogOpen = false"
+              variant="outline"
+              @click="dialogOpen = false"
             >
-              Cancel
+              {{ $t('common.actions.cancel') }}
             </Button>
             <Button
-                variant="destructive"
-                @click="deleteUser"
+              variant="destructive"
+              @click="deleteUser"
             >
-              Delete
+              {{ $t('common.actions.delete') }}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
       <Button
-          size="sm"
-          @click="navigateTo(`/users/${user.id}/edit`)"
+        size="sm"
+        asChild
       >
-        <Pencil class="size-4 mr-2" aria-hidden="true"/>
-        Edit
+        <NuxtLink :to="`/users/${user.id}/edit`">
+          <Pencil class="size-4" aria-hidden="true"/>
+          {{ $t('common.actions.edit') }}
+        </NuxtLink>
       </Button>
     </template>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div class="col-span-1">
-        <Card title="General information">
+        <Card :title="$t('users.general_information')">
           <dl class="space-y-4">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4">
-              <dt class="text-sm font-medium leading-6">Full name</dt>
+              <dt class="text-sm font-medium leading-6">{{ $t('common.general.name') }}</dt>
               <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ user.name || '-' }}</dd>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4">
-              <dt class="text-sm font-medium leading-6">Email</dt>
-              <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ user.email || '-' }}</dd>
+              <dt class="text-sm font-medium leading-6">{{ $t('common.general.email') }}</dt>
+              <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{
+                  user.email || '-'
+                }}
+              </dd>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4">
-              <dt class="text-sm font-medium leading-6">Role</dt>
+              <dt class="text-sm font-medium leading-6">{{ $t('users.role') }}</dt>
               <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ user.role || '-' }}</dd>
             </div>
           </dl>
@@ -104,26 +117,4 @@ const deleteUser = async () => {
     </div>
 
   </LayoutPage>
-<!--  <UiConfirmationModal-->
-<!--      :title="`Delete ${user.name}`"-->
-<!--      message="Are you sure you want to delete this user? All of your data will be permanently removed."-->
-<!--      ref="modal">-->
-<!--    <template #buttons>-->
-<!--      <div class="flex justify-end gap-2">-->
-<!--        <UiButton-->
-<!--            class="text-gray-700 dark:text-gray-400 bg-white dark:bg-black hover:bg-gray-50 dark:hover:bg-zinc-900"-->
-<!--            size="sm"-->
-<!--        >Cancel</UiButton>-->
-<!--        <UiButton-->
-<!--            class="text-white bg-red-600 hover:bg-red-500"-->
-<!--            size="sm"-->
-<!--            @click="deleteUser"-->
-<!--        >Delete</UiButton>-->
-<!--      </div>-->
-<!--    </template>-->
-<!--  </UiConfirmationModal>-->
 </template>
-
-<style scoped>
-
-</style>

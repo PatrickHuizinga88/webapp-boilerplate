@@ -1,8 +1,15 @@
 export default {
-  settings: "Settings",
-  theme: "Theme",
-  select_a_theme: "Select a theme",
-  light: "Light",
-  dark: "Dark",
-  system_default: "System default",
+  settings: {
+    settings: "Setting | Settings",
+
+    language: "Language",
+    theme: "Theme",
+
+    dark: "Dark",
+    light: "Light",
+    system_default: "System default",
+
+    select_a_language: "Select a language",
+    select_a_theme: "Select a theme",
+  }
 }

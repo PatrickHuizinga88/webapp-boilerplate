@@ -2,6 +2,7 @@
 import {toTypedSchema} from "@vee-validate/zod";
 import {z} from "zod";
 import {useForm} from "vee-validate";
+import {Loader2} from "lucide-vue-next";
 
 definePageMeta({
   layout: 'default-sidebar'
@@ -9,51 +10,73 @@ definePageMeta({
 
 const notificationStore = useNotificationStore()
 const colorMode = useColorMode()
-const {t} = useI18n()
+const {t, locale, locales, setLocale} = useI18n()
+const router = useRouter()
+
+const loading = ref(false)
 
 const themeOptions = [{
   value: 'light',
-  label: t('light')
+  label: t('settings.light')
 }, {
   value: 'dark',
-  label: t('dark')
+  label: t('settings.dark')
 }, {
   value: 'system',
-  label: t('system_default')
+  label: t('settings.system_default')
 }]
+
+const languageOptions =
+  locales.value.map(locale => ({
+    value: locale.code,
+    label: locale.name
+  }))
 
 const formSchema = toTypedSchema(z.object({
   theme: z.string(),
+  language: z.enum(['en', 'nl'])
 }))
 
 const form = useForm({
   initialValues: {
-    theme: colorMode.preference
+    theme: colorMode.preference,
+    language: locale.value
   },
   validationSchema: formSchema,
 })
 
-const onSubmit = form.handleSubmit((values) => {
+const onSubmit = form.handleSubmit(async (values) => {
+  loading.value = true
   colorMode.preference = values.theme
-  notificationStore.createNotification({
-    title: `${t('settings')} saved`,
-    description: 'Your settings have been saved successfully.',
-    type: 'success'
+  await setLocale(values.language)
+  await router.push({
+    query: { refresh: 'true' }
   })
+  location.reload()
+})
+
+onMounted(() => {
+  if (useRoute().query.refresh) {
+    notificationStore.createNotification({
+      type: 'success',
+      action: 'save',
+      item: t('settings.settings', 2)
+    })
+  }
 })
 </script>
 
 <template>
-  <LayoutPage :title="$t('settings')">
+  <LayoutPage :title="$t('settings.settings', 2)">
     <section>
       <form @submit="onSubmit" class="space-y-6">
         <FormField v-slot="{ componentField }" name="theme">
           <FormItem>
-            <FormLabel>{{ $t('theme') }}</FormLabel>
+            <FormLabel>{{ $t('settings.theme') }}</FormLabel>
             <Select v-bind="componentField">
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue :placeholder="$t('select_a_theme')"/>
+                  <SelectValue :placeholder="$t('settings.select_a_theme')"/>
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -64,7 +87,27 @@ const onSubmit = form.handleSubmit((values) => {
             </Select>
           </FormItem>
         </FormField>
-        <Button>{{ $t('save') + ' ' + lowercase($t('settings')) }}</Button>
+        <FormField v-slot="{ componentField }" name="language">
+          <FormItem>
+            <FormLabel>{{ $t('settings.language') }}</FormLabel>
+            <Select v-bind="componentField">
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue :placeholder="$t('settings.select_a_language')"/>
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem v-for="option in languageOptions" :value="option.value">
+                  {{ option.label }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </FormItem>
+        </FormField>
+        <Button>
+          <Loader2 v-if="loading" class="size-5 animate-spin"/>
+          {{ $t('common.actions.save', {item: lowercase($t('settings.settings', 2))}) }}
+        </Button>
       </form>
     </section>
   </LayoutPage>

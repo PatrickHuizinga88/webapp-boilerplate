@@ -1,13 +1,59 @@
 export default {
-  welcome: "Welcome",
-  email: "Email",
-  loading: "Loading",
+  common: {
+    general: {
+      dashboard: "Dashboard",
+      email: "Email",
+      general: "General",
+      guest: "Guest",
+      loading: "Loading",
+      name: "Name",
+      search: "Search",
+      welcome: "Welcome",
 
-  save: "Save",
-  cancel: "Cancel",
-  delete: "Delete",
-  edit: "Edit",
-  add: "Add",
+      no_records_found: "No {item} found",
+      not_found: "{item} not found",
+    },
 
-  try_again_or_contact: "Try again later or contact us."
+    actions: {
+      add: "Add {item}",
+      cancel: "Cancel",
+      delete: "Delete {item}",
+      edit: "Edit {item}",
+      save: "Save {item}",
+
+      delete_confirmation: "Are you sure you want to delete this {item}? It will be permanently removed.",
+    },
+
+    validations: {
+      required: "This field is required",
+    },
+
+    notifications: {
+      save: {
+        success: {
+          title: "Save successful",
+          description: "{item} was saved successfully."
+        },
+        error: {
+          title: "Save Failed",
+          description: "Failed to save {item}."
+        },
+      },
+      delete: {
+        success: {
+          title: "Delete successful",
+          description: "{item} was deleted successfully."
+        },
+        error: {
+          title: "Delete Failed",
+          description: "Failed to delete {item}."
+        },
+      },
+
+      error: {
+        title: "Something went wrong",
+        description: "Try again later or contact us.",
+      },
+    },
+  }
 }

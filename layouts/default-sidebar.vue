@@ -11,7 +11,7 @@ const notificationStore = useNotificationStore()
 
   <LayoutSidebar ref="sidebar" />
 
-  <div class="lg:pl-72">
+  <div class="lg:pl-64">
     <LayoutHeader :showBreadcrumbs="true" />
     <div class="pb-6">
       <slot />

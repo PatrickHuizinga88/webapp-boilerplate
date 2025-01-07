@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ArrowUp, ArrowDown } from 'lucide-vue-next'
 
-const props = defineProps<{
+defineProps<{
   title: string
   stat: string | number
-  difference?: string | number
+  difference?: number
   subtitle?: string
 }>()
 </script>
 
 <template>
-    <div class="border rounded-2xl shadow-md shadow-black/5 p-6">
+    <div class="bg-card border rounded-2xl shadow-md shadow-black/5 p-6">
         <h3 class="font-semibold mb-4">
           {{ title }}
         </h3>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import {Loader2, ArrowRight} from 'lucide-vue-next'
+import {PasswordInput} from "~/components/ui/password-input";
 
 definePageMeta({
-  layout: 'authentication'
+  layout: 'authentication',
 })
 
 const supabase = useSupabaseClient()
@@ -28,7 +29,7 @@ const signIn = async () => {
     }
     navigateTo('/')
   } catch (error) {
-    errorMessage.value = t('sign_in_failed')
+    errorMessage.value = t('authentication.login.sign_in_failed')
     console.error(error)
   }
 }
@@ -37,14 +38,14 @@ const signIn = async () => {
 <template>
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <img src="~/assets/images/logo.svg" alt="Logo" class="mx-auto h-12 w-auto">
-    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">{{ $t('sign_in_to_account') }}</h2>
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">{{ $t('authentication.login.sign_in_to_account') }}</h2>
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-    <div class="bg-background border px-6 py-12 shadow-[0_10px_50px_-15px] shadow-primary/25 sm:rounded-xl sm:px-12">
+    <div class="bg-card border px-6 py-12 shadow-[0_10px_50px_-15px] shadow-primary/25 sm:rounded-xl sm:px-12">
       <form class="space-y-6" @submit.prevent="signIn">
         <div>
-          <Label for="email" class="block text-sm font-medium leading-6">{{ $t('email') }}</Label>
+          <Label for="email" class="block text-sm font-medium leading-6">{{ $t('common.general.email') }}</Label>
           <div class="mt-2">
             <Input
                 v-model="form.email"
@@ -57,30 +58,28 @@ const signIn = async () => {
 
         <div>
           <div class="flex items-center justify-between">
-            <Label for="password" class="block text-sm font-medium leading-6">{{ $t('password') }}</Label>
+            <Label for="password" class="block text-sm font-medium leading-6">{{ $t('authentication.common.password') }}</Label>
             <Button variant="link" class="h-auto p-0" as-child>
-              <NuxtLink to="/password-recovery">
-                {{ $t('forgot_password') }}
-              </NuxtLink>
+              <NuxtLinkLocale to="password-recovery">
+                {{ $t('authentication.login.forgot_password') }}
+              </NuxtLinkLocale>
             </Button>
           </div>
           <div class="mt-2">
-<!--            TODO: Add PasswordInput -->
-            <Input
+            <PasswordInput
                 v-model="form.password"
                 id="password"
                 name="password"
-                type="password"
                 required/>
           </div>
         </div>
 
         <Button type="submit" :disabled="loading" class="w-full">
-          <div v-if="loading" role="status" class="mr-2">
+          <div v-if="loading" role="status">
             <Loader2 class="size-5 animate-spin"/>
-            <span class="sr-only">{{ $t('loading') }}...</span>
+            <span class="sr-only">{{ $t('common.general.loading') }}...</span>
           </div>
-          {{ $t('sign_in') }}
+          {{ $t('authentication.common.sign_in') }}
         </Button>
 
         <p v-if="errorMessage" class="text-sm text-destructive">{{ errorMessage }}</p>
@@ -89,12 +88,12 @@ const signIn = async () => {
     </div>
 
     <p class="mt-10 text-center text-sm text-muted-foreground">
-      {{ $t('no_account') }}
+      {{ $t('authentication.login.no_account') }}
       <Button variant="link" class="h-auto p-0 ml-1" as-child>
-        <NuxtLink to="/register">
-          {{ $t('register_now') }}
-          <ArrowRight class="size-4 ml-1" aria-hidden="true"/>
-        </NuxtLink>
+        <NuxtLinkLocale to="register">
+          {{ $t('authentication.login.register_now') }}
+          <ArrowRight class="size-4" aria-hidden="true"/>
+        </NuxtLinkLocale>
       </Button>
     </p>
   </div>

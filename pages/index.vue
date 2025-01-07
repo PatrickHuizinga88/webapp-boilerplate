@@ -11,7 +11,7 @@ definePageMeta({
 
 const user = useSupabaseUser()
 
-const recentUsers = [
+const recentCustomers = [
   {
     id: 1,
     name: 'Leanne Graham',
@@ -40,44 +40,44 @@ const recentUsers = [
 </script>
 
 <template>
-  <LayoutPage :title="`${$t('welcome')}, ${user?.id || 'Guest'}! 👋`">
+  <LayoutPage :title="`${$t('dashboard.welcome')}, ${user?.id || 'common.general.guest'}! 👋`">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-      <StatCard title="Customers" :stat="123" :difference="12.5" subtitle="compared to last week"/>
-      <StatCard title="Users" :stat="10"/>
-      <StatCard title="Last sign in" :stat="'Yesterday'"/>
+      <StatCard :title="$t('customers.customers', 2)" :stat="123" :difference="12.5" :subtitle="lowercase($t('dashboard.compared_to_last_week'))"/>
+      <StatCard :title="$t('users.users', 2)" :stat="10"/>
+      <StatCard :title="$t('dashboard.last_sign_in')" :stat="capitalize($dayjs(user?.last_sign_in_at).fromNow())"/>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
       <Card class="col-span-full md:col-span-2 2xl:col-span-3">
         <template #header>
           <h3 class="font-medium">
-            Revenue history
+            {{ $t('dashboard.revenue_history') }}
           </h3>
         </template>
         <div class="mt-5">
-          <!-- Graph -->
+          <!-- TODO: Add graph -->
           <div class="flex items-center justify-center h-40 text-muted-foreground text-sm">
-            Graph
+            {{ $t('dashboard.no_data') }}
           </div>
         </div>
       </Card>
-      <Card title="Recent registered users" description="In the last 30 days" class="col-span-1 md:col-span-2 2xl:col-span-1">
+      <Card :title="$t('dashboard.recent_registered_customers')" :description="$t('dashboard.in_the_last_30_days')" class="col-span-1 md:col-span-2 2xl:col-span-1">
         <template #action>
           <Button variant="ghost" size="sm" as-child>
-            <NuxtLink to="users">
-              View all
-              <ArrowRight class="w-4 h-4 ml-1" aria-hidden="true" />
+            <NuxtLink to="/customers">
+              {{ $t('dashboard.view_all') }}
+              <ArrowRight class="size-4" aria-hidden="true" />
             </NuxtLink>
           </Button>
         </template>
         <ul class="space-y-4">
-          <li v-for="user in recentUsers" class="flex items-center">
+          <li v-for="customer in recentCustomers" class="flex items-center">
             <Avatar>
-              <AvatarFallback>{{ user.avatar }}</AvatarFallback>
+              <AvatarFallback>{{ customer.avatar }}</AvatarFallback>
             </Avatar>
             <div class="text-sm ml-4">
-              <NuxtLink :to="`/users/${user.id}`" class="font-medium hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{{ user.name }}</NuxtLink>
-              <div class="text-muted-foreground">{{ user.date }}</div>
+              <NuxtLink :to="`/customers/${customer.id}`" class="font-medium hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{{ customer.name }}</NuxtLink>
+              <div class="text-muted-foreground">{{ customer.date }}</div>
             </div>
           </li>
         </ul>

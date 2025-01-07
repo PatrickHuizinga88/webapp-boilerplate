@@ -1,24 +1,37 @@
 export default {
-  // Login
-  forgot_password: "Forgot password?",
-  no_account: "Don't have an account?",
-  register_now: "Register now",
-  sign_in: "Sign in",
-  sign_in_failed: "Sign in failed. Please check your email and password.",
-  sign_in_to_account: "Sign in to your account",
-
-  // Register
-  create_new_account: "Create your new account",
-  have_account: "Already have an account?",
-  passwords_dont_match: "Passwords don't match",
-  repeat_password: "Repeat password",
-  sign_up: "Sign up",
-
-  // Password recovery
-  back_to_sign_in: "Back to sign in",
-  confirmation_email_sent_to: "Thank you! A confirmation email has been sent to",
-  password: "Password",
-  password_reset_email_sent: "If the email is registered, a password reset link has been sent to",
-  reset_password: "Reset password",
-  reset_your_password: "Reset your password",
+  authentication: {
+    common: {
+      password: 'Wachtwoord',
+      sign_in: "Inloggen",
+      sign_out: "Uitloggen",
+      toggle_password_visibility: "Wachtwoord zichtbaarheid wisselen",
+    },
+    login: {
+      forgot_password: "Wachtwoord vergeten?",
+      no_account: "Heb je geen account?",
+      register_now: "Registreer nu",
+      sign_in_failed: "Inloggen mislukt. Controleer je e-mail en wachtwoord.",
+      sign_in_to_account: "Log in op je account",
+    },
+    register: {
+      create_new_account: "Maak je nieuwe account aan",
+      have_account: "Heb je al een account?",
+      passwords_dont_match: "Wachtwoorden komen niet overeen",
+      repeat_password: "Herhaal wachtwoord",
+      sign_up: "Aanmelden",
+    },
+    password_recovery: {
+      back_to_sign_in: "Terug naar inloggen",
+      confirmation_email_sent_to: "Bedankt! Een bevestigingsmail is verzonden naar",
+      confirm_password: "Bevestig wachtwoord",
+      new_password: "Nieuw wachtwoord",
+      password_reset_email_sent: "Als de e-mail is geregistreerd, is een link voor het opnieuw instellen van het wachtwoord verzonden naar",
+      password_update_failed: "Bijwerken van wachtwoord mislukt",
+      password_update_success: "Wachtwoord is bijgewerkt",
+      reset_password: "Wachtwoord opnieuw instellen",
+      reset_your_password: "Stel je wachtwoord opnieuw in",
+      sign_in_with_new_password: "Je kunt nu inloggen met je nieuwe wachtwoord",
+      update_password: "Wachtwoord bijwerken",
+    }
+  }
 }

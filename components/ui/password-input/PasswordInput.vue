@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {useVModel} from "@vueuse/core";
 import type {HTMLAttributes} from "vue";
-import {Eye} from 'lucide-vue-next'
+import {useVModel} from "@vueuse/core";
+import {Eye, EyeOff} from 'lucide-vue-next'
 
 const props = defineProps<{
   defaultValue?: string | number
@@ -24,12 +24,13 @@ const modelValue = useVModel(props, 'modelValue', emits, {
 <template>
   <div class="relative rounded-md shadow-sm">
     <Input
-        :value="modelValue"
+        v-model="modelValue"
         :class="cn('pr-10', props.class)"
         :type="!showPassword ? 'password' : 'text'"
         v-bind="$attrs"/>
-    <button variant="ghost" size="icon" class="absolute inset-y-0 right-0 flex items-center">
-      <Eye class="size-5"/>
-    </button>
+    <Button @click="showPassword = !showPassword" type="button" variant="ghost" size="icon" :aria-label="$t('authentication.common.toggle_password_visibility')" class="absolute inset-y-0 right-0 text-muted-foreground hover:bg-transparent">
+      <Eye v-if="!showPassword" class="size-4"/>
+      <EyeOff v-else class="size-4"/>
+    </Button>
   </div>
 </template>

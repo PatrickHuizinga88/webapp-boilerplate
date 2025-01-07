@@ -1,8 +1,15 @@
 export default {
-  settings: "Settings",
-  theme: "Theme",
-  select_a_theme: "Select a theme",
-  light: "Light",
-  dark: "Dark",
-  system_default: "System default",
+  settings: {
+    settings: "Instelling | Instellingen",
+
+    language: "Taal",
+    theme: "Thema",
+
+    dark: "Donker",
+    light: "Licht",
+    system_default: "Systeemstandaard",
+
+    select_a_language: "Selecteer een taal",
+    select_a_theme: "Selecteer een thema",
+  }
 }

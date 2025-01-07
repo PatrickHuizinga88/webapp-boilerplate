@@ -10,11 +10,12 @@ const props = defineProps<{
 }>()
 
 const notificationStore = useNotificationStore()
+const {t} = useI18n()
 
 const roleOptions = [
-  { value: 'admin', label: 'Admin' },
-  { value: 'editor', label: 'Editor' },
-  { value: 'viewer', label: 'Viewer' },
+  { value: 'admin', label: t('users.roles.admin') },
+  { value: 'editor', label: t('users.roles.editor')},
+  { value: 'viewer', label: t('users.roles.viewer') },
 ]
 
 const formSchema = toTypedSchema(z.object({
@@ -46,17 +47,17 @@ const onSubmit = form.handleSubmit(async (values) => {
     })
 
     notificationStore.createNotification({
-      title: `User ${values.name} saved`,
-      description: 'User has been saved successfully.',
-      type: 'success'
+      type: 'success',
+      action: 'save',
+      item: values.name
     })
     navigateTo(`/users/${useRoute().params.id}`)
   } catch (error) {
     if (error) {
       notificationStore.createNotification({
-        title: 'Failed',
-        description: 'An error occurred while saving.',
-        type: 'destructive'
+        type: 'destructive',
+        action: 'save',
+        item: values.name
       })
       throw error
     }
@@ -70,7 +71,7 @@ const onSubmit = form.handleSubmit(async (values) => {
   <form @submit="onSubmit" class="space-y-6">
     <FormField v-slot="{ componentField }" name="name">
       <FormItem>
-        <FormLabel>Name</FormLabel>
+        <FormLabel>{{ $t('users.name') }}</FormLabel>
         <FormControl>
           <Input v-bind="componentField" />
         </FormControl>
@@ -80,7 +81,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 
     <FormField v-slot="{ componentField }" name="email">
       <FormItem>
-        <FormLabel>Email</FormLabel>
+        <FormLabel>{{ $t('common.general.email') }}</FormLabel>
         <FormControl>
           <Input type="email" v-bind="componentField" />
         </FormControl>
@@ -90,11 +91,11 @@ const onSubmit = form.handleSubmit(async (values) => {
 
     <FormField v-slot="{ componentField }" name="role">
       <FormItem>
-        <FormLabel>Role</FormLabel>
+        <FormLabel>{{ $t('users.name') }}</FormLabel>
         <Select v-bind="componentField">
           <FormControl>
             <SelectTrigger>
-              <SelectValue placeholder="Select a role" />
+              <SelectValue :placeholder="$t('users.select_role')" />
             </SelectTrigger>
           </FormControl>
           <SelectContent>
@@ -108,8 +109,8 @@ const onSubmit = form.handleSubmit(async (values) => {
     </FormField>
 
     <Button :disabled="loading">
-      Save
-      <LoaderCircle v-if="loading" class="size-5 ml-2 animate-spin" />
+      <LoaderCircle v-if="loading" class="size-5 animate-spin" />
+      {{ $t('common.actions.save', {item: lowercase($t('users.users'))}) }}
     </Button>
   </form>
 </template>

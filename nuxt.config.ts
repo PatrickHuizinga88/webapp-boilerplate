@@ -48,15 +48,20 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
-    '@unlok-co/nuxt-stripe',
     '@nuxtjs/i18n',
+    'dayjs-nuxt',
+    '@unlok-co/nuxt-stripe',
   ],
 
   supabase: {
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      exclude: ['/register', '/password-recovery', '/update-password'],
+      exclude: [
+        '/register',
+        '/password-recovery',
+        '/update-password',
+      ],
     }
   },
 
@@ -70,12 +75,65 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    strategy: 'prefix_except_default',
+    strategy: 'no_prefix',
     locales: [
-      { code: 'en', name: 'English', files: ['en/common', 'en/authentication', 'en/settings', 'en/users'] },
-      { code: 'nl', name: 'Nederlands', files: ['nl/common', 'nl/authentication', 'nl/settings', 'nl/users'] },
+      {
+        code: 'en',
+        name: 'English',
+        files: ['en/common', 'en/authentication', 'en/customers', 'en/dashboard', 'en/settings', 'en/users']
+      },
+      {
+        code: 'nl',
+        name: 'Nederlands',
+        files: ['nl/common', 'nl/authentication', 'nl/customers', 'nl/dashboard', 'nl/settings', 'nl/users']
+      },
     ],
+    // customRoutes: 'config',
+    // pages: {
+    //   register: {
+    //     en: '/register',
+    //     nl: '/registreren',
+    //   },
+    //   'password-recovery': {
+    //     en: '/password-recovery',
+    //     nl: '/wachtwoord-herstellen',
+    //   },
+    //   'update-password': {
+    //     en: '/update-password',
+    //     nl: '/wachtwoord-bijwerken',
+    //   },
+    //   users: {
+    //     en: '/users',
+    //     nl: '/gebruikers',
+    //   },
+    //   'users-create': {
+    //     en: '/users/create',
+    //     nl: '/gebruikers/aanmaken',
+    //   },
+    //   'users-id': {
+    //     en: '/users/[id]',
+    //     nl: '/gebruikers/[id]',
+    //   },
+    //   'users-id-edit': {
+    //     en: '/users/[id]/edit',
+    //     nl: '/gebruikers/[id]/bewerken',
+    //   },
+    //   customers: {
+    //     en: '/customers/',
+    //     nl: '/klanten/',
+    //   },
+    //   settings: {
+    //     en: '/settings',
+    //     nl: '/instellingen',
+    //   },
+    // },
     defaultLocale: 'en',
+  },
+
+  dayjs: {
+    locales: ['en', 'nl'],
+    defaultLocale: 'en',
+    plugins: ['relativeTime', 'utc', 'timezone'],
   },
 
   stripe: {

@@ -13,6 +13,6 @@ const { data: user } = await useFetch<User>('/api/users', {
 <template>
   <LayoutPage>
     <FormUser v-if="user" :user="user" />
-    <p v-else>User not found</p>
+    <p v-else>{{ $t('not_found', {item: $t('users.users')}) }}</p>
   </LayoutPage>
 </template>
