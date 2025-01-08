@@ -37,7 +37,7 @@ const { data: customers, status } = useFetch<User[]>('/api/users')
               <tbody class="divide-y divide-border bg-card">
               <tr v-for="customer in customers" :key="customer.id">
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
-                  <NuxtLink :to="`customers/${customer.id}`">{{ customer.name || '-' }}</NuxtLink>
+                  <NuxtLink :to="`/customers/${customer.id}`">{{ customer.name || '-' }}</NuxtLink>
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-muted-foreground">
                   <a :href="`mailto:${customer.email}`">{{ customer.email || '-' }}</a>
