@@ -1,8 +1,9 @@
 export default {
   common: {
     general: {
-      dashboard: "Dashboard",
+      breadcrumbs: "Breadcrumbs",
       email: "Email",
+      dashboard: "Dashboard",
       general: "General",
       guest: "Guest",
       loading: "Loading",
@@ -21,7 +22,7 @@ export default {
       edit: "Edit {item}",
       save: "Save {item}",
 
-      delete_confirmation: "Are you sure you want to delete this {item}? It will be permanently removed.",
+      delete_confirmation: "Are you sure you want to delete {item}? It will be permanently removed.",
     },
 
     validations: {

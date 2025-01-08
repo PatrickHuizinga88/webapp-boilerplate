@@ -1,11 +1,12 @@
 export default {
   common: {
     general: {
-      dashboard: "Dashboard",
+      breadcrumbs: "Kruimelpad",
       email: "E-mailadres",
+      dashboard: "Dashboard",
       general: "Algemeen",
       guest: "Gast",
-      loading: "Laden",
+      loading: "Aan het laden",
       name: "Naam",
       search: "Zoeken",
       welcome: "Welkom",
@@ -21,7 +22,7 @@ export default {
       edit: "Bewerk {item}",
       save: "Bewaar {item}",
 
-      delete_confirmation: "Weet je zeker dat je deze {item} wilt verwijderen? Het zal permanent worden verwijderd.",
+      delete_confirmation: "Weet je zeker dat je {item} wilt verwijderen? Het zal permanent worden verwijderd.",
     },
 
     validations: {

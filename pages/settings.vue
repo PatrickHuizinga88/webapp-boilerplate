@@ -17,13 +17,13 @@ const loading = ref(false)
 
 const themeOptions = [{
   value: 'light',
-  label: t('settings.light')
+  label: t('settings.themes.light')
 }, {
   value: 'dark',
-  label: t('settings.dark')
+  label: t('settings.themes.dark')
 }, {
   value: 'system',
-  label: t('settings.system_default')
+  label: t('settings.themes.system_default')
 }]
 
 const languageOptions =

@@ -43,7 +43,7 @@ const deleteUser = async () => {
 </script>
 
 <template>
-  <LayoutPage :title="user.name">
+  <LayoutPage :title="user.name" :customBreadcrumb="true">
     <template #actions>
       <Dialog v-model:open="dialogOpen">
         <DialogTrigger as-child>

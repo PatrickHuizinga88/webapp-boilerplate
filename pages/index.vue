@@ -10,6 +10,7 @@ definePageMeta({
 })
 
 const user = useSupabaseUser()
+const {locale} = useI18n()
 
 const recentCustomers = [
   {
@@ -44,7 +45,7 @@ const recentCustomers = [
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       <StatCard :title="$t('customers.customers', 2)" :stat="123" :difference="12.5" :subtitle="lowercase($t('dashboard.compared_to_last_week'))"/>
       <StatCard :title="$t('users.users', 2)" :stat="10"/>
-      <StatCard :title="$t('dashboard.last_sign_in')" :stat="capitalize($dayjs(user?.last_sign_in_at).fromNow())"/>
+      <StatCard :title="$t('dashboard.last_sign_in')" :stat="capitalize($dayjs(user?.last_sign_in_at).locale(locale).fromNow())"/>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">

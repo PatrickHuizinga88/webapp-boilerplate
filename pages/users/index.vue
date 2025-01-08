@@ -38,14 +38,14 @@ const { data: users, status } = useFetch<User[]>('/api/users')
               <tbody class="divide-y divide-border bg-card">
               <tr v-for="user in users" :key="user.email">
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
-                  <NuxtLink :to="`users/${user.id}`">{{ user.name || '-' }}</NuxtLink>
+                  <NuxtLink :to="`/users/${user.id}`">{{ user.name || '-' }}</NuxtLink>
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-muted-foreground">
                   <a :href="`mailto:${user.email}`">{{ user.email || '-' }}</a>
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-muted-foreground">{{ user.role || '-' }}</td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                  <NuxtLink :to="`users/${user.id}`" class="text-primary hover:underline">
+                  <NuxtLink :to="`/users/${user.id}`" class="text-primary hover:underline">
                     {{ $t('common.actions.edit') }}<span class="sr-only">, {{ user.name }}</span>
                   </NuxtLink>
                 </td>

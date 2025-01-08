@@ -1,5 +1,5 @@
 <template>
-  <!-- <LayoutHeader :customBreadcrumb="customBreadcrumb ? title : undefined" :showBreadcrumbs="breadcrumbs"/> -->
+  <LayoutHeader :customBreadcrumb="customBreadcrumb ? title : undefined" :showBreadcrumbs="true"/>
 
   <LayoutContainer>
     <div v-if="title || $slots.actions" class="min-h-[40px] flex justify-between items-center gap-4 mb-8">
