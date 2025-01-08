@@ -3,23 +3,36 @@ import {toTypedSchema} from "@vee-validate/zod";
 import {z} from "zod";
 import {useForm} from "vee-validate";
 import {LoaderCircle} from "lucide-vue-next";
-import type Customer from "~/types/Customer";
+import type {Database, Tables} from "~/types/database.types";
 
 const props = defineProps<{
-  customer?: Customer
+  customer?: Tables<'customers'>
 }>()
 
 const notificationStore = useNotificationStore()
+const supabase = useSupabaseClient<Database>()
 
 const formSchema = toTypedSchema(z.object({
-  name: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
   email: z.string(),
+  phoneNumber: z.string().optional(),
+  address: z.string().optional(),
+  postal_code: z.string().optional(),
+  city: z.string().optional(),
+  country: z.string().optional(),
 }))
 
 const form = useForm({
   initialValues: {
-    name: props.customer?.name,
+    firstName: props.customer?.first_name,
+    lastName: props.customer?.last_name,
     email: props.customer?.email,
+    phoneNumber: props.customer?.phone_number,
+    address: props.customer?.address,
+    postal_code: props.customer?.postal_code,
+    city: props.customer?.city,
+    country: props.customer?.country,
   },
   validationSchema: formSchema,
 })
@@ -29,26 +42,33 @@ const loading = ref(false)
 const onSubmit = form.handleSubmit(async (values) => {
   try {
     loading.value = true
-    await $fetch('/api/users', {
-      method: props.customer ? 'PUT' : 'POST',
-      body: {
+    await useAsyncData(async () => {
+      const {data, error} = await supabase.from('customers').upsert({
         id: props.customer?.id,
-        ...values
-      }
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        phone_number: values.phoneNumber,
+        address: values.address,
+        postal_code: values.postal_code,
+        city: values.city,
+        country: values.country,
+      }, {onConflict: 'id'})
+      if (error) console.error(error)
+      return data
     })
-
     notificationStore.createNotification({
       type: 'success',
       action: 'save',
-      item: values.name
+      item: `${values.firstName} ${values.lastName}`
     })
-    navigateTo(`/customers/${useRoute().params.id}`)
+    if (props.customer) navigateTo(`/customers/${props.customer.id}`)
   } catch (error) {
     if (error) {
       notificationStore.createNotification({
         type: 'destructive',
         action: 'save',
-        item: values.name
+        item: `${values.firstName} ${values.lastName}`
       })
       throw error
     }
@@ -60,28 +80,98 @@ const onSubmit = form.handleSubmit(async (values) => {
 
 <template>
   <form @submit="onSubmit" class="space-y-6">
-    <FormField v-slot="{ componentField }" name="name">
+    <div class="grid sm:grid-cols-2 gap-6">
+      <FormField v-slot="{ componentField }" name="firstName">
+        <FormItem>
+          <FormLabel>{{ $t('customers.first_name') }}</FormLabel>
+          <FormControl>
+            <Input v-bind="componentField"/>
+          </FormControl>
+          <FormMessage/>
+        </FormItem>
+      </FormField>
+      <FormField v-slot="{ componentField }" name="lastName">
+        <FormItem>
+          <FormLabel>{{ $t('customers.last_name') }}</FormLabel>
+          <FormControl>
+            <Input v-bind="componentField"/>
+          </FormControl>
+          <FormMessage/>
+        </FormItem>
+      </FormField>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-6">
+      <FormField v-slot="{ componentField }" name="email">
+        <FormItem>
+          <FormLabel>{{ $t('common.general.email') }}</FormLabel>
+          <FormControl>
+            <Input type="email" v-bind="componentField"/>
+          </FormControl>
+          <FormMessage/>
+        </FormItem>
+      </FormField>
+      <FormField v-slot="{ componentField }" name="phoneNumber">
+        <FormItem>
+          <FormLabel>{{ $t('customers.phone_number') }}</FormLabel>
+          <FormControl>
+            <Input type="tel" v-bind="componentField"/>
+          </FormControl>
+          <FormMessage/>
+        </FormItem>
+      </FormField>
+    </div>
+    <FormField v-slot="{ componentField }" name="address">
       <FormItem>
-        <FormLabel>{{ $t('common.general.name') }}</FormLabel>
+        <FormLabel>{{ $t('customers.address') }}</FormLabel>
         <FormControl>
-          <Input v-bind="componentField" />
+          <Input v-bind="componentField"/>
         </FormControl>
-        <FormMessage />
+        <FormMessage/>
       </FormItem>
     </FormField>
+    <div class="grid sm:grid-cols-2 gap-6">
+      <FormField v-slot="{ componentField }" name="city">
+        <FormItem>
+          <FormLabel>{{ $t('customers.city') }}</FormLabel>
+          <FormControl>
+            <Input v-bind="componentField"/>
+          </FormControl>
+          <FormMessage/>
+        </FormItem>
+      </FormField>
+      <FormField v-slot="{ componentField }" name="country">
+        <FormItem>
+          <FormLabel>{{ $t('customers.country') }}</FormLabel>
+          <FormControl>
+            <Input v-bind="componentField"/>
+          </FormControl>
+          <FormMessage/>
+        </FormItem>
+      </FormField>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-6">
+      <FormField v-slot="{ componentField }" name="state">
+        <FormItem>
+          <FormLabel>{{ $t('customers.state') }}</FormLabel>
+          <FormControl>
+            <Input v-bind="componentField"/>
+          </FormControl>
+          <FormMessage/>
+        </FormItem>
+      </FormField>
+      <FormField v-slot="{ componentField }" name="postalCode">
+        <FormItem>
+          <FormLabel>{{ $t('customers.postal_code') }}</FormLabel>
+          <FormControl>
+            <Input v-bind="componentField"/>
+          </FormControl>
+          <FormMessage/>
+        </FormItem>
+      </FormField>
+    </div>
 
-    <FormField v-slot="{ componentField }" name="email">
-      <FormItem>
-        <FormLabel>{{ $t('common.general.email') }}</FormLabel>
-        <FormControl>
-          <Input type="email" v-bind="componentField" />
-        </FormControl>
-        <FormMessage />
-      </FormItem>
-    </FormField>
-
-    <Button :disabled="loading">
-      <LoaderCircle v-if="loading" class="size-5 animate-spin" />
+    <Button :disabled="loading" class="w-full lg:w-auto">
+      <LoaderCircle v-if="loading" class="size-5 animate-spin"/>
       {{ $t('common.actions.save', {item: lowercase($t('customers.customers'))}) }}
     </Button>
   </form>

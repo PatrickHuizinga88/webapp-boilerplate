@@ -2,48 +2,54 @@
 import {Trash, Pencil} from 'lucide-vue-next'
 import {useNotificationStore} from "~/stores/notificationStore";
 import {Card} from "~/components/ui/card";
-import type Customer from "~/types/Customer";
+import type {Database} from "~/types/database.types";
 
 definePageMeta({
   layout: 'default-sidebar',
 })
 
+const supabase = useSupabaseClient<Database>()
 const notificationStore = useNotificationStore()
 const {t} = useI18n()
 
 const dialogOpen = ref(false)
+const loadingDelete = ref(false)
 
-// TODO: Get customer from Supabase
-const {data: customer} = await useFetch<Customer>('/api/users', {
-  query: {
-    id: useRoute().params.id
-  }
+const {data: customer, status} = await useAsyncData(async () => {
+  const {data} = await supabase.from('customers').select('*').filter('id', 'eq', useRoute().params.id).single()
+  return data
 })
 
 const deleteCustomer = async () => {
   try {
-
-    // TODO: Delete customer
+    loadingDelete.value = true
+    await useAsyncData(async () => {
+      const { data, error } = await supabase.from('customers').delete().filter('id', 'eq', useRoute().params.id)
+      if (error) console.error(error)
+      return data
+    })
 
     notificationStore.createNotification({
       type: 'success',
       action: 'delete',
-      item: customer.value?.name || t('customers.customers'),
+      item: `${customer.value?.first_name} ${customer.value?.last_name}` || t('customers.customers'),
     })
     navigateTo('/customers')
   } catch (error) {
     notificationStore.createNotification({
       type: 'destructive',
       action: 'delete',
-      item: customer.value?.name || t('customers.customers'),
+      item: `${customer.value?.first_name} ${customer.value?.last_name}` || t('customers.customers'),
     })
     console.error(error)
+  } finally {
+    loadingDelete.value = false
   }
 }
 </script>
 
 <template>
-  <LayoutPage :title="customer?.name || $t('customers.customers')" :customBreadcrumb="true">
+  <LayoutPage :title="`${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')" :customBreadcrumb="true">
     <template #actions>
       <Dialog v-model:open="dialogOpen">
         <DialogTrigger as-child>
@@ -57,7 +63,7 @@ const deleteCustomer = async () => {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{{ $t('common.actions.delete', {item: customer.name || $t('customers.customers')}) }}</DialogTitle>
+            <DialogTitle>{{ $t('common.actions.delete', {item: `${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')}) }}</DialogTitle>
             <DialogDescription>
               {{ $t('common.actions.delete_confirmation', {item: $t('customers.customers')}) }}
             </DialogDescription>
@@ -95,7 +101,12 @@ const deleteCustomer = async () => {
           <dl class="space-y-4">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4">
               <dt class="text-sm font-medium leading-6">{{ $t('common.general.name') }}</dt>
-              <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ customer.name || '-' }}</dd>
+              <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">
+                <template v-if="customer?.first_name || customer?.last_name">
+                  {{ `${customer?.first_name} ${customer?.last_name}` }}
+                </template>
+                <template>-</template>
+              </dd>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4">
               <dt class="text-sm font-medium leading-6">{{ $t('common.general.email') }}</dt>

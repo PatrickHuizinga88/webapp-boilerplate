@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-  <LayoutPage>
+  <LayoutPage :title="$t('common.general.new', {item: lowercase($t('customers.customers'))})">
     <FormCustomer />
   </LayoutPage>
 </template>

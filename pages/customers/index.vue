@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import type Customer from '~/types/Customer'
-import { PlusCircle, LoaderCircle } from 'lucide-vue-next'
+import {PlusCircle, LoaderCircle} from 'lucide-vue-next'
+import type {Database} from "~/types/database.types";
 
 definePageMeta({
   layout: 'default-sidebar',
 })
 
-const { data: customers, status } = useFetch<Customer[]>('/api/users')
+const supabase = useSupabaseClient<Database>()
+
+const {data: customers, status} = useAsyncData(async () => {
+  const { data } = await supabase.from('customers').select('*')
+  return data
+})
 </script>
 
 <template>
@@ -37,14 +42,19 @@ const { data: customers, status } = useFetch<Customer[]>('/api/users')
               <tbody class="divide-y divide-border bg-card">
               <tr v-for="customer in customers" :key="customer.id">
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
-                  <NuxtLink :to="`/customers/${customer.id}`">{{ customer.name || '-' }}</NuxtLink>
+                  <NuxtLink :to="`/customers/${customer.id}`">
+                    <template v-if="customer.first_name || customer.last_name">
+                      {{ customer.first_name + ' ' + customer.last_name }}
+                    </template>
+                    <template v-else>-</template>
+                  </NuxtLink>
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-muted-foreground">
                   <a :href="`mailto:${customer.email}`">{{ customer.email || '-' }}</a>
                 </td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                   <NuxtLink :to="`/customers/${customer.id}/edit`" class="text-primary hover:underline">
-                    {{ $t('common.actions.edit') }}<span class="sr-only">, {{ customer.name }}</span>
+                    {{ $t('common.actions.edit') }}<span class="sr-only">, {{ customer.first_name + ' ' + customer.last_name }}</span>
                   </NuxtLink>
                 </td>
               </tr>

@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import type Customer from "~/types/Customer";
+import type {Database} from "~/types/database.types";
 
 definePageMeta({
   layout: 'default-sidebar'
 })
 
-const { data: customer } = await useFetch<Customer>('/api/users', {
-  query: { id: useRoute().params.id }
+const supabase = useSupabaseClient<Database>()
+
+const {data: customer} = await useAsyncData(async () => {
+  const {data} = await supabase.from('customers').select('*').filter('id', 'eq', useRoute().params.id).single()
+  return data
 })
 </script>
 
 <template>
-  <LayoutPage>
-    <FormCustomer v-if="customer" :customer="customer" />
+  <LayoutPage :title="`${customer.first_name} ${customer.last_name}`">
+    <FormCustomer v-if="customer" :customer="customer"/>
     <p v-else>{{ $t('not_found', {item: $t('customers.customers')}) }}</p>
   </LayoutPage>
 </template>

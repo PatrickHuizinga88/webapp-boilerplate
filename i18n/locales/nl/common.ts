@@ -8,6 +8,7 @@ export default {
       guest: "Gast",
       loading: "Aan het laden",
       name: "Naam",
+      new: "Nieuwe {item}",
       search: "Zoeken",
       welcome: "Welkom",
 

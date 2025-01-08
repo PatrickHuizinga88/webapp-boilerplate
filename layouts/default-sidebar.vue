@@ -12,8 +12,10 @@ const notificationStore = useNotificationStore()
   <LayoutSidebar ref="sidebar" />
 
   <div class="lg:pl-64">
-    <div class="pb-6">
-      <slot />
+    <div class="container">
+      <div class="pb-6">
+        <slot />
+      </div>
     </div>
   </div>
 
