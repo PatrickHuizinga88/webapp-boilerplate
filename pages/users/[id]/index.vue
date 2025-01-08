@@ -3,6 +3,7 @@ import {Trash, Pencil} from 'lucide-vue-next'
 import {useNotificationStore} from "~/stores/notificationStore";
 import {Card} from "~/components/ui/card";
 import type User from "~/types/User";
+import {Page, PageActions, PageBackButton, PageHeader} from "~/components/layout/page";
 
 definePageMeta({
   layout: 'default-sidebar',
@@ -43,52 +44,54 @@ const deleteUser = async () => {
 </script>
 
 <template>
-  <LayoutPage :title="user.name" :customBreadcrumb="true">
-    <template #actions>
-      <Dialog v-model:open="dialogOpen">
-        <DialogTrigger as-child>
-          <Button
-            variant="outline"
-            size="sm"
-          >
-            <Trash class="size-4" aria-hidden="true"/>
-            {{ $t('common.actions.delete') }}
-          </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{{ $t('common.actions.delete', {item: user.name || $t('users.users')}) }}</DialogTitle>
-            <DialogDescription>
-              {{ $t('common.actions.delete_confirmation', {item: $t('users.users')}) }}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
+  <Page :title="user.name || `${$t('users.users')} ${user.id}`">
+    <PageHeader>
+      <PageBackButton to="/users" :label="$t('common.actions.back_to', {item: lowercase($t('users.users', 2))})"/>
+      <PageActions>
+        <Dialog v-model:open="dialogOpen">
+          <DialogTrigger as-child>
             <Button
-              variant="outline"
-              @click="dialogOpen = false"
+                variant="outline"
+                size="sm"
             >
-              {{ $t('common.actions.cancel') }}
-            </Button>
-            <Button
-              variant="destructive"
-              @click="deleteUser"
-            >
+              <Trash class="size-4" aria-hidden="true"/>
               {{ $t('common.actions.delete') }}
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      <Button
-        size="sm"
-        asChild
-      >
-        <NuxtLink :to="`/users/${user.id}/edit`">
-          <Pencil class="size-4" aria-hidden="true"/>
-          {{ $t('common.actions.edit') }}
-        </NuxtLink>
-      </Button>
-    </template>
-
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{{ $t('common.actions.delete', {item: user.name || $t('users.users')}) }}</DialogTitle>
+              <DialogDescription>
+                {{ $t('common.actions.delete_confirmation', {item: $t('users.users')}) }}
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button
+                  variant="outline"
+                  @click="dialogOpen = false"
+              >
+                {{ $t('common.actions.cancel') }}
+              </Button>
+              <Button
+                  variant="destructive"
+                  @click="deleteUser"
+              >
+                {{ $t('common.actions.delete') }}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Button
+            size="sm"
+            asChild
+        >
+          <NuxtLink :to="`/users/${user.id}/edit`">
+            <Pencil class="size-4" aria-hidden="true"/>
+            {{ $t('common.actions.edit') }}
+          </NuxtLink>
+        </Button>
+      </PageActions>
+    </PageHeader>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div class="col-span-1">
         <Card :title="$t('users.general_information')">
@@ -116,5 +119,5 @@ const deleteUser = async () => {
       </div>
     </div>
 
-  </LayoutPage>
+  </Page>
 </template>

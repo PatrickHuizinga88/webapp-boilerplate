@@ -9,6 +9,7 @@ export default {
       loading: "Loading",
       name: "Name",
       new: "New {item}",
+      notifications: "Notifications",
       search: "Search",
       welcome: "Welcome",
 
@@ -18,6 +19,7 @@ export default {
 
     actions: {
       add: "Add {item}",
+      back_to: "Back to {item}",
       cancel: "Cancel",
       delete: "Delete {item}",
       edit: "Edit {item}",

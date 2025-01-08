@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type User from '~/types/User'
-import { PlusCircle, LoaderCircle } from 'lucide-vue-next'
+import { PlusCircle } from 'lucide-vue-next'
+import {Page, PageActions, PageHeader} from "~/components/layout/page";
+import {SkeletonTable} from "~/components/ui/skeleton";
 
 definePageMeta({
   layout: 'default-sidebar',
@@ -10,15 +12,17 @@ const { data: users, status } = useFetch<User[]>('/api/users')
 </script>
 
 <template>
-  <LayoutPage :title="$t('users.users', 2)">
-    <template #actions>
+  <Page :title="$t('users.users', 2)">
+    <PageHeader class="justify-end">
+      <PageActions>
         <Button size="sm" as-child>
           <NuxtLink to="/users/create">
             <PlusCircle class="size-4" />
             {{$t('common.actions.add', {item: lowercase($t('users.users'))})}}
           </NuxtLink>
         </Button>
-    </template>
+      </PageActions>
+    </PageHeader>
     
     <div v-if="users?.length" class="flow-root">
       <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -56,9 +60,9 @@ const { data: users, status } = useFetch<User[]>('/api/users')
         </div>
       </div>
     </div>
-    <div v-else-if="status === 'pending'" class="flex justify-center">
-      <LoaderCircle class="size-8 text-primary animate-spin" />
-    </div>
+    <template v-else-if="status === 'pending'">
+      <SkeletonTable :columns="3" />
+    </template>
     <div v-else class="w-full text-center">{{ $t('common.no_records_found', {item: $t('users.users', 2)}) }}</div>
-  </LayoutPage>
+  </Page>
 </template>

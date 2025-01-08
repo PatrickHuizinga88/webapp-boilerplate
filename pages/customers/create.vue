@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import {Page} from "~/components/layout/page";
+
 definePageMeta({
   layout: 'default-sidebar'
 })
 </script>
 
 <template>
-  <LayoutPage :title="$t('common.general.new', {item: lowercase($t('customers.customers'))})">
+  <Page :title="$t('common.general.new', {item: lowercase($t('customers.customers'))})">
     <FormCustomer />
-  </LayoutPage>
+  </Page>
 </template>

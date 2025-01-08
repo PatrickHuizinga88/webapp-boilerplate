@@ -3,6 +3,7 @@ import {Trash, Pencil} from 'lucide-vue-next'
 import {useNotificationStore} from "~/stores/notificationStore";
 import {Card} from "~/components/ui/card";
 import type {Database} from "~/types/database.types";
+import {Page, PageActions, PageBackButton, PageHeader} from "~/components/layout/page";
 
 definePageMeta({
   layout: 'default-sidebar',
@@ -49,51 +50,54 @@ const deleteCustomer = async () => {
 </script>
 
 <template>
-  <LayoutPage :title="`${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')" :customBreadcrumb="true">
-    <template #actions>
-      <Dialog v-model:open="dialogOpen">
-        <DialogTrigger as-child>
-          <Button
-            variant="outline"
-            size="sm"
-          >
-            <Trash class="size-4" aria-hidden="true"/>
-            {{ $t('common.actions.delete') }}
-          </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{{ $t('common.actions.delete', {item: `${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')}) }}</DialogTitle>
-            <DialogDescription>
-              {{ $t('common.actions.delete_confirmation', {item: $t('customers.customers')}) }}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
+  <Page :title="`${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')" :customBreadcrumb="true">
+    <PageHeader>
+      <PageBackButton to="/customers" :label="$t('common.actions.back_to', {item: lowercase($t('customers.customers', 2))})"/>
+      <PageActions>
+        <Dialog v-model:open="dialogOpen">
+          <DialogTrigger as-child>
             <Button
-              variant="outline"
-              @click="dialogOpen = false"
+                variant="outline"
+                size="sm"
             >
-              {{ $t('common.actions.cancel') }}
-            </Button>
-            <Button
-              variant="destructive"
-              @click="deleteCustomer"
-            >
+              <Trash class="size-4" aria-hidden="true"/>
               {{ $t('common.actions.delete') }}
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      <Button
-        size="sm"
-        asChild
-      >
-        <NuxtLink :to="`/customers/${customer.id}/edit`">
-          <Pencil class="size-4" aria-hidden="true"/>
-          {{ $t('common.actions.edit') }}
-        </NuxtLink>
-      </Button>
-    </template>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{{ $t('common.actions.delete', {item: `${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')}) }}</DialogTitle>
+              <DialogDescription>
+                {{ $t('common.actions.delete_confirmation', {item: $t('customers.customers')}) }}
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button
+                  variant="outline"
+                  @click="dialogOpen = false"
+              >
+                {{ $t('common.actions.cancel') }}
+              </Button>
+              <Button
+                  variant="destructive"
+                  @click="deleteCustomer"
+              >
+                {{ $t('common.actions.delete') }}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Button
+            size="sm"
+            asChild
+        >
+          <NuxtLink :to="`/customers/${customer.id}/edit`">
+            <Pencil class="size-4" aria-hidden="true"/>
+            {{ $t('common.actions.edit') }}
+          </NuxtLink>
+        </Button>
+      </PageActions>
+    </PageHeader>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div class="col-span-1">
@@ -105,7 +109,7 @@ const deleteCustomer = async () => {
                 <template v-if="customer?.first_name || customer?.last_name">
                   {{ `${customer?.first_name} ${customer?.last_name}` }}
                 </template>
-                <template>-</template>
+                <template v-else>-</template>
               </dd>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4">
@@ -123,5 +127,5 @@ const deleteCustomer = async () => {
       </div>
     </div>
 
-  </LayoutPage>
+  </Page>
 </template>

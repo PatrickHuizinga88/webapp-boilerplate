@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type User from "~/types/User";
+import {Page} from "~/components/layout/page";
 
 definePageMeta({
   layout: 'default-sidebar'
@@ -11,8 +12,8 @@ const { data: user } = await useFetch<User>('/api/users', {
 </script>
 
 <template>
-  <LayoutPage>
+  <Page :title="user.name">
     <FormUser v-if="user" :user="user" />
     <p v-else>{{ $t('not_found', {item: $t('users.users')}) }}</p>
-  </LayoutPage>
+  </Page>
 </template>

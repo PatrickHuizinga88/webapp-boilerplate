@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {Database} from "~/types/database.types";
+import {Page} from "~/components/layout/page";
 
 definePageMeta({
   layout: 'default-sidebar'
@@ -14,8 +15,8 @@ const {data: customer} = await useAsyncData(async () => {
 </script>
 
 <template>
-  <LayoutPage :title="`${customer.first_name} ${customer.last_name}`">
+  <Page :title="`${customer.first_name} ${customer.last_name}`">
     <FormCustomer v-if="customer" :customer="customer"/>
     <p v-else>{{ $t('not_found', {item: $t('customers.customers')}) }}</p>
-  </LayoutPage>
+  </Page>
 </template>

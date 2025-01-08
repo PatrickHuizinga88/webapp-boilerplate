@@ -3,6 +3,7 @@ import { Home, IdCard, LogOut, Users, Settings } from "lucide-vue-next";
 
 const supabase = useSupabaseClient()
 const {t} = useI18n()
+const route = useRoute()
 
 const navigation = [
   {
@@ -15,6 +16,12 @@ const navigation = [
     ]
   }
 ]
+
+const isCurrentOrChildRoute = (path: string) => {
+  return {
+    'bg-foreground/5': route.fullPath.startsWith('/' + path)
+  }
+}
 
 const signOut = async () => {
   const { error } = await supabase.auth.signOut()
@@ -32,7 +39,7 @@ const signOut = async () => {
         <ul role="list" class="-mx-2 mt-4 space-y-1">
           <li v-for="link in category.links" :key="link.name">
             <Button as-child variant="ghost" class="w-full justify-start hover:bg-foreground/5 p-2">
-              <NuxtLinkLocale  :href="link.url" active-class="bg-foreground/5">
+              <NuxtLinkLocale :href="link.url" active-class="bg-foreground/5" :class="isCurrentOrChildRoute(link.url)">
                 <component :is="link.icon" class="size-5 shrink-0" aria-hidden="true" />
                 <span class="truncate">{{ link.name }}</span>
               </NuxtLinkLocale>

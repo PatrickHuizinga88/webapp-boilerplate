@@ -9,6 +9,7 @@ export default {
       loading: "Aan het laden",
       name: "Naam",
       new: "Nieuwe {item}",
+      notifications: "Notificaties",
       search: "Zoeken",
       welcome: "Welkom",
 
@@ -18,6 +19,7 @@ export default {
 
     actions: {
       add: "Voeg {item} toe",
+      back_to: "Terug naar {item}",
       cancel: "Annuleren",
       delete: "Verwijder {item}",
       edit: "Bewerk {item}",
