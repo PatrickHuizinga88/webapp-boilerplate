@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type User from '~/types/User'
+import type Customer from '~/types/Customer'
 import { PlusCircle, LoaderCircle } from 'lucide-vue-next'
 
 definePageMeta({
   layout: 'default-sidebar',
 })
 
-const { data: customers, status } = useFetch<User[]>('/api/users')
+const { data: customers, status } = useFetch<Customer[]>('/api/users')
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const { data: customers, status } = useFetch<User[]>('/api/users')
     <template #actions>
         <Button size="sm" as-child>
           <NuxtLink to="/customers/create">
-            <PlusCircle class="size-5" />
+            <PlusCircle class="size-4" />
             {{$t('common.actions.add', {item: lowercase($t('customers.customers'))})}}
           </NuxtLink>
         </Button>
