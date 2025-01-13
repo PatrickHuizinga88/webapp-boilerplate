@@ -44,7 +44,7 @@ const {data: customers, status} = useAsyncData(async () => {
                   }}
                 </th>
                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span class="sr-only">{{ $t('common.actions.edit') }}</span>
+                  <span class="sr-only">{{ $t('common.actions.actions') }}</span>
                 </th>
               </tr>
               </thead>
@@ -78,7 +78,7 @@ const {data: customers, status} = useAsyncData(async () => {
       <SkeletonTable :columns="2"/>
     </template>
     <div v-else class="w-full text-center">{{
-        $t('common.no_records_found', {item: $t('customers.customers', 2)})
+        $t('common.general.no_records_found', {item: $t('customers.customers', 2)})
       }}
     </div>
   </Page>

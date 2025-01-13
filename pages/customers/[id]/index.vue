@@ -16,7 +16,7 @@ const {t} = useI18n()
 const dialogOpen = ref(false)
 const loadingDelete = ref(false)
 
-const {data: customer, status} = await useAsyncData(async () => {
+const {data: customer} = await useAsyncData(async () => {
   const {data} = await supabase.from('customers').select('*').filter('id', 'eq', useRoute().params.id).single()
   return data
 })
@@ -24,12 +24,8 @@ const {data: customer, status} = await useAsyncData(async () => {
 const deleteCustomer = async () => {
   try {
     loadingDelete.value = true
-    await useAsyncData(async () => {
-      const { data, error } = await supabase.from('customers').delete().filter('id', 'eq', useRoute().params.id)
-      if (error) console.error(error)
-      return data
-    })
-
+    const {error} = await supabase.from('customers').delete().filter('id', 'eq', customer.value.id)
+    if (error) throw error
     notificationStore.createNotification({
       type: 'success',
       action: 'delete',
@@ -42,6 +38,7 @@ const deleteCustomer = async () => {
       action: 'delete',
       item: `${customer.value?.first_name} ${customer.value?.last_name}` || t('customers.customers'),
     })
+    dialogOpen.value = false
     console.error(error)
   } finally {
     loadingDelete.value = false
@@ -52,7 +49,8 @@ const deleteCustomer = async () => {
 <template>
   <Page :title="`${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')" :customBreadcrumb="true">
     <PageHeader>
-      <PageBackButton to="/customers" :label="$t('common.actions.back_to', {item: lowercase($t('customers.customers', 2))})"/>
+      <PageBackButton to="/customers"
+                      :label="$t('common.actions.back_to', {item: lowercase($t('customers.customers', 2))})"/>
       <PageActions>
         <Dialog v-model:open="dialogOpen">
           <DialogTrigger as-child>
@@ -66,9 +64,12 @@ const deleteCustomer = async () => {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{{ $t('common.actions.delete', {item: `${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')}) }}</DialogTitle>
+              <DialogTitle>{{
+                  $t('common.actions.delete', {item: `${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')})
+                }}
+              </DialogTitle>
               <DialogDescription>
-                {{ $t('common.actions.delete_confirmation', {item: $t('customers.customers')}) }}
+                {{ $t('common.actions.delete_confirmation', {item: lowercase($t('customers.customers'))}) }}
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
@@ -89,7 +90,7 @@ const deleteCustomer = async () => {
         </Dialog>
         <Button
             size="sm"
-            asChild
+            as-child
         >
           <NuxtLink :to="`/customers/${customer.id}/edit`">
             <Pencil class="size-4" aria-hidden="true"/>
