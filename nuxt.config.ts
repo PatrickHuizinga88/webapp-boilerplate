@@ -31,6 +31,10 @@ export default defineNuxtConfig({
         // {rel: 'mask-icon', href: '/favicon/safari-pinned-tab.svg', color: '#ffffff'},
       ],
     },
+    layoutTransition: {
+      name: 'fade',
+      mode: 'out-in'
+    }
   },
 
   css: ['../assets/css/main.css'],
@@ -58,9 +62,12 @@ export default defineNuxtConfig({
       login: '/login',
       callback: '/confirm',
       exclude: [
-        '/register',
+        '/confirm-registration',
         '/password-recovery',
+        '/register',
         '/update-password',
+
+        '/intro',
       ],
     }
   },

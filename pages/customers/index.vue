@@ -9,10 +9,22 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient<Database>()
+const notificationStore = useNotificationStore()
+const {t} = useI18n()
 
 const {data: customers, status} = useAsyncData(async () => {
-  const {data} = await supabase.from('customers').select('*')
-  return data
+  try {
+    const {data, error} = await supabase.from('customers').select('*')
+    if (error) throw error
+    return data
+  } catch (error) {
+    notificationStore.createNotification({
+      type: 'destructive',
+      action: 'retrieve',
+      item: lowercase(t('customers.customers', 2))
+    })
+    console.error(error)
+  }
 })
 </script>
 

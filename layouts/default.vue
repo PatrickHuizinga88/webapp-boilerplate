@@ -9,6 +9,7 @@ const { t } = useI18n()
 
 const mainNavItems = [
   { name: t('dashboard'), url: '/' },
+  { name: t('customers'), url: '/customers' },
   { name: t('users'), url: '/users' },
 ]
 
@@ -19,7 +20,7 @@ const userNavItems = [
 </script>
 
 <template>
-  <NuxtLoadingIndicator color="#4f46e5"/>
+  <NuxtLoadingIndicator color="hsl(var(--primary)"/>
   <header class="bg-background border-b border-border shadow">
     <div class="container">
       <nav class="flex justify-between items-center">
@@ -37,7 +38,7 @@ const userNavItems = [
           <ul class="flex gap-4">
             <li v-for="item in userNavItems">
               <NuxtLink :to="item.url" class="inline-block p-2 duration-150">
-                <component :is="item.icon" class="size-5"/>
+                <component :is="item.icon" class="size-4"/>
               </NuxtLink>
             </li>
           </ul>

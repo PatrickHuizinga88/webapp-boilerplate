@@ -14,5 +14,6 @@ export default {
     },
     select_a_language: "Selecteer een taal",
     select_a_theme: "Selecteer een thema",
+    refresh_page: "De pagina zal worden vernieuwd.",
   }
 }

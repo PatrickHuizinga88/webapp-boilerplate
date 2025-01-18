@@ -25,6 +25,7 @@ export default {
       delete: "Delete {item}",
       edit: "Edit {item}",
       save: "Save {item}",
+      skip: "Skip",
 
       delete_confirmation: "Are you sure you want to delete {item}? It will be permanently removed.",
     },
@@ -54,7 +55,26 @@ export default {
           description: "Failed to delete {item}."
         },
       },
-
+      update: {
+        success: {
+          title: "Update successful",
+          description: "{item} was updated successfully."
+        },
+        error: {
+          title: "Update Failed",
+          description: "Failed to update {item}."
+        }
+      },
+      retrieve: {
+        success: {
+          title: "Retrieve successful",
+          description: "{item} was retrieved successfully."
+        },
+        error: {
+          title: "Retrieve Failed",
+          description: "Failed to retrieve {item}."
+        },
+      },
       error: {
         title: "Something went wrong",
         description: "Try again later or contact us.",
