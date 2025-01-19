@@ -3,6 +3,16 @@ import {PlusCircle} from 'lucide-vue-next'
 import type {Database} from "~/types/database.types";
 import {Page, PageActions, PageHeader} from "~/components/layout/page";
 import {SkeletonTable} from "~/components/ui/skeleton";
+import {
+  Pagination,
+  PaginationEllipsis,
+  PaginationFirst,
+  PaginationLast,
+  PaginationList,
+  PaginationListItem,
+  PaginationNext,
+  PaginationPrev,
+} from '@/components/ui/pagination'
 
 definePageMeta({
   layout: 'default-sidebar',
@@ -12,11 +22,21 @@ const supabase = useSupabaseClient<Database>()
 const notificationStore = useNotificationStore()
 const {t} = useI18n()
 
+const startRange = ref(0)
+const endRange = ref(8)
+
 const {data: customers, status} = useAsyncData(async () => {
   try {
-    const {data, error} = await supabase.from('customers').select('*')
+    const {count, data, error} = await supabase
+      .from('customers')
+      .select('*', {count: 'exact'})
+      .order('created_at', {ascending: false})
+      .range(startRange.value, endRange.value)
     if (error) throw error
-    return data
+    return {
+      data,
+      count
+    }
   } catch (error) {
     notificationStore.createNotification({
       type: 'destructive',
@@ -41,7 +61,7 @@ const {data: customers, status} = useAsyncData(async () => {
       </PageActions>
     </PageHeader>
 
-    <div v-if="customers?.length" class="flow-root">
+    <div v-if="customers?.data.length" class="flow-root">
       <div class="-mx-6 -my-2 overflow-x-auto lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <div class="overflow-hidden shadow-md shadow-black/5 border border-border sm:rounded-2xl">
@@ -61,7 +81,7 @@ const {data: customers, status} = useAsyncData(async () => {
               </tr>
               </thead>
               <tbody class="divide-y divide-border bg-card">
-              <tr v-for="customer in customers" :key="customer.id">
+              <tr v-for="customer in customers.data" :key="customer.id">
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
                   <NuxtLink :to="`/customers/${customer.id}`">
                     <template v-if="customer.first_name || customer.last_name">
@@ -85,6 +105,24 @@ const {data: customers, status} = useAsyncData(async () => {
           </div>
         </div>
       </div>
+<!--      <Pagination v-slot="{ page }" :total="customers.count || 0" :items-per-page="8" show-edges :default-page="1">-->
+<!--        <PaginationList v-slot="{ items }" class="flex items-center gap-1">-->
+<!--          <PaginationFirst />-->
+<!--          <PaginationPrev />-->
+
+<!--          <template v-for="(item, index) in items">-->
+<!--            <PaginationListItem v-if="item.type === 'page'" :key="index" :value="item.value" as-child>-->
+<!--              <Button class="w-10 h-10 p-0" :variant="item.value === page ? 'default' : 'outline'">-->
+<!--                {{ item.value }}-->
+<!--              </Button>-->
+<!--            </PaginationListItem>-->
+<!--            <PaginationEllipsis v-else :key="item.type" :index="index" />-->
+<!--          </template>-->
+
+<!--          <PaginationNext />-->
+<!--          <PaginationLast />-->
+<!--        </PaginationList>-->
+<!--      </Pagination>-->
     </div>
     <template v-else-if="status === 'pending'">
       <SkeletonTable :columns="2"/>

@@ -40,7 +40,7 @@ const notificationStore = useNotificationStore()
           enter-to-class="opacity-1 translate-y-none"
           appear
       >
-        <div class="bg-background sm:bg-card sm:border px-6 py-10 gradient-shadows sm:rounded-xl sm:px-12">
+        <div class="bg-background sm:bg-card sm:border px-6 py-8 gradient-shadows sm:rounded-xl sm:px-8">
           <slot/>
         </div>
       </transition>

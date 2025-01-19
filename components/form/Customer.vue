@@ -13,10 +13,10 @@ const notificationStore = useNotificationStore()
 const supabase = useSupabaseClient<Database>()
 
 const formSchema = toTypedSchema(z.object({
-  firstName: z.string(),
-  lastName: z.string(),
+  first_name: z.string(),
+  last_name: z.string(),
   email: z.string(),
-  phoneNumber: z.string().optional(),
+  phone_number: z.string().optional(),
   address: z.string().optional(),
   postal_code: z.string().optional(),
   city: z.string().optional(),
@@ -25,10 +25,10 @@ const formSchema = toTypedSchema(z.object({
 
 const form = useForm({
   initialValues: {
-    firstName: props.customer?.first_name,
-    lastName: props.customer?.last_name,
+    first_name: props.customer?.first_name,
+    last_name: props.customer?.last_name,
     email: props.customer?.email,
-    phoneNumber: props.customer?.phone_number,
+    phone_number: props.customer?.phone_number,
     address: props.customer?.address,
     postal_code: props.customer?.postal_code,
     city: props.customer?.city,
@@ -44,10 +44,10 @@ const onSubmit = form.handleSubmit(async (values) => {
     loading.value = true
     const {data, error} = await supabase.from('customers').upsert({
       id: props.customer?.id,
-      first_name: values.firstName,
-      last_name: values.lastName,
+      first_name: values.first_name,
+      last_name: values.last_name,
       email: values.email,
-      phone_number: values.phoneNumber,
+      phone_number: values.phone_number,
       address: values.address,
       postal_code: values.postal_code,
       city: values.city,
@@ -59,14 +59,14 @@ const onSubmit = form.handleSubmit(async (values) => {
     notificationStore.createNotification({
       type: 'success',
       action: 'save',
-      item: `${values.firstName} ${values.lastName}`
+      item: `${values.first_name} ${values.last_name}`
     })
     navigateTo(`/customers/${data[0].id}`)
   } catch (error) {
     notificationStore.createNotification({
       type: 'destructive',
       action: 'save',
-      item: `${values.firstName} ${values.lastName}`
+      item: `${values.first_name} ${values.last_name}`
     })
     console.error(error)
   } finally {
@@ -78,7 +78,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 <template>
   <form @submit="onSubmit" class="space-y-6">
     <div class="grid sm:grid-cols-2 gap-6">
-      <FormField v-slot="{ componentField }" name="firstName">
+      <FormField v-slot="{ componentField }" name="first_name">
         <FormItem>
           <FormLabel>{{ $t('customers.first_name') }}</FormLabel>
           <FormControl>
@@ -87,7 +87,7 @@ const onSubmit = form.handleSubmit(async (values) => {
           <FormMessage/>
         </FormItem>
       </FormField>
-      <FormField v-slot="{ componentField }" name="lastName">
+      <FormField v-slot="{ componentField }" name="last_name">
         <FormItem>
           <FormLabel>{{ $t('customers.last_name') }}</FormLabel>
           <FormControl>
@@ -107,7 +107,7 @@ const onSubmit = form.handleSubmit(async (values) => {
           <FormMessage/>
         </FormItem>
       </FormField>
-      <FormField v-slot="{ componentField }" name="phoneNumber">
+      <FormField v-slot="{ componentField }" name="phone_number">
         <FormItem>
           <FormLabel>{{ $t('customers.phone_number') }}</FormLabel>
           <FormControl>
@@ -156,7 +156,7 @@ const onSubmit = form.handleSubmit(async (values) => {
           <FormMessage/>
         </FormItem>
       </FormField>
-      <FormField v-slot="{ componentField }" name="postalCode">
+      <FormField v-slot="{ componentField }" name="postal_code">
         <FormItem>
           <FormLabel>{{ $t('customers.postal_code') }}</FormLabel>
           <FormControl>
