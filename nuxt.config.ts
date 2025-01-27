@@ -41,7 +41,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseUrl: 'localhost:3000'
+      baseUrl: 'localhost:3000',
+      sentry: {
+        dsn: ''
+      }
     }
   },
 
@@ -54,6 +57,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxtjs/i18n',
     'dayjs-nuxt',
+    '@sentry/nuxt/module',
     '@unlok-co/nuxt-stripe',
   ],
 
@@ -142,6 +146,15 @@ export default defineNuxtConfig({
     defaultLocale: 'en',
     plugins: ['relativeTime', 'utc', 'timezone'],
   },
+
+  sentry: {
+    sourceMapsUploadOptions: {
+      org: 'patrick-huizinga',
+      project: 'webapp-boilerplate',
+      authToken: process.env.NUXT_SENTRY_AUTH_TOKEN,
+    },
+  },
+  sourcemap: { client: "hidden" },
 
   stripe: {
     server: {
