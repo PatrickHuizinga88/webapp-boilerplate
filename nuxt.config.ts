@@ -87,12 +87,12 @@ export default defineNuxtConfig({
       {
         code: 'en',
         name: 'English',
-        files: ['en/common', 'en/authentication', 'en/customers', 'en/dashboard', 'en/settings', 'en/users']
+        files: ['en/common', 'en/authentication', 'en/customers', 'en/dashboard', 'en/feedback', 'en/pricing', 'en/settings', 'en/users']
       },
       {
         code: 'nl',
         name: 'Nederlands',
-        files: ['nl/common', 'nl/authentication', 'nl/customers', 'nl/dashboard', 'nl/settings', 'nl/users']
+        files: ['nl/common', 'nl/authentication', 'nl/customers', 'nl/dashboard', 'nl/feedback', 'nl/pricing', 'nl/settings', 'nl/users']
       },
     ],
     // customRoutes: 'config',

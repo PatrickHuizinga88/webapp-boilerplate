@@ -65,10 +65,11 @@ const notificationStore = useNotificationStore()
 </template>
 
 <style scoped>
-.gradient-shadows {
-  box-shadow:
-      32px 64px 128px -48px hsl(var(--primary) / .1),
-      -64px -24px 128px -48px color-mix(in lch increasing hue, hsl(var(--primary) / .1) 33%, hsl(var(--accent) / .1)),
-      64px -48px 128px -48px color-mix(in lch increasing hue, hsl(var(--primary) / .1) 67%, hsl(var(--accent) / .1));
+@media (min-width: 640px) {
+  .gradient-shadows {
+    box-shadow: 32px 64px 128px -48px hsl(var(--primary) / .1),
+    -64px -24px 128px -48px color-mix(in lch increasing hue, hsl(var(--primary) / .1) 33%, hsl(var(--accent) / .1)),
+    64px -48px 128px -48px color-mix(in lch increasing hue, hsl(var(--primary) / .1) 67%, hsl(var(--accent) / .1));
+  }
 }
 </style>

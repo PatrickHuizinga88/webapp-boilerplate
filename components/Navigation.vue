@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Home, IdCard, LogOut, Users, Settings } from "lucide-vue-next";
+import { Home, IdCard, LogOut, Users, Settings, MessageSquare, ArrowBigUp } from "lucide-vue-next";
 
 const supabase = useSupabaseClient()
 const {t} = useI18n()
@@ -50,10 +50,25 @@ const signOut = async () => {
     </ul>
 
     <ul role="list" class="-mx-2 mt-auto space-y-1">
+      <li class="!mb-5">
+        <NuxtLink to="/pricing" class="group flex bg-gradient-to-br from-primary/50 to-accent/50 text-primary-foreground rounded-lg px-2 py-4 hover:from-primary/100 hover:to-accent/100 duration-300">
+          <ArrowBigUp class="size-5 shrink-0 mr-2 group-hover:scale-110 duration-100" aria-hidden="true"/>
+          <div class="text-sm">
+            <span class="block font-semibold mb-1">{{ $t('pricing.upgrade_now') }}</span>
+            {{ $t('pricing.check_our_pricing_model') }}
+          </div>
+        </NuxtLink>
+      </li>
       <li>
-        <Button @click="signOut" variant="ghost" class="w-full justify-start">
+        <Button variant="ghost" class="w-full justify-start hover:bg-foreground/5 p-2">
+          <MessageSquare class="size-5 shrink-0" aria-hidden="true" />
+          <span class="truncate">{{ $t('feedback.give_feedback') }}</span>
+        </Button>
+      </li>
+      <li>
+        <Button @click="signOut" variant="ghost" class="w-full justify-start hover:bg-foreground/5 p-2">
           <LogOut class="size-5 shrink-0" aria-hidden="true" />
-          {{ t('authentication.common.sign_out') }}
+          {{ $t('authentication.common.sign_out') }}
         </Button>
       </li>
     </ul>
