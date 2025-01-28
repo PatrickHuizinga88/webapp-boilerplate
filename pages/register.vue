@@ -46,21 +46,28 @@ const signUp = async () => {
 
     if (!customerId) throw new Error('Failed to create customer')
 
-    const {error} = await supabase.auth.signUp({
+    const {data, error: authError} = await supabase.auth.signUp({
       email: form.email,
       password: form.password,
       options: {
         data: {
           stripe_customer_id: customerId,
-          plan: 'free',
         },
         emailRedirectTo: `${baseUrl}/intro`
       }
     })
 
-    if (error) {
-      loading.value = false
-      throw error
+    if (authError) {
+      throw authError
+    }
+
+    const {error: profileError} = await supabase.from('profiles').insert({
+      id: data.user?.id,
+      plan: 'free',
+    })
+
+    if (profileError) {
+      throw profileError
     }
 
     success.value = true
@@ -69,6 +76,8 @@ const signUp = async () => {
   } catch (error) {
     errorMessage.value = t('authentication.register.sign_up_failed')
     console.error(error)
+  } finally {
+    loading.value = false
   }
 }
 </script>
