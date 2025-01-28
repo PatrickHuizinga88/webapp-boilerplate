@@ -3,6 +3,7 @@ export default {
     dashboard: "Dashboard",
 
     welcome: "Welcome",
+    statistics: "Statistics",
 
     compared_to_last_week: "Compared to last week",
     last_sign_in: "Last sign in",

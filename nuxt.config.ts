@@ -41,8 +41,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseUrl: 'localhost:3000'
-    }
+      baseUrl: 'http://localhost:3000',
+      stripeKey: '',
+    },
+    stripeSecretKey: ''
   },
 
   modules: [
@@ -54,7 +56,6 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxtjs/i18n',
     'dayjs-nuxt',
-    '@unlok-co/nuxt-stripe',
   ],
 
   supabase: {
@@ -63,11 +64,10 @@ export default defineNuxtConfig({
       callback: '/confirm',
       exclude: [
         '/confirm-registration',
+        '/intro',
         '/password-recovery',
         '/register',
         '/update-password',
-
-        '/intro',
       ],
     }
   },
@@ -83,16 +83,20 @@ export default defineNuxtConfig({
 
   i18n: {
     strategy: 'no_prefix',
+    // detectBrowserLanguage: {
+    //   useCookie: false
+    // },
+    defaultLocale: 'en',
     locales: [
       {
         code: 'en',
         name: 'English',
-        files: ['en/common', 'en/authentication', 'en/customers', 'en/dashboard', 'en/feedback', 'en/pricing', 'en/settings', 'en/users']
+        files: ['en/common', 'en/authentication', 'en/customers', 'en/dashboard', 'en/feedback', 'en/pricing', 'en/profile', 'en/settings', 'en/users']
       },
       {
         code: 'nl',
         name: 'Nederlands',
-        files: ['nl/common', 'nl/authentication', 'nl/customers', 'nl/dashboard', 'nl/feedback', 'nl/pricing', 'nl/settings', 'nl/users']
+        files: ['nl/common', 'nl/authentication', 'nl/customers', 'nl/dashboard', 'nl/feedback', 'nl/pricing', 'nl/profile', 'nl/settings', 'nl/users']
       },
     ],
     // customRoutes: 'config',
@@ -134,19 +138,12 @@ export default defineNuxtConfig({
     //     nl: '/instellingen',
     //   },
     // },
-    defaultLocale: 'en',
   },
 
   dayjs: {
     locales: ['en', 'nl'],
     defaultLocale: 'en',
     plugins: ['relativeTime', 'utc', 'timezone'],
-  },
-
-  stripe: {
-    server: {
-      key: process.env.STRIPE_SECRET_KEY,
-    },
   },
 
   compatibilityDate: '2024-12-17',

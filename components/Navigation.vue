@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { Home, IdCard, LogOut, Users, Settings, MessageSquare, ArrowBigUp } from "lucide-vue-next";
+import type {Database} from "~/types/database.types";
 
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient<Database>()
+const user = useSupabaseUser()
 const {t} = useI18n()
 const route = useRoute()
 
@@ -22,6 +24,10 @@ const isCurrentOrChildRoute = (path: string) => {
     'bg-foreground/5': route.fullPath.startsWith('/' + path)
   }
 }
+
+const freeUser = computed(() => {
+  return user.value?.user_metadata?.plan === 'free'
+})
 
 const signOut = async () => {
   const { error } = await supabase.auth.signOut()
@@ -50,10 +56,11 @@ const signOut = async () => {
     </ul>
 
     <ul role="list" class="-mx-2 mt-auto space-y-1">
-      <li class="!mb-5">
-        <NuxtLink to="/pricing" class="group flex bg-gradient-to-br from-primary/50 to-accent/50 text-primary-foreground rounded-lg px-2 py-4 hover:from-primary/100 hover:to-accent/100 duration-300">
-          <ArrowBigUp class="size-5 shrink-0 mr-2 group-hover:scale-110 duration-100" aria-hidden="true"/>
-          <div class="text-sm">
+      <li v-if="freeUser" class="!mb-5">
+        <NuxtLink to="/pricing" class="group relative flex bg-gradient-to-br from-primary to-accent text-primary-foreground rounded-lg px-2 py-4">
+          <div class="absolute inset-0 bg-background opacity-25 dark:opacity-50 group-hover:opacity-0 dark:group-hover:opacity-25 duration-300"></div>
+          <ArrowBigUp class="relative size-5 shrink-0 mr-2" aria-hidden="true"/>
+          <div class="relative text-sm">
             <span class="block font-semibold mb-1">{{ $t('pricing.upgrade_now') }}</span>
             {{ $t('pricing.check_our_pricing_model') }}
           </div>

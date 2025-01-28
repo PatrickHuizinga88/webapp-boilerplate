@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ArrowRight, CheckCircle, Loader2} from 'lucide-vue-next'
 import Authentication from "~/layouts/authentication.vue";
+import Customer = module
 
 definePageMeta({
   layout: false
@@ -39,17 +40,29 @@ const signUp = async () => {
 
     const {public: {baseUrl}} = useRuntimeConfig()
 
+    const {id: customerId} = await $fetch<Customer>('/api/stripe/create-customer', {
+      query: {email: form.email}
+    })
+
+    if (!customerId) throw new Error('Failed to create customer')
+
     const {error} = await supabase.auth.signUp({
       email: form.email,
       password: form.password,
       options: {
-        emailRedirectTo: `${baseUrl}/intro` // TODO: Fix redirection
+        data: {
+          stripe_customer_id: customerId,
+          plan: 'free',
+        },
+        emailRedirectTo: `${baseUrl}/intro`
       }
     })
+
     if (error) {
       loading.value = false
       throw error
     }
+
     success.value = true
     resendDelay.value = 10
     countDown()
@@ -115,7 +128,7 @@ const signUp = async () => {
         </AlertDescription>
       </Alert>
 
-      <p class="text-sm text-muted-foreground mt-4">
+      <p class="text-sm text-muted-foreground text-center mt-4">
         {{ $t('authentication.register.received_nothing') }}
         <Button @click="signUp" variant="link" class="h-auto p-0 text-primary" :disabled="resendDelay > 0">
           {{ $t('authentication.register.send_again') }}
@@ -126,7 +139,7 @@ const signUp = async () => {
       </p>
     </div>
 
-    <template #footer>
+    <template v-if="!success" #footer>
       {{ $t('authentication.register.have_account') + ' ' }}
       <Button variant="link" class="h-auto p-0 ml-1" as-child>
         <NuxtLink to="/login">

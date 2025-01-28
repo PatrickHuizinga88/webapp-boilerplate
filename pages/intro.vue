@@ -5,6 +5,7 @@ import Authentication from "~/layouts/authentication.vue";
 import {toTypedSchema} from "@vee-validate/zod";
 import * as z from 'zod'
 import {useForm} from "vee-validate";
+import {APP_NAME} from "~/constants";
 
 definePageMeta({
   layout: false,
@@ -59,7 +60,7 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <Authentication :title="'Welkom bij Lapzy!'" description="Laten we beginnen met het aanmaken van je profiel.">
+  <Authentication :title="$t('profile.welcome_to', {appName: APP_NAME})" :description="$t('profile.lets_start_with_your_profile')">
     <form @submit="onSubmit" class="space-y-6">
       <section id="profile-settings" class="space-y-6">
         <div class="grid grid-cols-2 gap-4">

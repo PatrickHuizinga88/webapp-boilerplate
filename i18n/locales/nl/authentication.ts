@@ -24,6 +24,7 @@ export default {
       repeat_password: "Herhaal wachtwoord",
       send_again: "Opnieuw versturen",
       sign_up: "Registreren",
+      sign_up_failed: "Registreren mislukt. Controleer je e-mailadres en wachtwoord.",
       sign_up_success: {
         title: "Registratie gelukt!",
         description: "Er is een e-mail verstuurd naar {email} om je account te activeren.",

@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import {Page} from "~/components/layout/page";
-import {CheckCircle} from "lucide-vue-next";
+import {CheckCircle, Loader2} from "lucide-vue-next";
 import {Separator} from "~/components/ui/separator";
+import {Dialog, DialogHeader, DialogTitle, DialogFooter} from "~/components/ui/dialog";
 
 definePageMeta({
   layout: 'default-sidebar'
 })
 
+const user = useSupabaseUser()
+
+const loading = ref('')
+const open = ref(false)
+const transationSuccess = ref(false)
+
 const currency = 'EUR'
+
 const plans = [
   {
     name: 'Free plan',
@@ -22,6 +30,7 @@ const plans = [
     isCurrentPlan: true,
   },
   {
+    lookupKey: 'premium_monthly',
     name: 'Premium plan',
     description: 'Better for growing teams that want to scale their business.',
     pricing: '29',
@@ -35,6 +44,55 @@ const plans = [
     isCurrentPlan: false,
   }
 ]
+
+const checkout = async (lookupKey: string) => {
+  try {
+    loading.value = lookupKey
+    const url = await $fetch('/api/stripe/create-checkout-session', {
+      query: {
+        lookupKey,
+        stripeCustomerId: user.value?.user_metadata.stripe_customer_id
+      }
+    })
+
+    if (!url) {
+      throw new Error('Failed to create checkout session')
+    }
+
+    if (url) {
+      navigateTo(url, {
+        external: true,
+      })
+    }
+  } catch (error) {
+    console.error(error)
+  } finally {
+    loading.value = ''
+  }
+}
+
+const route = useRoute()
+
+onMounted(async () => {
+  if (!route.query.success) {
+    return
+  }
+
+  if (route.query.success === 'true') {
+    await $fetch('/api/stripe/update-subscription', {
+      query: {
+        stripeCustomerId: user.value?.user_metadata.stripe_customer_id
+      }
+    })
+    transationSuccess.value = true
+  }
+
+  if (route.query.success === 'false') {
+    transationSuccess.value = false
+  }
+
+  open.value = true
+})
 </script>
 
 <template>
@@ -58,12 +116,43 @@ const plans = [
         </li>
       </ul>
       <div class="mt-auto">
-        <Button size="lg" class="mt-6" :disabled="plan.isCurrentPlan">
+        <Button
+            size="lg"
+            class="mt-6"
+            :disabled="plan.isCurrentPlan || loading === plan.lookupKey"
+            @click="checkout(plan.lookupKey)">
+          <Loader2 v-if="loading === plan.lookupKey" class="size-5 animate-spin"/>
           {{ plan.isCurrentPlan ? $t('pricing.current_plan') : $t('pricing.upgrade') }}
         </Button>
       </div>
     </div>
   </div>
+
+  <Dialog v-model:open="open">
+    <DialogContent class="text-center">
+      <DialogHeader>
+        <DialogTitle class="text-center">
+          {{ transationSuccess ?
+            $t('pricing.upgrade_confirmation.title.success') :
+            $t('pricing.upgrade_confirmation.title.error')
+          }}
+        </DialogTitle>
+      </DialogHeader>
+      <p>{{
+          transationSuccess ?
+              $t('pricing.upgrade_confirmation.description.success') :
+              $t('pricing.upgrade_confirmation.description.error')
+        }}</p>
+      <DialogFooter>
+        <Button @click="open = false" :variant="transationSuccess ? 'default' : 'outline'" class="w-full">
+          {{ transationSuccess ?
+                $t('pricing.upgrade_confirmation.action.success') :
+                $t('pricing.upgrade_confirmation.action.error')
+          }}
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
 </Page>
 </template>
 

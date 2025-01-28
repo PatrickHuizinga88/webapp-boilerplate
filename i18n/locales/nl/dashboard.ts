@@ -3,6 +3,7 @@ export default {
     dashboard: "Dashboard",
 
     welcome: "Welkom",
+    statistics: "Statistieken",
 
     compared_to_last_week: "Vergeleken met vorige week",
     last_sign_in: "Laatste aanmelding",

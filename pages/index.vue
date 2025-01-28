@@ -12,7 +12,8 @@ definePageMeta({
 
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
-const {locale} = useI18n()
+const notificationStore = useNotificationStore()
+const {t, locale} = useI18n()
 const dayjs = useDayjs()
 
 const {data: profile} = await useAsyncData('profile', async () => {
@@ -27,47 +28,40 @@ const {data: profile} = await useAsyncData('profile', async () => {
 
 const {data: statistics} = await useLazyAsyncData('statistics', async () => {
   if (!user.value) return
-  const {count: customersCount, error} = await supabase.from('customers')
-      .select('*', {count: 'exact', head: true})
-  if (error) throw error
+  try {
+    const {count: customersCount, error: customersCountError} = await supabase.from('customers')
+        .select('*', {count: 'exact', head: true})
+    if (customersCountError) throw customersCountError
 
-  const lastSignIn = capitalize(dayjs(user.value.last_sign_in_at).locale(locale).fromNow())
-  return {
-    customersCount,
-    lastSignIn
+    const lastSignIn = capitalize(dayjs(user.value.last_sign_in_at).locale(locale).fromNow())
+
+    const {data: recentCustomers, error: recentCustomersError} = await supabase.from('customers')
+        .select('id,first_name,last_name,created_at')
+        .order('created_at', {ascending: false})
+        .limit(4)
+    if (recentCustomersError) throw recentCustomersError
+
+    return {
+      customersCount,
+      lastSignIn,
+      recentCustomers,
+    }
+  } catch (error) {
+    notificationStore.createNotification({
+      type: 'destructive',
+      action: 'retrieve',
+      item: t('dashboard.statistics')
+    })
   }
 })
 
-const recentCustomers = [
-  {
-    id: 1,
-    name: 'Leanne Graham',
-    avatar: 'LG',
-    date: '3 days ago'
-  },
-  {
-    id: 2,
-    name: 'Ervin Howell',
-    avatar: 'EH',
-    date: '5 days ago'
-  },
-  {
-    id: 3,
-    name: 'Clementine Bauch',
-    avatar: 'CB',
-    date: '2 weeks ago'
-  },
-  {
-    id: 4,
-    name: 'Patricia Lebsack',
-    avatar: 'PL',
-    date: '3 weeks ago'
-  }
-]
+const initials = (firstName: string, lastName: string) => {
+  return `${firstName.charAt(0)}${lastName.charAt(0)}`
+}
 </script>
 
 <template>
-  <Page :title="`${$t('dashboard.welcome')}, ${profile.first_name || 'common.general.guest'}! 👋`">
+  <Page :title="`${$t('dashboard.welcome')}, ${profile?.first_name || 'common.general.guest'}! 👋`">
     <div v-if="statistics" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       <StatCard :title="$t('customers.customers', 2)" :stat="statistics.customersCount" :difference="12.5"
                 :subtitle="lowercase($t('dashboard.compared_to_last_week'))"/>
@@ -101,16 +95,16 @@ const recentCustomers = [
           </Button>
         </template>
         <ul class="space-y-4">
-          <li v-for="customer in recentCustomers" class="flex items-center">
+          <li v-for="customer in statistics?.recentCustomers" class="flex items-center">
             <Avatar>
-              <AvatarFallback>{{ customer.avatar }}</AvatarFallback>
+              <AvatarFallback>{{initials(customer.first_name, customer.last_name)}}</AvatarFallback>
             </Avatar>
             <div class="text-sm ml-4">
               <NuxtLink :to="`/customers/${customer.id}`"
                         class="font-medium hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                {{ customer.name }}
+                {{`${customer.first_name} ${customer.last_name}`}}
               </NuxtLink>
-              <div class="text-muted-foreground">{{ customer.date }}</div>
+              <div class="text-muted-foreground">{{ $dayjs(customer.created_at).locale(locale).fromNow() }}</div>
             </div>
           </li>
         </ul>
