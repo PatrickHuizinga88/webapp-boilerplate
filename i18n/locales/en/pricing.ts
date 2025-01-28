@@ -2,10 +2,11 @@ export default {
   pricing: {
     pricing: "Pricing",
 
-    upgrade_now: "Upgrade now",
-    current_plan: "Current plan",
-    upgrade: "Upgrade",
     check_our_pricing_model: "Check our pricing model.",
+    current_plan: "Current plan",
+    downgrade: "Downgrade",
+    upgrade: "Upgrade",
+    upgrade_now: "Upgrade now",
 
     upgrade_confirmation: {
       title: {

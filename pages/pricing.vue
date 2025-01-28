@@ -3,12 +3,16 @@ import {Page} from "~/components/layout/page";
 import {CheckCircle, Loader2} from "lucide-vue-next";
 import {Separator} from "~/components/ui/separator";
 import {Dialog, DialogHeader, DialogTitle, DialogFooter} from "~/components/ui/dialog";
+import type {Database} from "~/types/database.types";
 
 definePageMeta({
   layout: 'default-sidebar'
 })
 
+const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
+const route = useRoute()
+const {t} = useI18n()
 
 const loading = ref('')
 const open = ref(false)
@@ -45,6 +49,23 @@ const plans = [
   }
 ]
 
+const {data: profile} = await useAsyncData('profile', async () => {
+  const {data} = await supabase.from('profiles').select('plan').filter('id', 'eq', user.value?.id).single()
+  return data
+})
+
+const actionText = (lookupKey: string) => {
+  if (profile.value.plan === lookupKey) {
+    return t('pricing.current_plan')
+  }
+
+  if (!lookupKey) {
+    return t('pricing.downgrade')
+  }
+
+  return t('pricing.upgrade')
+}
+
 const checkout = async (lookupKey: string) => {
   try {
     loading.value = lookupKey
@@ -70,8 +91,6 @@ const checkout = async (lookupKey: string) => {
     loading.value = ''
   }
 }
-
-const route = useRoute()
 
 onMounted(async () => {
   if (!route.query.success) {
@@ -116,13 +135,15 @@ onMounted(async () => {
         </li>
       </ul>
       <div class="mt-auto">
+<!--        TODO: Add link to manage subscription to button -->
         <Button
             size="lg"
             class="mt-6"
-            :disabled="plan.isCurrentPlan || loading === plan.lookupKey"
-            @click="checkout(plan.lookupKey)">
+            :variant="!plan.lookupKey ? 'outline' : 'default'"
+            :disabled="profile.plan === plan.lookupKey || loading === plan.lookupKey"
+            @click="!plan.lookupKey ? null : checkout(plan.lookupKey)">
           <Loader2 v-if="loading === plan.lookupKey" class="size-5 animate-spin"/>
-          {{ plan.isCurrentPlan ? $t('pricing.current_plan') : $t('pricing.upgrade') }}
+          {{ actionText(plan.lookupKey) }}
         </Button>
       </div>
     </div>
