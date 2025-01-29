@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type {Database} from "~/types/database.types";
-import {Loader2} from 'lucide-vue-next'
 import Authentication from "~/layouts/authentication.vue";
 import {toTypedSchema} from "@vee-validate/zod";
 import * as z from 'zod'
@@ -84,11 +83,10 @@ const onSubmit = handleSubmit(async (values) => {
       </section>
 
       <div class="space-y-4">
-        <Button type="submit" class="w-full" :disabled="loading">
-          <Loader2 v-if="loading" class="size-5 animate-spin"/>
+        <Button type="submit" class="w-full" :loading="loading">
           {{ $t('common.actions.save') }}
         </Button>
-        <Button variant="outline" type="button" class="w-full" :disabled="loading" as-child>
+        <Button variant="outline" type="button" class="w-full" :loading="loading" as-child>
           <NuxtLink to="/">
             {{ $t('common.actions.skip') }}
           </NuxtLink>

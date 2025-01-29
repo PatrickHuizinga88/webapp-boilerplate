@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Loader2, ArrowRight} from 'lucide-vue-next'
+import {ArrowRight} from 'lucide-vue-next'
 import {PasswordInput} from "~/components/ui/password-input";
 
 definePageMeta({
@@ -69,11 +69,7 @@ const signIn = async () => {
               required/>
         </div>
 
-        <Button type="submit" :disabled="loading" class="w-full">
-          <div v-if="loading" role="status">
-            <Loader2 class="size-5 animate-spin"/>
-            <span class="sr-only">{{ $t('common.general.loading') }}...</span>
-          </div>
+        <Button type="submit" :loading="loading" class="w-full">
           {{ $t('authentication.common.sign_in') }}
         </Button>
 

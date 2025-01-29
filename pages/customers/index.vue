@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {PlusCircle} from 'lucide-vue-next'
 import type {Database} from "~/types/database.types";
-import {Page, PageActions, PageHeader} from "~/components/layout/page";
+import {Page, PageActions, PageHeader} from "../../components/ui/page";
 import {SkeletonTable} from "~/components/ui/skeleton";
 import {
   Pagination,
@@ -41,7 +41,7 @@ const {data: customers, status} = useAsyncData(async () => {
     notificationStore.createNotification({
       type: 'destructive',
       action: 'retrieve',
-      item: lowercase(t('customers.customers', 2))
+      item: t('customers.customers', 2)
     })
     console.error(error)
   }

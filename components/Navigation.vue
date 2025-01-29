@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import {Home, IdCard, LogOut, Users, Settings, MessageSquare, ArrowBigUp} from "lucide-vue-next";
+import {Home, IdCard, LogOut, User, Users, Settings, MessageSquare, ArrowBigUp, ChevronsUpDown} from "lucide-vue-next";
 import type {Database} from "~/types/database.types";
+import {DropdownMenu, DropdownMenuTrigger} from "~/components/ui/dropdown-menu";
 
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
@@ -19,16 +20,21 @@ const navigation = [
   }
 ]
 
+const {data: profile} = await useLazyAsyncData('profile', async () => {
+  const {data} = await supabase.from('profiles').select('first_name,last_name,plan').filter('id', 'eq', user.value?.id).single()
+  return data
+})
+
+const initials = computed(() => {
+  if (!profile.value) return ''
+  return profile.value.first_name.charAt(0) + profile.value.last_name.charAt(0)
+})
+
 const isCurrentOrChildRoute = (path: string) => {
   return {
     'bg-foreground/5': route.fullPath.startsWith('/' + path)
   }
 }
-
-const {data: profile} = useLazyAsyncData('profile', async () => {
-  const {data} = supabase.from('profiles').select('plan').filter('id', 'eq', user.value?.id).single()
-  return data
-})
 
 const signOut = async () => {
   const {error} = await supabase.auth.signOut()
@@ -47,7 +53,7 @@ const signOut = async () => {
           <li v-for="link in category.links" :key="link.name">
             <Button as-child variant="ghost" class="w-full justify-start hover:bg-foreground/5 p-2">
               <NuxtLinkLocale :href="link.url" active-class="bg-foreground/5" :class="isCurrentOrChildRoute(link.url)">
-                <component :is="link.icon" class="size-5 shrink-0" aria-hidden="true"/>
+                <component :is="link.icon" class="shrink-0" aria-hidden="true"/>
                 <span class="truncate">{{ link.name }}</span>
               </NuxtLinkLocale>
             </Button>
@@ -61,10 +67,10 @@ const signOut = async () => {
           enter-active-class="duration-300"
           enter-from-class="opacity-0 scale-95"
           enter-to-class="opacity-100 scale-100"
-        >
+      >
         <li v-if="profile && profile.plan === 'free'" class="!mb-5">
           <NuxtLink to="/pricing"
-                    class="group relative flex bg-gradient-to-br from-primary to-accent text-primary-foreground rounded-lg px-2 py-4">
+                    class="group relative flex bg-gradient-to-br from-primary to-accent text-primary-foreground rounded-lg px-2 py-4 no-underline">
             <div
                 class="absolute inset-0 bg-background opacity-25 dark:opacity-50 group-hover:opacity-0 dark:group-hover:opacity-25 duration-300"></div>
             <ArrowBigUp class="relative size-5 shrink-0 mr-2" aria-hidden="true"/>
@@ -75,18 +81,42 @@ const signOut = async () => {
           </NuxtLink>
         </li>
       </transition>
-
       <li>
         <Button variant="ghost" class="w-full justify-start hover:bg-foreground/5 p-2">
-          <MessageSquare class="size-5 shrink-0" aria-hidden="true"/>
+          <MessageSquare class="shrink-0" aria-hidden="true"/>
           <span class="truncate">{{ $t('feedback.give_feedback') }}</span>
         </Button>
       </li>
       <li>
-        <Button @click="signOut" variant="ghost" class="w-full justify-start hover:bg-foreground/5 p-2">
-          <LogOut class="size-5 shrink-0" aria-hidden="true"/>
-          {{ $t('authentication.common.sign_out') }}
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <Button variant="ghost" size="lg" class="w-full justify-start hover:bg-foreground/5 p-2">
+              <Avatar class="h-8 w-8 rounded-lg">
+                <AvatarFallback class="rounded-lg">
+                  {{ initials }}
+                </AvatarFallback>
+              </Avatar>
+              <div class="grid flex-1 text-left text-sm leading-tight">
+                <span class="truncate font-semibold">{{ `${profile.first_name} ${profile.last_name}` }}</span>
+              </div>
+              <ChevronsUpDown class="ml-auto !size-4"/>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent class="min-w-56 rounded-lg">
+            <DropdownMenuGroup>
+              <DropdownMenuItem as-child>
+                <NuxtLink to="/account">
+                  <User/>
+                  {{ $t('authentication.common.account') }}
+                </NuxtLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem @click="signOut">
+                <LogOut/>
+                {{ $t('authentication.common.sign_out') }}
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </li>
     </ul>
   </nav>

@@ -1,7 +1,12 @@
 import {stripe} from "~/server/utils/stripe";
 
+interface Query {
+  stripeCustomerId: string
+  lookupKey: string
+}
+
 export default defineEventHandler(async (event) => {
-  const { stripeCustomerId, lookupKey } = getQuery(event)
+  const { stripeCustomerId, lookupKey } = getQuery<Query>(event)
   const { public: {baseUrl} } = useRuntimeConfig()
 
   if (!lookupKey) {

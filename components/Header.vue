@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Search, Menu, Bell } from 'lucide-vue-next'
-import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
+import { Sheet, SheetTrigger, SheetContent } from '~/components/ui/sheet';
 
 defineProps<{
   pageTitle: string
-  pageSubtitle?: string
+  pageDescription?: string
   // showBreadcrumbs?: boolean
   // customBreadcrumb?: string
 }>()
@@ -31,15 +31,15 @@ watch(useRoute(), () => {
 			</Sheet>
 
       <div class="hidden lg:flex lg:flex-col shrink overflow-hidden mt-1.5">
-        <div v-if="pageSubtitle" class="text-muted-foreground mb-1">{{ pageSubtitle }}</div>
-        <h1 v-if="pageTitle" class="text-2xl leading-[1.2] font-semibold align-middle">{{ pageTitle }}</h1>
+        <h1 v-if="pageTitle" class="h2 align-middle">{{ pageTitle }}</h1>
+        <div v-if="pageDescription" class="text-muted-foreground mt-1">{{ pageDescription }}</div>
       </div>
 
 <!--			<LayoutBreadcrumbs v-if="showBreadcrumbs" :overwrittenRoute="customBreadcrumb" />-->
 
 			<div class="flex gap-x-2">
         <Button variant="ghost" size="icon" :aria-label="$t('common.general.notifications')" class="text-muted-foreground">
-          <Bell class="size-5" aria-hidden="true" />
+          <Bell aria-hidden="true" />
         </Button>
 				<div class="hidden sm:block">
 					<div class="relative w-full max-w-sm items-center">
@@ -50,14 +50,14 @@ watch(useRoute(), () => {
 					</div>
 				</div>
 				<Button variant="ghost" size="icon" class="sm:hidden text-muted-foreground" :aria-label="$t('common.general.search')">
-					<Search class="size-5" aria-hidden="true" />
+					<Search aria-hidden="true" />
 				</Button>
 			</div>
 		</div>
 
     <div class="lg:hidden shrink overflow-hidden pt-7">
-      <div v-if="pageSubtitle" class="text-muted-foreground mt-1">{{ pageSubtitle }}</div>
-      <h1 v-if="pageTitle" class="text-2xl leading-[1.2] font-semibold">{{ pageTitle }}</h1>
+      <h1 v-if="pageTitle" class="h2">{{ pageTitle }}</h1>
+      <div v-if="pageDescription" class="text-muted-foreground mt-1">{{ pageDescription }}</div>
     </div>
 	</header>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {Page} from "~/components/layout/page";
-import {CheckCircle, Loader2} from "lucide-vue-next";
+import {Page} from "../components/ui/page";
+import {CheckCircle, LoaderCircle} from "lucide-vue-next";
 import {Separator} from "~/components/ui/separator";
 import {Dialog, DialogHeader, DialogTitle, DialogFooter} from "~/components/ui/dialog";
 import type {Database} from "~/types/database.types";
@@ -11,6 +11,7 @@ definePageMeta({
 
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
+const notificationStore = useNotificationStore()
 const route = useRoute()
 const {t} = useI18n()
 
@@ -20,6 +21,7 @@ const transationSuccess = ref(false)
 
 const currency = 'EUR'
 
+// TODO - Setup: Configure or remove plans
 const plans = [
   {
     name: 'Free plan',
@@ -66,9 +68,9 @@ const actionText = (lookupKey: string) => {
   return t('pricing.upgrade')
 }
 
-const checkout = async (lookupKey: string) => {
+const checkout = async (lookupKey?: string) => {
   try {
-    loading.value = lookupKey
+    loading.value = lookupKey || ''
     const url = await $fetch('/api/stripe/create-checkout-session', {
       query: {
         lookupKey,
@@ -86,6 +88,10 @@ const checkout = async (lookupKey: string) => {
       })
     }
   } catch (error) {
+    notificationStore.createNotification({
+      type: 'destructive',
+      isError: true,
+    })
     console.error(error)
   } finally {
     loading.value = ''
@@ -115,10 +121,12 @@ onMounted(async () => {
 </script>
 
 <template>
-<Page :title="$t('pricing.pricing')">
+<Page :title="$t('pricing.choose_your_plan')" :description="$t('pricing.ready_to_upgrade')">
+<!--  <h2 class="h1">{{ $t('pricing.choose_your_plan') }}</h2>-->
+<!--  <p class="text-muted-foreground mt-2">{{ $t('pricing.ready_to_upgrade') }}</p>-->
   <div class="grid sm:grid-cols-2 gap-6">
     <div v-for="plan in plans" class="flex flex-col bg-background border rounded-2xl p-6">
-      <h2 class="font-bold text-xl mb-2">{{ plan.name }}</h2>
+      <h3 class="font-bold mb-2">{{ plan.name }}</h3>
       <p class="text-muted-foreground text-sm">{{ plan.description }}</p>
       <div class="flex text-5xl font-semibold mt-6">
         {{ (currency === 'EUR' ? '€' : '$') + plan.pricing }}
@@ -138,11 +146,12 @@ onMounted(async () => {
 <!--        TODO: Add link to manage subscription to button -->
         <Button
             size="lg"
-            class="mt-6"
+            class="w-full sm:w-auto mt-6"
             :variant="!plan.lookupKey ? 'outline' : 'default'"
-            :disabled="profile.plan === plan.lookupKey || loading === plan.lookupKey"
+            :loading="loading === plan.lookupKey"
+            :disabled="profile.plan === plan.lookupKey"
             @click="!plan.lookupKey ? null : checkout(plan.lookupKey)">
-          <Loader2 v-if="loading === plan.lookupKey" class="size-5 animate-spin"/>
+          <LoaderCircle v-if="loading === plan.lookupKey" class="animate-spin"/>
           {{ actionText(plan.lookupKey) }}
         </Button>
       </div>

@@ -2,7 +2,6 @@
 import {toTypedSchema} from "@vee-validate/zod";
 import {z} from "zod";
 import {useForm} from "vee-validate";
-import {LoaderCircle} from "lucide-vue-next";
 import type {Database, Tables} from "~/types/database.types";
 
 const props = defineProps<{

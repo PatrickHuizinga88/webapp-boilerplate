@@ -3,7 +3,7 @@ import {StatCard} from "~/components/ui/stat-card";
 import {Card} from "~/components/ui/card";
 import {Avatar, AvatarFallback} from "~/components/ui/avatar";
 import {ArrowRight} from 'lucide-vue-next';
-import {Page} from "~/components/layout/page";
+import {Page} from "../components/ui/page";
 import type {Database} from "~/types/database.types";
 
 definePageMeta({
@@ -62,7 +62,7 @@ const initials = (firstName: string, lastName: string) => {
 
 <template>
   <Page :title="`${$t('dashboard.welcome')}, ${profile?.first_name || 'common.general.guest'}! 👋`">
-    <div v-if="statistics" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+    <div v-if="statistics" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
       <StatCard :title="$t('customers.customers', 2)" :stat="statistics.customersCount" :difference="12.5"
                 :subtitle="lowercase($t('dashboard.compared_to_last_week'))"/>
       <StatCard :title="$t('users.users', 2)" :stat="10"/>
@@ -70,10 +70,10 @@ const initials = (firstName: string, lastName: string) => {
                 :stat="statistics.lastSignIn"/>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-3 gap-4 mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-3 gap-6 mb-4">
       <Card class="col-span-full xl:col-span-2">
         <template #header>
-          <h3 class="font-medium">
+          <h3 class="text-base font-medium">
             {{ $t('dashboard.revenue_history') }}
           </h3>
         </template>

@@ -48,15 +48,15 @@ export const useNotificationStore = defineStore('notificationStore', {
         }
 
         const { action, item } = props;
-        return useT(actionContent[action][type], {item});
+        return useT(actionContent[action][type], {item: lowercase(item)});
       }
 
       this.notifications.push(
         {
           id,
           type,
-          title: getNotificationText('title'),
-          description: getNotificationText('description')
+          title: capitalizeSentence(getNotificationText('title')),
+          description: capitalizeSentence(getNotificationText('description'))
         }
       )
 

@@ -3,7 +3,7 @@ import {Trash, Pencil} from 'lucide-vue-next'
 import {useNotificationStore} from "~/stores/notificationStore";
 import {Card} from "~/components/ui/card";
 import type User from "~/types/User";
-import {Page, PageActions, PageBackButton, PageHeader} from "~/components/layout/page";
+import {Page, PageActions, PageBackButton, PageHeader} from "../../../components/ui/page";
 
 definePageMeta({
   layout: 'default-sidebar',

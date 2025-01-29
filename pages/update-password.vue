@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {Loader2} from 'lucide-vue-next'
 import {useI18n} from 'vue-i18n'
 import Authentication from "~/layouts/authentication.vue";
 
@@ -85,11 +84,7 @@ const updatePassword = async () => {
             required/>
       </div>
 
-      <Button type="submit" :disabled="loading" class="w-full">
-        <div v-if="loading" role="status">
-          <Loader2 class="size-5 animate-spin"/>
-          <span class="sr-only">{{ t('common.general.loading') }}...</span>
-        </div>
+      <Button type="submit" :loading="loading" class="w-full">
         {{ t('authentication.password_recovery.update_password') }}
       </Button>
 

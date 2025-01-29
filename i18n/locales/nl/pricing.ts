@@ -3,8 +3,11 @@ export default {
     pricing: "Prijzen",
 
     check_our_pricing_model: "Bekijk ons prijsmodel.",
+    choose_your_plan: "Kies uw pakket",
     current_plan: "Huidig plan",
     downgrade: "Downgraden",
+    ready_to_upgrade: "Klaar om te upgraden? Kies het pakket dat het beste bij u past.",
+    subscription: "Abonnement",
     upgrade: "Upgraden",
     upgrade_now: "Nu upgraden",
 

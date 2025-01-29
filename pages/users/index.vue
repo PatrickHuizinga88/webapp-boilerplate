@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type User from '~/types/User'
 import { PlusCircle } from 'lucide-vue-next'
-import {Page, PageActions, PageHeader} from "~/components/layout/page";
+import {Page, PageActions, PageHeader} from "../../components/ui/page";
 import {SkeletonTable} from "~/components/ui/skeleton";
 
 definePageMeta({

@@ -10,14 +10,14 @@ defineProps<{
 </script>
 
 <template>
-    <div class="bg-card border rounded-2xl shadow-md shadow-black/5 p-6">
-        <h3 class="font-semibold mb-4">
+    <div class="bg-card border rounded-2xl shadow shadow-black/5 p-6">
+        <h3 class="h4 mb-4">
           {{ title }}
         </h3>
         <div class="flex items-end">
           <div class="mt-4">
             <div class="flex items-center">
-              <span class="text-2xl font-semibold">
+              <span class="h2">
                 {{ stat || '-' }}
               </span>
               <div v-if="difference" :class="[difference > 0 ? 'text-success' : 'text-destructive', 'inline-flex items-center text-xs font-medium ml-2.5']">

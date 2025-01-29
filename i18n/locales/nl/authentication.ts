@@ -1,6 +1,7 @@
 export default {
   authentication: {
     common: {
+      account: "Account",
       password: 'Wachtwoord',
       sign_in: "Inloggen",
       sign_out: "Uitloggen",

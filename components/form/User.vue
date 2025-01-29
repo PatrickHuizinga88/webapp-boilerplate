@@ -108,8 +108,7 @@ const onSubmit = form.handleSubmit(async (values) => {
       </FormItem>
     </FormField>
 
-    <Button :disabled="loading" class="w-full lg:w-auto">
-      <LoaderCircle v-if="loading" class="size-5 animate-spin" />
+    <Button :loading="loading" class="w-full lg:w-auto">
       {{ $t('common.actions.save', {item: lowercase($t('users.users'))}) }}
     </Button>
   </form>

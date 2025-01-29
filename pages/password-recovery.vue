@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ArrowRight, Loader2} from 'lucide-vue-next'
+import {ArrowRight, LoaderCircle} from 'lucide-vue-next'
 import Authentication from "~/layouts/authentication.vue";
 
 definePageMeta({
@@ -58,11 +58,7 @@ const resetPassword = async () => {
             required/>
       </div>
 
-      <Button type="submit" :disabled="loading" class="w-full">
-        <div v-if="loading" role="status">
-          <Loader2 class="size-5 animate-spin"/>
-          <span class="sr-only">{{ $t('common.general.loading') }}...</span>
-        </div>
+      <Button type="submit" :loading="loading" class="w-full">
         {{ $t('authentication.password_recovery.send_recovery_link') }}
       </Button>
     </form>

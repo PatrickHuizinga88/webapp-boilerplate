@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Page} from "~/components/layout/page";
+import {Page} from "../../components/ui/page";
 
 definePageMeta({
   layout: 'default-sidebar'

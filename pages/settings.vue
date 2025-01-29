@@ -2,8 +2,7 @@
 import {toTypedSchema} from "@vee-validate/zod";
 import {z} from "zod";
 import {useForm} from "vee-validate";
-import {Loader2} from "lucide-vue-next";
-import {Page} from "~/components/layout/page";
+import {Page} from "../components/ui/page";
 
 definePageMeta({
   layout: 'default-sidebar'
@@ -105,8 +104,7 @@ onMounted(() => {
         </FormItem>
       </FormField>
       <div class="flex flex-col items-start sm:flex-row sm:items-center gap-2 sm:gap-4">
-        <Button :disabled="loading">
-          <Loader2 v-if="loading" class="size-5 animate-spin"/>
+        <Button :loading="loading">
           {{ $t('common.actions.save', {item: lowercase($t('settings.settings', 2))}) }}
         </Button>
         <p class="text-sm text-muted-foreground">{{ $t('settings.refresh_page') }}</p>

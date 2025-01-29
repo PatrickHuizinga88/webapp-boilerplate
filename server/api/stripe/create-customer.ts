@@ -11,6 +11,6 @@ export default defineEventHandler(async (event) => {
   }
 
   return await stripe.customers.create({
-    email,
+    email: email as string,
   })
 })
