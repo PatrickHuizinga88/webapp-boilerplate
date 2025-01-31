@@ -7,6 +7,10 @@ export default {
       sign_out: "Uitloggen",
       toggle_password_visibility: "Wachtwoord zichtbaarheid wisselen",
     },
+    validations: {
+      email: "Dit is geen geldig e-mailadres",
+      password_length: "Wachtwoord moet minimaal {length} tekens lang zijn",
+    },
     login: {
       forgot_password: "Wachtwoord vergeten?",
       no_account: "Heb je geen account?",

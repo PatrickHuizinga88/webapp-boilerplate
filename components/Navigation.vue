@@ -20,13 +20,13 @@ const navigation = [
   }
 ]
 
-const {data: profile} = await useLazyAsyncData('profile', async () => {
+const {data: profile} = await useAsyncData('navigationProfile', async () => {
   const {data} = await supabase.from('profiles').select('first_name,last_name,plan').filter('id', 'eq', user.value?.id).single()
   return data
 })
 
 const initials = computed(() => {
-  if (!profile.value) return ''
+  if (!profile.value.first_name || !profile.value.last_name) return ''
   return profile.value.first_name.charAt(0) + profile.value.last_name.charAt(0)
 })
 
@@ -49,7 +49,7 @@ const signOut = async () => {
     <ul role="list" class="flex flex-1 flex-col divide-y divide-border">
       <li v-for="category in navigation" :key="category.name" class="py-7 first:pt-0">
         <div class="text-xs leading-6 text-muted-foreground">{{ category.name }}</div>
-        <ul role="list" class="-mx-2 mt-4 space-y-1">
+        <ul role="list" class="-mx-2 mt-2 space-y-1">
           <li v-for="link in category.links" :key="link.name">
             <Button as-child variant="ghost" class="w-full justify-start hover:bg-foreground/5 p-2">
               <NuxtLinkLocale :href="link.url" active-class="bg-foreground/5" :class="isCurrentOrChildRoute(link.url)">
@@ -97,7 +97,10 @@ const signOut = async () => {
                 </AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">
-                <span class="truncate font-semibold">{{ `${profile.first_name} ${profile.last_name}` }}</span>
+                <span class="truncate font-semibold">
+                  <template v-if="profile">{{ `${profile.first_name} ${profile.last_name}` }}</template>
+                  <template v-else>{{ user.email }}</template>
+                </span>
               </div>
               <ChevronsUpDown class="ml-auto !size-4"/>
             </Button>

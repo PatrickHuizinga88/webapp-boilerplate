@@ -22,6 +22,7 @@ export default {
       add: "Add {item}",
       back_to: "Back to {item}",
       cancel: "Cancel",
+      close: "Close",
       delete: "Delete {item}",
       edit: "Edit {item}",
       save: "Save {item}",

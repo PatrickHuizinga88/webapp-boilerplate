@@ -46,7 +46,7 @@ const signUp = async () => {
 
     if (!customerId) throw new Error('Failed to create customer')
 
-    const {data, error: authError} = await supabase.auth.signUp({
+    const {error} = await supabase.auth.signUp({
       email: form.email,
       password: form.password,
       options: {
@@ -57,17 +57,8 @@ const signUp = async () => {
       }
     })
 
-    if (authError) {
-      throw authError
-    }
-
-    const {error: profileError} = await supabase.from('profiles').insert({
-      id: data.user?.id,
-      plan: 'free',
-    })
-
-    if (profileError) {
-      throw profileError
+    if (error) {
+      throw error
     }
 
     success.value = true

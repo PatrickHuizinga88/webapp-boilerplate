@@ -11,22 +11,46 @@ const props = defineProps<{
 
 const notificationStore = useNotificationStore()
 const supabase = useSupabaseClient<Database>()
+const user = useSupabaseUser()
 const {t} = useI18n()
 
+const loading = ref(false)
 const emailDialogOpen = ref(false)
+const passwordDialogOpen = ref(false)
 const emailSuccess = ref(false)
+const fakePassword = ref('************')
+const passwordChangeMessage = ref('')
+const loadingPassword = ref(false)
 
-const formSchema = toTypedSchema(z.object({
-  email: z.string(),
+const formSchemaEmail = toTypedSchema(z.object({
+  email: z.string().email({
+    message: t('authentication.validations.email')
+  }),
 }))
 
-const initialValues = {
+const formSchemaPassword = toTypedSchema(z.object({
+  current_password: z.string().min(6, {
+    message: t('authentication.validations.password_length', {length: 6})
+  }),
+  new_password: z.string().min(6, {
+    message: t('authentication.validations.password_length', {length: 6})
+  }),
+  repeated_password: z.string().min(6, {
+    message: t('authentication.validations.password_length', {length: 6})
+  }),
+}))
+
+const initialValuesEmail = {
   email: props.email,
 }
 
-const loading = ref(false)
+const initialValuesPassword = {
+  current_password: '',
+  new_password: '',
+  repeated_password: '',
+}
 
-const onSubmit = async (values: any) => {
+const onEmailSubmit = async (values: any) => {
   try {
     loading.value = true
     const {error} = await supabase.auth.updateUser({
@@ -51,12 +75,46 @@ const onSubmit = async (values: any) => {
     loading.value = false
   }
 }
+
+const onPasswordSubmit = async (values: any) => {
+  try {
+    loadingPassword.value = true
+    if (values.new_password !== values.repeated_password) {
+      passwordChangeMessage.value = 'De nieuwe wachtwoorden komen niet overeen.'
+      return
+    }
+    const {data, error: verificationError} = await supabase.rpc('verify_password', {
+      current_plain_password: values.current_password,
+      current_id: user.value?.id
+    })
+    if (data === 'incorrect') {
+      passwordChangeMessage.value = 'Het huidige wachtwoord is onjuist.'
+      return
+    }
+    if (verificationError) throw verificationError
+    const {error: updateError} = await supabase.auth.updateUser({
+      password: values.new_password,
+    })
+    if (updateError) throw updateError
+    passwordChangeMessage.value = ''
+    passwordDialogOpen.value = false
+    notificationStore.createNotification({
+      type: 'success',
+      action: 'save',
+      item: t('authentication.common.password'),
+    })
+  } catch (error) {
+    console.error(error)
+  } finally {
+    loadingPassword.value = false
+  }
+}
 </script>
 
 <template>
-  <div class="grid sm:grid-cols-2">
+  <div class="grid sm:grid-cols-2 gap-6">
     <div>
-      <div class="space-y-1 5">
+      <div class="space-y-1.5">
         <Label>{{ $t('common.general.email') }}</Label>
         <Input type="email" placeholder="name@example.com" v-model="props.email" disabled/>
       </div>
@@ -67,7 +125,7 @@ const onSubmit = async (values: any) => {
           Please click on the links sent to your old and new email address to confirm this change.
         </AlertDescription>
       </Alert>
-      <Form v-slot="{ handleSubmit }" as="" keep-values :initial-values="initialValues" :validation-schema="formSchema">
+      <Form v-slot="{ handleSubmit }" as="" keep-values :initial-values="initialValuesEmail" :validation-schema="formSchemaEmail">
         <Dialog v-model:open="emailDialogOpen">
           <DialogTrigger as-child>
             <Button variant="outline" size="sm" class="w-full mt-4">
@@ -78,7 +136,7 @@ const onSubmit = async (values: any) => {
             <DialogHeader>
               <DialogTitle>{{ $t('common.actions.edit', {item: lowercase($t('common.general.email'))}) }}</DialogTitle>
             </DialogHeader>
-            <form id="dialogForm" @submit="handleSubmit($event, onSubmit)" class="grid gap-4">
+            <form id="emailForm" @submit="handleSubmit($event, onEmailSubmit)" class="grid gap-4">
               <FormField v-slot="{ componentField }" name="email">
                 <FormItem>
                   <FormLabel>{{ $t('common.general.email') }}</FormLabel>
@@ -89,11 +147,66 @@ const onSubmit = async (values: any) => {
                 </FormItem>
               </FormField>
               <DialogFooter>
-                <Button type="submit" :loading="loading" class="w-full">
+                <Button type="submit" :loading="loading" class="w-full" form="emailForm">
                   {{ $t('common.actions.save', {item: lowercase($t('common.general.email'))}) }}
                 </Button>
               </DialogFooter>
             </form>
+          </DialogContent>
+        </Dialog>
+      </Form>
+    </div>
+    <div>
+      <div class="space-y-1.5">
+        <Label>{{ $t('authentication.common.password') }}</Label>
+        <Input type="password" v-model="fakePassword" disabled/>
+      </div>
+      <Form v-slot="{ handleSubmit }" as="" keep-values :initial-values="initialValuesPassword" :validation-schema="formSchemaPassword">
+        <Dialog v-model:open="passwordDialogOpen">
+          <DialogTrigger as-child>
+            <Button variant="outline" size="sm" class="w-full mt-4">{{ $t('common.actions.edit', {item: lowercase($t('authentication.common.password'))}) }}</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader class="text-left">
+              <DialogTitle>{{ $t('common.actions.edit', {item: lowercase($t('authentication.common.password'))}) }}</DialogTitle>
+            </DialogHeader>
+            <form id="passwordForm" @submit="handleSubmit($event, onPasswordSubmit)" class="space-y-4">
+              <FormField v-slot="{ componentField }" name="current_password">
+                <FormItem>
+                  <FormLabel>{{ $t('account.account_information.current_password') }}</FormLabel>
+                  <FormControl>
+                    <PasswordInput v-bind="componentField"/>
+                  </FormControl>
+                  <FormMessage/>
+                </FormItem>
+              </FormField>
+              <FormField v-slot="{ componentField }" name="new_password">
+                <FormItem>
+                  <FormLabel>{{ $t('authentication.password_recovery.new_password') }}</FormLabel>
+                  <FormControl>
+                    <PasswordInput v-bind="componentField"/>
+                  </FormControl>
+                  <FormMessage/>
+                </FormItem>
+              </FormField>
+              <FormField v-slot="{ componentField }" name="repeated_password">
+                <FormItem>
+                  <FormLabel>{{ $t('authentication.password_recovery.confirm_password') }}</FormLabel>
+                  <FormControl>
+                    <PasswordInput v-bind="componentField"/>
+                  </FormControl>
+                  <FormMessage/>
+                </FormItem>
+              </FormField>
+            </form>
+
+            <p v-if="passwordChangeMessage" class="text-sm text-destructive">{{ passwordChangeMessage }}</p>
+
+            <DialogFooter>
+              <Button type="submit" class="w-full" form="passwordForm" :loadng="loadingPassword">
+                {{ $t('common.actions.save', {item: lowercase($t('authentication.common.password'))}) }}
+              </Button>
+            </DialogFooter>
           </DialogContent>
         </Dialog>
       </Form>

@@ -2,72 +2,52 @@
 import {toTypedSchema} from "@vee-validate/zod";
 import {z} from "zod";
 import {useForm} from "vee-validate";
-import type {Database, Tables} from "~/types/database.types";
+import type {Database} from "~/types/database.types";
 
 const props = defineProps<{
-  customer?: Tables<'customers'>
+  first_name: string
+  last_name: string
 }>()
 
-const notificationStore = useNotificationStore()
 const supabase = useSupabaseClient<Database>()
+const user = useSupabaseUser()
+const notificationStore = useNotificationStore()
+const {t} = useI18n()
+
+const loading = ref(false)
 
 const formSchema = toTypedSchema(z.object({
   first_name: z.string(),
-  last_name: z.string(),
-  email: z.string(),
-  phone_number: z.string().optional(),
-  address: z.string().optional(),
-  postal_code: z.string().optional(),
-  city: z.string().optional(),
-  country: z.string().optional(),
+  last_name: z.string()
 }))
 
 const form = useForm({
   initialValues: {
-    first_name: props.customer?.first_name,
-    last_name: props.customer?.last_name,
-    email: props.customer?.email,
-    phone_number: props.customer?.phone_number,
-    address: props.customer?.address,
-    postal_code: props.customer?.postal_code,
-    city: props.customer?.city,
-    country: props.customer?.country,
+    first_name: props.first_name || '',
+    last_name: props.last_name || '',
   },
   validationSchema: formSchema,
 })
 
-const loading = ref(false)
-
 const onSubmit = form.handleSubmit(async (values) => {
   try {
     loading.value = true
-    const {data, error} = await supabase.from('customers').upsert({
-      id: props.customer?.id,
+    const {error} = await supabase.from('profiles').update({
       first_name: values.first_name,
       last_name: values.last_name,
-      email: values.email,
-      phone_number: values.phone_number,
-      address: values.address,
-      postal_code: values.postal_code,
-      city: values.city,
-      country: values.country,
-    }, {
-      onConflict: 'id'
-    }).select()
+    }).eq('id', user.value?.id)
     if (error) throw error
     notificationStore.createNotification({
       type: 'success',
       action: 'save',
-      item: `${values.first_name} ${values.last_name}`
+      item: t('account.profile.profile'),
     })
-    navigateTo(`/customers/${data[0].id}`)
   } catch (error) {
     notificationStore.createNotification({
       type: 'destructive',
       action: 'save',
-      item: `${values.first_name} ${values.last_name}`
+      item: t('account.profile.profile'),
     })
-    console.error(error)
   } finally {
     loading.value = false
   }
@@ -79,95 +59,25 @@ const onSubmit = form.handleSubmit(async (values) => {
     <div class="grid sm:grid-cols-2 gap-6">
       <FormField v-slot="{ componentField }" name="first_name">
         <FormItem>
-          <FormLabel>{{ $t('customers.first_name') }}</FormLabel>
+          <FormLabel>{{ $t('account.profile.first_name') }}</FormLabel>
           <FormControl>
-            <Input v-bind="componentField"/>
+            <Input type="text" placeholder="John" v-bind="componentField"/>
           </FormControl>
           <FormMessage/>
         </FormItem>
       </FormField>
       <FormField v-slot="{ componentField }" name="last_name">
         <FormItem>
-          <FormLabel>{{ $t('customers.last_name') }}</FormLabel>
+          <FormLabel>{{ $t('account.profile.last_name') }}</FormLabel>
           <FormControl>
-            <Input v-bind="componentField"/>
+            <Input type="text" placeholder="Doe" v-bind="componentField"/>
           </FormControl>
           <FormMessage/>
         </FormItem>
       </FormField>
     </div>
-    <div class="grid sm:grid-cols-2 gap-6">
-      <FormField v-slot="{ componentField }" name="email">
-        <FormItem>
-          <FormLabel>{{ $t('common.general.email') }}</FormLabel>
-          <FormControl>
-            <Input type="email" v-bind="componentField"/>
-          </FormControl>
-          <FormMessage/>
-        </FormItem>
-      </FormField>
-      <FormField v-slot="{ componentField }" name="phone_number">
-        <FormItem>
-          <FormLabel>{{ $t('customers.phone_number') }}</FormLabel>
-          <FormControl>
-            <Input type="tel" v-bind="componentField"/>
-          </FormControl>
-          <FormMessage/>
-        </FormItem>
-      </FormField>
-    </div>
-    <FormField v-slot="{ componentField }" name="address">
-      <FormItem>
-        <FormLabel>{{ $t('customers.address') }}</FormLabel>
-        <FormControl>
-          <Input v-bind="componentField"/>
-        </FormControl>
-        <FormMessage/>
-      </FormItem>
-    </FormField>
-    <div class="grid sm:grid-cols-2 gap-6">
-      <FormField v-slot="{ componentField }" name="city">
-        <FormItem>
-          <FormLabel>{{ $t('customers.city') }}</FormLabel>
-          <FormControl>
-            <Input v-bind="componentField"/>
-          </FormControl>
-          <FormMessage/>
-        </FormItem>
-      </FormField>
-      <FormField v-slot="{ componentField }" name="country">
-        <FormItem>
-          <FormLabel>{{ $t('customers.country') }}</FormLabel>
-          <FormControl>
-            <Input v-bind="componentField"/>
-          </FormControl>
-          <FormMessage/>
-        </FormItem>
-      </FormField>
-    </div>
-    <div class="grid sm:grid-cols-2 gap-6">
-      <FormField v-slot="{ componentField }" name="state">
-        <FormItem>
-          <FormLabel>{{ $t('customers.state') }}</FormLabel>
-          <FormControl>
-            <Input v-bind="componentField"/>
-          </FormControl>
-          <FormMessage/>
-        </FormItem>
-      </FormField>
-      <FormField v-slot="{ componentField }" name="postal_code">
-        <FormItem>
-          <FormLabel>{{ $t('customers.postal_code') }}</FormLabel>
-          <FormControl>
-            <Input v-bind="componentField"/>
-          </FormControl>
-          <FormMessage/>
-        </FormItem>
-      </FormField>
-    </div>
-
-    <Button :loading="loading" class="w-full lg:w-auto">
-      {{ $t('common.actions.save', {item: lowercase($t('customers.customers'))}) }}
+    <Button :loading="loading" size="sm">
+      {{ $t('common.actions.save', {item: lowercase($t('account.profile.profile'))}) }}
     </Button>
   </form>
 </template>

@@ -11,6 +11,12 @@ export default {
     upgrade: "Upgraden",
     upgrade_now: "Nu upgraden",
 
+    plans: {
+      free: "Gratis",
+      premium_monthly: "Premium",
+      premium_yearly: "Premium",
+    },
+
     upgrade_confirmation: {
       title: {
         success: "Aankoop succesvol",

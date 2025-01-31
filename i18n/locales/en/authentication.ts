@@ -7,6 +7,10 @@ export default {
       sign_out: "Logout",
       toggle_password_visibility: "Toggle password visibility",
     },
+    validations: {
+      email: "This is not a valid email address",
+      password_length: "Password must be at least {length} characters long",
+    },
     login: {
       forgot_password: "Forgot password?",
       no_account: "Don't have an account?",

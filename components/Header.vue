@@ -17,8 +17,8 @@ watch(useRoute(), () => {
 </script>
 
 <template>
-	<header class="py-6 lg:pb-10">
-		<div class="flex justify-between items-start gap-6">
+	<header class="pb-8 pt-6">
+		<div class="flex justify-between items-start gap-6 lg:h-16">
 			<Sheet v-model:open="open">
 				<SheetTrigger as-child>
 					<Button variant="ghost" size="icon" aria-label="Toggle navigation menu" class="shrink-0 lg:hidden -ml-2">
@@ -32,7 +32,7 @@ watch(useRoute(), () => {
 
       <div class="hidden lg:flex lg:flex-col shrink overflow-hidden mt-1.5">
         <h1 v-if="pageTitle" class="h2 align-middle">{{ pageTitle }}</h1>
-        <div v-if="pageDescription" class="text-muted-foreground mt-1">{{ pageDescription }}</div>
+        <div v-if="pageDescription" class="text-muted-foreground text-sm mt-0.5">{{ pageDescription }}</div>
       </div>
 
 <!--			<LayoutBreadcrumbs v-if="showBreadcrumbs" :overwrittenRoute="customBreadcrumb" />-->
@@ -57,7 +57,7 @@ watch(useRoute(), () => {
 
     <div class="lg:hidden shrink overflow-hidden pt-7">
       <h1 v-if="pageTitle" class="h2">{{ pageTitle }}</h1>
-      <div v-if="pageDescription" class="text-muted-foreground mt-1">{{ pageDescription }}</div>
+      <div v-if="pageDescription" class="text-muted-foreground text-sm mt-0.5">{{ pageDescription }}</div>
     </div>
 	</header>
 </template>

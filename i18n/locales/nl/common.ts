@@ -22,6 +22,7 @@ export default {
       add: "Voeg {item} toe",
       back_to: "Terug naar {item}",
       cancel: "Annuleren",
+      close: "Sluiten",
       delete: "Verwijder {item}",
       edit: "Bewerk {item}",
       save: "Bewaar {item}",

@@ -18,12 +18,26 @@ const {t} = useI18n()
 const loading = ref(false)
 
 const formSchema = toTypedSchema(z.object({
-  first_name: z.string().optional(),
-  last_name: z.string().optional(),
+  first_name: z.string().min(2),
+  last_name: z.string().min(2),
 }))
 
 const {handleSubmit} = useForm({
   validationSchema: formSchema,
+})
+
+console.log(user.value)
+
+await useAsyncData('profile', async () => {
+  const {data} = await supabase.from('profiles').upsert(
+      {
+        id: user.value?.id
+      },
+      {
+        onConflict: 'id'
+      }
+  )
+  return data
 })
 
 const onSubmit = handleSubmit(async (values) => {
@@ -59,24 +73,27 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <Authentication :title="$t('profile.welcome_to', {appName: APP_NAME})" :description="$t('profile.lets_start_with_your_profile')">
+  <Authentication :title="$t('account.profile.welcome_to', {appName: APP_NAME})"
+                  :description="$t('account.profile.lets_start_with_your_profile')">
     <form @submit="onSubmit" class="space-y-6">
       <section id="profile-settings" class="space-y-6">
         <div class="grid grid-cols-2 gap-4">
           <FormField v-slot="{ componentField }" name="first_name">
             <FormItem>
-              <FormLabel>{{ $t('profile.first_name') }}</FormLabel>
+              <FormLabel>{{ $t('account.profile.first_name') }}</FormLabel>
               <FormControl>
                 <Input type="text" v-bind="componentField"/>
               </FormControl>
+              <FormMessage/>
             </FormItem>
           </FormField>
           <FormField v-slot="{ componentField }" name="last_name">
             <FormItem>
-              <FormLabel>{{ $t('profile.last_name') }}</FormLabel>
+              <FormLabel>{{ $t('account.profile.last_name') }}</FormLabel>
               <FormControl>
                 <Input type="text" v-bind="componentField"/>
               </FormControl>
+              <FormMessage/>
             </FormItem>
           </FormField>
         </div>
