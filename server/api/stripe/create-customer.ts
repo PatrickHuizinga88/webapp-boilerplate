@@ -10,6 +10,15 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const {data: customers} = await stripe.customers.search({
+    query: `email:"${email}"`,
+    limit: 1,
+  });
+
+  if (customers.length) {
+    return customers[0];
+  }
+
   return await stripe.customers.create({
     email: email as string,
   })

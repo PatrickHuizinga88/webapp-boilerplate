@@ -1,28 +1,37 @@
 <script setup lang="ts">
 import {ArrowRight} from 'lucide-vue-next'
 import {PasswordInput} from "~/components/ui/password-input";
+import {toTypedSchema} from "@vee-validate/zod";
+import * as z from "zod";
+import {useForm} from "vee-validate";
 
 definePageMeta({
   layout: false,
-  layoutTransition: 'fade'
 })
 
 const supabase = useSupabaseClient()
 const {t} = useI18n()
 
-const form = reactive({
-  email: '',
-  password: ''
-})
 const errorMessage = ref('')
 const loading = ref(false)
 
-const signIn = async () => {
+const formSchema = toTypedSchema(z.object({
+  email: z
+      .string({message: t('common.validations.required')})
+      .email({message: t('authentication.validations.email')}),
+  password: z.string({message: t('common.validations.required')}),
+}))
+
+const form = useForm({
+  validationSchema: formSchema,
+})
+
+const onSubmit = form.handleSubmit(async (values) => {
   try {
     loading.value = true
     const {error} = await supabase.auth.signInWithPassword({
-      email: form.email,
-      password: form.password
+      email: values.email,
+      password: values.password
     })
     if (error) {
       loading.value = false
@@ -33,41 +42,41 @@ const signIn = async () => {
     errorMessage.value = t('authentication.login.sign_in_failed')
     console.error(error)
   }
-}
+})
 </script>
 
 <template>
   <div>
     <NuxtLayout name="authentication" :title="$t('authentication.common.sign_in')">
 
-      <form class="space-y-6" @submit.prevent="signIn">
-        <div>
-          <Label for="email" class="block text-sm font-medium leading-6">{{ $t('common.general.email') }}</Label>
-          <Input
-              v-model="form.email"
-              id="email"
-              name="email"
-              type="email"
-              required/>
-        </div>
-
-        <div>
-          <div class="flex items-center justify-between">
-            <Label for="password" class="block text-sm font-medium leading-6">{{
-                $t('authentication.common.password')
-              }}</Label>
-            <Button variant="link" size="sm" class="h-auto p-0 mb-1.5" as-child>
-              <NuxtLinkLocale to="password-recovery">
-                {{ $t('authentication.login.forgot_password') }}
-              </NuxtLinkLocale>
-            </Button>
-          </div>
-          <PasswordInput
-              v-model="form.password"
-              id="password"
-              name="password"
-              required/>
-        </div>
+      <form class="space-y-6" @submit="onSubmit">
+        <FormField v-slot="{ componentField }" :validate-on-blur="false" name="email">
+          <FormItem>
+            <FormLabel>{{ $t('common.general.email') }}</FormLabel>
+            <FormControl>
+              <Input v-bind="componentField" type="email"/>
+            </FormControl>
+            <FormMessage/>
+          </FormItem>
+        </FormField>
+        <FormField v-slot="{ componentField }" :validate-on-blur="false" name="password">
+          <FormItem>
+            <div class="flex items-center justify-between">
+              <FormLabel>
+                {{ $t('authentication.common.password') }}
+              </FormLabel>
+              <Button type="button" variant="link" size="sm" class="h-auto p-0" as-child>
+                <NuxtLinkLocale to="password-recovery">
+                  {{ $t('authentication.login.forgot_password') }}
+                </NuxtLinkLocale>
+              </Button>
+            </div>
+            <FormControl>
+              <PasswordInput v-bind="componentField"/>
+            </FormControl>
+            <FormMessage/>
+          </FormItem>
+        </FormField>
 
         <Button type="submit" :loading="loading" class="w-full">
           {{ $t('authentication.common.sign_in') }}

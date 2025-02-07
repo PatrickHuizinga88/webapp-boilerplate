@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ArrowRight, LoaderCircle} from 'lucide-vue-next'
+import {ArrowRight} from 'lucide-vue-next'
 import Authentication from "~/layouts/authentication.vue";
 
 definePageMeta({

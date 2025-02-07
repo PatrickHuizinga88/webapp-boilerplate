@@ -3,7 +3,6 @@ import type User from '~/types/User'
 import {toTypedSchema} from "@vee-validate/zod";
 import {z} from "zod";
 import {useForm} from "vee-validate";
-import {LoaderCircle} from "lucide-vue-next";
 
 const props = defineProps<{
   user?: User
