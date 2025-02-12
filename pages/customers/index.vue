@@ -22,15 +22,30 @@ const supabase = useSupabaseClient<Database>()
 const notificationStore = useNotificationStore()
 const {t} = useI18n()
 
+const searchQuery = ref('')
 const startRange = ref(0)
 const endRange = ref(8)
 
-const {data: customers, status} = useAsyncData(async () => {
+const nextPage = () => {
+  startRange.value = endRange.value
+  endRange.value += 8
+}
+
+const previousPage = () => {
+  startRange.value -= 8
+  endRange.value -= 8
+}
+
+const currentPage = computed(() => Math.ceil(endRange.value / 8))
+const totalPages = computed(() => Math.ceil((customers.value?.count ?? 0) / 8))
+
+const {data: customers, status} = await useLazyAsyncData(async () => {
   try {
     const {count, data, error} = await supabase
       .from('customers')
       .select('*', {count: 'exact'})
       .order('created_at', {ascending: false})
+      .ilike('last_name', `%${searchQuery.value}%`)
       .range(startRange.value, endRange.value)
     if (error) throw error
     return {
@@ -45,12 +60,18 @@ const {data: customers, status} = useAsyncData(async () => {
     })
     console.error(error)
   }
+}, {
+  watch: [startRange, searchQuery]
 })
 </script>
 
 <template>
   <Page :title="$t('customers.customers', 2)">
-    <PageHeader class="justify-end">
+    <PageHeader>
+      <Input
+          v-model="searchQuery"
+          :placeholder="$t('common.general.search')"
+          class="w-64"/>
       <PageActions>
         <Button size="sm" as-child>
           <NuxtLink to="/customers/create">
@@ -105,30 +126,21 @@ const {data: customers, status} = useAsyncData(async () => {
           </div>
         </div>
       </div>
-<!--      <Pagination v-slot="{ page }" :total="customers.count || 0" :items-per-page="8" show-edges :default-page="1">-->
-<!--        <PaginationList v-slot="{ items }" class="flex items-center gap-1">-->
-<!--          <PaginationFirst />-->
-<!--          <PaginationPrev />-->
-
-<!--          <template v-for="(item, index) in items">-->
-<!--            <PaginationListItem v-if="item.type === 'page'" :key="index" :value="item.value" as-child>-->
-<!--              <Button class="w-10 h-10 p-0" :variant="item.value === page ? 'default' : 'outline'">-->
-<!--                {{ item.value }}-->
-<!--              </Button>-->
-<!--            </PaginationListItem>-->
-<!--            <PaginationEllipsis v-else :key="item.type" :index="index" />-->
-<!--          </template>-->
-
-<!--          <PaginationNext />-->
-<!--          <PaginationLast />-->
-<!--        </PaginationList>-->
-<!--      </Pagination>-->
+      <div class="flex justify-end items-center gap-x-6 mt-4">
+        <div class="text-sm text-muted-foreground">{{ `${$t('common.pagination.page')} ${currentPage} ${$t('common.pagination.of')} ${totalPages}`}}</div>
+        <Pagination :total="customers.count || 0" :items-per-page="8" show-edges>
+          <PaginationList class="flex items-center gap-2">
+            <PaginationPrev @click="previousPage"/>
+            <PaginationNext @click="nextPage"/>
+          </PaginationList>
+        </Pagination>
+      </div>
     </div>
     <template v-else-if="status === 'pending'">
       <SkeletonTable :columns="2"/>
     </template>
     <div v-else class="w-full text-center">{{
-        $t('common.general.no_records_found', {item: $t('customers.customers', 2)})
+        $t('common.general.no_records_found', {item: lowercase($t('customers.customers', 2))})
       }}
     </div>
   </Page>

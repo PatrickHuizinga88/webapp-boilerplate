@@ -26,7 +26,7 @@ const {data: profile} = await useAsyncData('navigationProfile', async () => {
 })
 
 const initials = computed(() => {
-  if (!profile.value.first_name || !profile.value.last_name) return ''
+  if (!profile.value) return ''
   return profile.value.first_name.charAt(0) + profile.value.last_name.charAt(0)
 })
 
@@ -93,7 +93,10 @@ const signOut = async () => {
             <Button variant="ghost" size="lg" class="w-full justify-start hover:bg-foreground/5 p-2">
               <Avatar class="h-8 w-8 rounded-lg">
                 <AvatarFallback class="rounded-lg">
-                  {{ initials }}
+                  <template v-if="initials">
+                    {{ initials }}
+                  </template>
+                  <User v-else class="size-5"/>
                 </AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">

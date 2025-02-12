@@ -45,12 +45,12 @@ const onSubmit = form.handleSubmit(async (values) => {
       }
     })
 
+    await navigateTo(`/users/${useRoute().params.id}`)
     notificationStore.createNotification({
       type: 'success',
       action: 'save',
       item: values.name
     })
-    navigateTo(`/users/${useRoute().params.id}`)
   } catch (error) {
     if (error) {
       notificationStore.createNotification({

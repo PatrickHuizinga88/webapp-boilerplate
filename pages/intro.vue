@@ -53,12 +53,12 @@ const onSubmit = handleSubmit(async (values) => {
           onConflict: 'id'
         })
     if (error) throw error
+    await navigateTo('/')
     notificationStore.createNotification({
       type: 'success',
       action: 'save',
       item: t('profiles.profiles'),
     })
-    navigateTo('/')
   } catch (error) {
     notificationStore.createNotification({
       type: 'destructive',

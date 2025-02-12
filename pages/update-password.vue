@@ -40,13 +40,12 @@ const updatePassword = async () => {
       console.error(error)
       return
     }
-
+    await navigateTo('/login')
     notificationStore.createNotification({
       type: 'success',
       action: 'update',
       item: t('authentication.common.password'),
     })
-    navigateTo('/login')
   } catch (error) {
     notificationStore.createNotification({
       type: 'destructive',

@@ -26,12 +26,12 @@ const deleteUser = async () => {
 
     // Delete user
 
+    await navigateTo('/users')
     notificationStore.createNotification({
       type: 'success',
       action: 'delete',
       item: user.value?.name || t('users.users'),
     })
-    navigateTo('/users')
   } catch (error) {
     notificationStore.createNotification({
       type: 'destructive',

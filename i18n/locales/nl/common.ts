@@ -81,5 +81,10 @@ export default {
         description: "Probeer het later opnieuw of neem contact met ons op.",
       },
     },
+
+    pagination: {
+      page: "Pagina",
+      of: "van",
+    }
   }
 }

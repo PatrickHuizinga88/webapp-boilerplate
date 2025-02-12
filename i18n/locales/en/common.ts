@@ -81,5 +81,10 @@ export default {
         description: "Try again later or contact us.",
       },
     },
+
+    pagination: {
+      page: "Page",
+      of: "of",
+    }
   }
 }

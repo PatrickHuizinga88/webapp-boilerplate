@@ -26,12 +26,12 @@ const deleteCustomer = async () => {
     loadingDelete.value = true
     const {error} = await supabase.from('customers').delete().filter('id', 'eq', customer.value.id)
     if (error) throw error
+    await navigateTo('/customers')
     notificationStore.createNotification({
       type: 'success',
       action: 'delete',
       item: `${customer.value?.first_name} ${customer.value?.last_name}` || t('customers.customers'),
     })
-    navigateTo('/customers')
   } catch (error) {
     notificationStore.createNotification({
       type: 'destructive',
@@ -115,9 +115,8 @@ const deleteCustomer = async () => {
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4">
               <dt class="text-sm font-medium leading-6">{{ $t('common.general.email') }}</dt>
-              <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{
-                  customer.email || '-'
-                }}
+              <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">
+                <a :href="`mailto:${customer.email}`" class="underline">{{ customer.email || '-' }}</a>
               </dd>
             </div>
           </dl>

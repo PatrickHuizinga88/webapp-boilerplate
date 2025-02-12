@@ -55,12 +55,12 @@ const onSubmit = form.handleSubmit(async (values) => {
       onConflict: 'id'
     }).select()
     if (error) throw error
+    await navigateTo(`/customers/${data[0].id}`)
     notificationStore.createNotification({
       type: 'success',
       action: 'save',
       item: `${values.first_name} ${values.last_name}`
     })
-    navigateTo(`/customers/${data[0].id}`)
   } catch (error) {
     notificationStore.createNotification({
       type: 'destructive',
