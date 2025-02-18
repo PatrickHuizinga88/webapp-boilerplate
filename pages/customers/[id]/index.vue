@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {Trash, Pencil} from 'lucide-vue-next'
 import {useNotificationStore} from "~/stores/notificationStore";
-import {Card} from "~/components/ui/card";
+import {Card, CardHeader, CardTitle} from "~/components/ui/card";
 import type {Database} from "~/types/database.types";
 import {Page, PageActions, PageBackButton, PageHeader} from "../../../components/ui/page";
 
@@ -65,7 +65,7 @@ const deleteCustomer = async () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>{{
-                  $t('common.actions.delete', {item: `${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')})
+                  capitalizeSentence($t('common.actions.delete_item', {item: $t('customers.customers')}))
                 }}
               </DialogTitle>
               <DialogDescription>
@@ -102,7 +102,10 @@ const deleteCustomer = async () => {
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div class="col-span-1">
-        <Card :title="$t('customers.general_information')">
+        <Card>
+          <CardHeader>
+            <CardTitle>{{ $t('users.general_information') }}</CardTitle>
+          </CardHeader>
           <dl class="space-y-4">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4">
               <dt class="text-sm font-medium leading-6">{{ $t('common.general.name') }}</dt>

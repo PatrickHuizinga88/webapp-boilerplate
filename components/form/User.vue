@@ -108,7 +108,7 @@ const onSubmit = form.handleSubmit(async (values) => {
     </FormField>
 
     <Button :loading="loading" class="w-full lg:w-auto">
-      {{ $t('common.actions.save', {item: lowercase($t('users.users'))}) }}
+      {{ capitalizeSentence($t('common.actions.save_item', {item: $t('users.users')})) }}
     </Button>
   </form>
 </template>

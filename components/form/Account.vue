@@ -118,6 +118,7 @@ const onPasswordSubmit = async (values: any) => {
         <Label>{{ $t('common.general.email') }}</Label>
         <Input type="email" placeholder="name@example.com" v-model="props.email" disabled/>
       </div>
+      <!-- TODO: Translate alert-->
       <Alert v-if="emailSuccess" variant="info" class="mt-4">
         <Info class="size-4"/>
         <AlertTitle>Confirmation link sent</AlertTitle>
@@ -125,16 +126,17 @@ const onPasswordSubmit = async (values: any) => {
           Please click on the links sent to your old and new email address to confirm this change.
         </AlertDescription>
       </Alert>
-      <Form v-slot="{ handleSubmit }" as="" keep-values :initial-values="initialValuesEmail" :validation-schema="formSchemaEmail">
+      <Form v-slot="{ handleSubmit }" as="" keep-values :initial-values="initialValuesEmail"
+            :validation-schema="formSchemaEmail">
         <Dialog v-model:open="emailDialogOpen">
           <DialogTrigger as-child>
             <Button variant="outline" size="sm" class="w-full mt-4">
-              {{ $t('common.actions.edit', {item: lowercase($t('common.general.email'))}) }}
+              {{ capitalizeSentence($t('common.actions.edit_item', {item: $t('common.general.email')})) }}
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{{ $t('common.actions.edit', {item: lowercase($t('common.general.email'))}) }}</DialogTitle>
+              <DialogTitle>{{ capitalizeSentence($t('common.actions.edit_item', {item: $t('common.general.email')})) }}</DialogTitle>
             </DialogHeader>
             <form id="emailForm" @submit="handleSubmit($event, onEmailSubmit)" class="grid gap-4">
               <FormField v-slot="{ componentField }" name="email">
@@ -148,7 +150,7 @@ const onPasswordSubmit = async (values: any) => {
               </FormField>
               <DialogFooter>
                 <Button type="submit" :loading="loading" class="w-full" form="emailForm">
-                  {{ $t('common.actions.save', {item: lowercase($t('common.general.email'))}) }}
+                  {{ capitalizeSentence($t('common.actions.save_item', {item: $t('common.general.email')})) }}
                 </Button>
               </DialogFooter>
             </form>
@@ -161,14 +163,20 @@ const onPasswordSubmit = async (values: any) => {
         <Label>{{ $t('authentication.common.password') }}</Label>
         <Input type="password" v-model="fakePassword" disabled/>
       </div>
-      <Form v-slot="{ handleSubmit }" as="" keep-values :initial-values="initialValuesPassword" :validation-schema="formSchemaPassword">
+      <Form v-slot="{ handleSubmit }" as="" keep-values :initial-values="initialValuesPassword"
+            :validation-schema="formSchemaPassword">
         <Dialog v-model:open="passwordDialogOpen">
           <DialogTrigger as-child>
-            <Button variant="outline" size="sm" class="w-full mt-4">{{ $t('common.actions.edit', {item: lowercase($t('authentication.common.password'))}) }}</Button>
+            <Button variant="outline" size="sm" class="w-full mt-4">
+              {{ capitalizeSentence($t('common.actions.edit_item', {item: $t('authentication.common.password')}))}}
+            </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader class="text-left">
-              <DialogTitle>{{ $t('common.actions.edit', {item: lowercase($t('authentication.common.password'))}) }}</DialogTitle>
+              <DialogTitle>{{
+                  capitalizeSentence($t('common.actions.edit_item', {item: $t('authentication.common.password')}))
+                }}
+              </DialogTitle>
             </DialogHeader>
             <form id="passwordForm" @submit="handleSubmit($event, onPasswordSubmit)" class="space-y-4">
               <FormField v-slot="{ componentField }" name="current_password">
@@ -204,7 +212,7 @@ const onPasswordSubmit = async (values: any) => {
 
             <DialogFooter>
               <Button type="submit" class="w-full" form="passwordForm" :loadng="loadingPassword">
-                {{ $t('common.actions.save', {item: lowercase($t('authentication.common.password'))}) }}
+                {{ capitalizeSentence($t('common.actions.save_item', {item: $t('authentication.common.password')})) }}
               </Button>
             </DialogFooter>
           </DialogContent>

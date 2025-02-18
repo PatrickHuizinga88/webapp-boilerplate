@@ -19,19 +19,30 @@ export default {
 
     actions: {
       actions: "Acties",
-      add: "Voeg {item} toe",
-      back_to: "Terug naar {item}",
+      add: "Toevoegen",
+      add_item: "{item} toevoegen",
+      back: "Terug",
+      back_to_item: "Terug naar {item}",
       cancel: "Annuleren",
       close: "Sluiten",
-      delete: "Verwijder {item}",
-      edit: "Bewerk {item}",
-      save: "Bewaar {item}",
+      copied: "Gekopieerd",
+      copy: "Kopieer {item}",
+      delete: "Verwijderen",
+      delete_item: "{item} verwijderen",
+      edit: "Bewerken",
+      edit_item: "{item} bewerken",
+      save: "Opslaan",
+      save_item: "{item} opslaan",
+      send: "Versturen",
+      send_item: "{item} versturen",
       skip: "Overslaan",
 
       delete_confirmation: "Weet je zeker dat je {item} wilt verwijderen? Het zal permanent worden verwijderd.",
     },
 
     validations: {
+      max_length: "Dit veld mag maximaal {max} tekens bevatten",
+      min_length: "Dit veld moet minimaal {min} tekens bevatten",
       required: "Dit veld is verplicht",
     },
 
@@ -39,7 +50,7 @@ export default {
       save: {
         success: {
           title: "Opslaan geslaagd",
-          description: "{item} is succesvol opgeslagen."
+          description: "{item} succesvol opgeslagen."
         },
         error: {
           title: "Opslaan mislukt",
@@ -49,7 +60,7 @@ export default {
       delete: {
         success: {
           title: "Verwijderen geslaagd",
-          description: "{item} is succesvol verwijderd."
+          description: "{item} succesvol verwijderd."
         },
         error: {
           title: "Verwijderen mislukt",
@@ -59,7 +70,7 @@ export default {
       update: {
         success: {
           title: "Update geslaagd",
-          description: "{item} is succesvol bijgewerkt."
+          description: "{item} succesvol bijgewerkt."
         },
         error: {
           title: "Update mislukt",
@@ -69,7 +80,7 @@ export default {
       retrieve: {
         success: {
           title: "Ophalen geslaagd",
-          description: "{item} is succesvol opgehaald."
+          description: "{item} succesvol opgehaald."
         },
         error: {
           title: "Ophalen mislukt",

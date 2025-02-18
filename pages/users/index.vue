@@ -18,7 +18,7 @@ const { data: users, status } = useFetch<User[]>('/api/users')
         <Button size="sm" as-child>
           <NuxtLink to="/users/create">
             <PlusCircle class="size-4" />
-            {{$t('common.actions.add', {item: lowercase($t('users.users'))})}}
+            {{capitalizeSentence($t('common.actions.add_item', {item: $t('users.users')}))}}
           </NuxtLink>
         </Button>
       </PageActions>

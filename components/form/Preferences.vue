@@ -101,7 +101,7 @@ onMounted(() => {
     </div>
     <div class="flex flex-col items-start sm:flex-row sm:items-center gap-2 sm:gap-4">
       <Button :loading="loading">
-        {{ $t('common.actions.save', {item: lowercase($t('account.preferences.preferences', 2))}) }}
+        {{ capitalizeSentence($t('common.actions.save_item', {item: $t('account.preferences.preferences', 2)})) }}
       </Button>
       <p class="text-sm text-muted-foreground">{{ $t('account.preferences.refresh_page') }}</p>
     </div>

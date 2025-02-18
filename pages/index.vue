@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {StatCard} from "~/components/ui/stat-card";
-import {Card} from "~/components/ui/card";
+import {Card, CardAction, CardDescription, CardHeader, CardTitle} from "~/components/ui/card";
 import {Avatar, AvatarFallback} from "~/components/ui/avatar";
 import {ArrowRight} from 'lucide-vue-next';
 import {Page} from "../components/ui/page";
@@ -72,11 +72,9 @@ const initials = (firstName: string, lastName: string) => {
 
     <div class="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-3 gap-6 mb-4">
       <Card class="col-span-full xl:col-span-2">
-        <template #header>
-          <h3 class="text-base font-medium">
-            {{ $t('dashboard.revenue_history') }}
-          </h3>
-        </template>
+        <CardHeader>
+          <CardTitle>{{ $t('dashboard.revenue_history') }}</CardTitle>
+        </CardHeader>
         <div class="mt-5">
           <!-- TODO: Add graph -->
           <div class="flex items-center justify-center h-40 text-muted-foreground text-sm">
@@ -84,16 +82,21 @@ const initials = (firstName: string, lastName: string) => {
           </div>
         </div>
       </Card>
-      <Card :title="$t('dashboard.recent_registered_customers')" :description="$t('dashboard.in_the_last_30_days')"
-            class="col-span-1 md:col-span-2 xl:col-span-1">
-        <template #action>
-          <Button variant="ghost" size="sm" as-child>
-            <NuxtLink to="/customers">
-              {{ $t('dashboard.view_all') }}
-              <ArrowRight class="size-4" aria-hidden="true"/>
-            </NuxtLink>
-          </Button>
-        </template>
+      <Card class="col-span-1 md:col-span-2 xl:col-span-1">
+        <CardHeader>
+          <div>
+            <CardTitle>{{ $t('dashboard.recent_registered_customers') }}</CardTitle>
+            <CardDescription>{{ $t('dashboard.in_the_last_30_days') }}</CardDescription>
+          </div>
+          <CardAction>
+            <Button variant="ghost" size="sm" as-child>
+              <NuxtLink to="/customers">
+                {{ $t('dashboard.view_all') }}
+                <ArrowRight class="size-4" aria-hidden="true"/>
+              </NuxtLink>
+            </Button>
+          </CardAction>
+        </CardHeader>
         <ul class="space-y-4">
           <li v-for="customer in statistics?.recentCustomers" class="flex items-center">
             <Avatar>

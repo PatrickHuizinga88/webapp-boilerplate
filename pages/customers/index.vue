@@ -42,11 +42,11 @@ const totalPages = computed(() => Math.ceil((customers.value?.count ?? 0) / 8))
 const {data: customers, status} = await useLazyAsyncData(async () => {
   try {
     const {count, data, error} = await supabase
-      .from('customers')
-      .select('*', {count: 'exact'})
-      .order('created_at', {ascending: false})
-      .ilike('last_name', `%${searchQuery.value}%`)
-      .range(startRange.value, endRange.value)
+        .from('customers')
+        .select('*', {count: 'exact'})
+        .order('created_at', {ascending: false})
+        .ilike('last_name', `%${searchQuery.value}%`)
+        .range(startRange.value, endRange.value)
     if (error) throw error
     return {
       data,
@@ -76,7 +76,7 @@ const {data: customers, status} = await useLazyAsyncData(async () => {
         <Button size="sm" as-child>
           <NuxtLink to="/customers/create">
             <PlusCircle class="size-4"/>
-            {{ $t('common.actions.add', {item: lowercase($t('customers.customers'))}) }}
+            {{ capitalizeSentence($t('common.actions.add_item', {item: $t('customers.customers')})) }}
           </NuxtLink>
         </Button>
       </PageActions>
@@ -127,7 +127,9 @@ const {data: customers, status} = await useLazyAsyncData(async () => {
         </div>
       </div>
       <div class="flex justify-end items-center gap-x-6 mt-4">
-        <div class="text-sm text-muted-foreground">{{ `${$t('common.pagination.page')} ${currentPage} ${$t('common.pagination.of')} ${totalPages}`}}</div>
+        <div class="text-sm text-muted-foreground">
+          {{ `${$t('common.pagination.page')} ${currentPage} ${$t('common.pagination.of')} ${totalPages}` }}
+        </div>
         <Pagination :total="customers.count || 0" :items-per-page="8" show-edges>
           <PaginationList class="flex items-center gap-2">
             <PaginationPrev @click="previousPage"/>
