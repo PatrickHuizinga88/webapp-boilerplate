@@ -75,7 +75,7 @@ const {data: customers, status} = await useLazyAsyncData(async () => {
       <PageActions>
         <Button size="sm" as-child>
           <NuxtLink to="/customers/create">
-            <PlusCircle class="size-4"/>
+            <PlusCircle/>
             {{ capitalizeSentence($t('common.actions.add_item', {item: $t('customers.customers')})) }}
           </NuxtLink>
         </Button>

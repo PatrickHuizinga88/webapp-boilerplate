@@ -9,6 +9,8 @@ export default {
     },
     validations: {
       email: "Dit is geen geldig e-mailadres",
+      incorrect_current_password: "Huidig wachtwoord is onjuist",
+      passwords_dont_match: "Wachtwoorden komen niet overeen",
       password_length: "Wachtwoord moet minimaal {length} tekens lang zijn",
     },
     login: {

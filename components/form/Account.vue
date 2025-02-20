@@ -80,7 +80,7 @@ const onPasswordSubmit = async (values: any) => {
   try {
     loadingPassword.value = true
     if (values.new_password !== values.repeated_password) {
-      passwordChangeMessage.value = 'De nieuwe wachtwoorden komen niet overeen.'
+      passwordChangeMessage.value = t('authentication.validations.passwords_dont_match')
       return
     }
     const {data, error: verificationError} = await supabase.rpc('verify_password', {
@@ -88,7 +88,7 @@ const onPasswordSubmit = async (values: any) => {
       current_id: user.value?.id
     })
     if (data === 'incorrect') {
-      passwordChangeMessage.value = 'Het huidige wachtwoord is onjuist.'
+      passwordChangeMessage.value = t('authentication.validations.incorrect_current_password')
       return
     }
     if (verificationError) throw verificationError

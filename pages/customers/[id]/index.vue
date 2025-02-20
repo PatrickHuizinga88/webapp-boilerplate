@@ -50,7 +50,7 @@ const deleteCustomer = async () => {
   <Page :title="`${customer?.first_name} ${customer?.last_name}` || $t('customers.customers')" :customBreadcrumb="true">
     <PageHeader>
       <PageBackButton to="/customers"
-                      :label="$t('common.actions.back_to', {item: lowercase($t('customers.customers', 2))})"/>
+                      :label="capitalizeSentence($t('common.actions.back_to_item', {item: $t('customers.customers', 2)}))"/>
       <PageActions>
         <Dialog v-model:open="dialogOpen">
           <DialogTrigger as-child>
@@ -58,7 +58,7 @@ const deleteCustomer = async () => {
                 variant="outline"
                 size="sm"
             >
-              <Trash class="size-4" aria-hidden="true"/>
+              <Trash aria-hidden="true"/>
               {{ $t('common.actions.delete') }}
             </Button>
           </DialogTrigger>
@@ -93,7 +93,7 @@ const deleteCustomer = async () => {
             as-child
         >
           <NuxtLink :to="`/customers/${customer.id}/edit`">
-            <Pencil class="size-4" aria-hidden="true"/>
+            <Pencil aria-hidden="true"/>
             {{ $t('common.actions.edit') }}
           </NuxtLink>
         </Button>
@@ -106,7 +106,7 @@ const deleteCustomer = async () => {
           <CardHeader>
             <CardTitle>{{ $t('users.general_information') }}</CardTitle>
           </CardHeader>
-          <dl class="space-y-4">
+          <dl class="space-y-6">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4">
               <dt class="text-sm font-medium leading-6">{{ $t('common.general.name') }}</dt>
               <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">

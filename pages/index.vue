@@ -92,7 +92,7 @@ const initials = (firstName: string, lastName: string) => {
             <Button variant="ghost" size="sm" as-child>
               <NuxtLink to="/customers">
                 {{ $t('dashboard.view_all') }}
-                <ArrowRight class="size-4" aria-hidden="true"/>
+                <ArrowRight ria-hidden="true"/>
               </NuxtLink>
             </Button>
           </CardAction>

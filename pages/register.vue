@@ -32,10 +32,10 @@ const formSchema = toTypedSchema(z.object({
       .email({message: t('authentication.validations.email')}),
   password: z
       .string({message: t('common.validations.required')})
-      .min(6, {message: t('authentication.validations.password_length', {length: 6})}),
+      .min(8, {message: t('authentication.validations.password_length', {length: 8})}),
   repeated_password: z
       .string({message: t('common.validations.required')})
-      .min(6, {message: t('authentication.validations.password_length', {length: 6})}),
+      .min(8, {message: t('authentication.validations.password_length', {length: 8})}),
 }))
 
 const form = useForm({
@@ -68,7 +68,7 @@ const signUp = async (email: string, password: string) => {
 
 const onSubmit = form.handleSubmit(async (values) => {
   if (values.password !== values.repeated_password) {
-    errorMessage.value = t('authentication.register.passwords_dont_match')
+    errorMessage.value = t('authentication.validations.passwords_dont_match')
     return
   }
 
@@ -98,7 +98,7 @@ const onSubmit = form.handleSubmit(async (values) => {
           <FormMessage/>
         </FormItem>
       </FormField>
-      <FormField v-slot="{ componentField }" :validate-on-blur="false" name="password">
+      <FormField v-slot="{ componentField }" name="password">
         <FormItem>
           <FormLabel>{{ $t('authentication.common.password') }}</FormLabel>
           <FormControl>
@@ -107,7 +107,7 @@ const onSubmit = form.handleSubmit(async (values) => {
           <FormMessage/>
         </FormItem>
       </FormField>
-      <FormField v-slot="{ componentField }" :validate-on-blur="false" name="repeated_password">
+      <FormField v-slot="{ componentField }" name="repeated_password">
         <FormItem>
           <FormLabel>{{ $t('authentication.register.repeat_password') }}</FormLabel>
           <FormControl>
@@ -148,10 +148,10 @@ const onSubmit = form.handleSubmit(async (values) => {
 
     <template v-if="!success" #footer>
       {{ $t('authentication.register.have_account') + ' ' }}
-      <Button variant="link" class="h-auto p-0 ml-1" as-child>
+      <Button variant="link" size="sm" class="h-auto p-0 ml-1" as-child>
         <NuxtLink to="/login">
           {{ $t('authentication.common.sign_in') }}
-          <ArrowRight class="size-4" aria-hidden="true"/>
+          <ArrowRight aria-hidden="true"/>
         </NuxtLink>
       </Button>
     </template>

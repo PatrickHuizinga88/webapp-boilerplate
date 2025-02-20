@@ -8,9 +8,9 @@ defineProps<{
 </script>
 
 <template>
-<Button variant="ghost" size="sm" asChild>
+<Button variant="ghost" size="sm" class="-ml-3" as-child>
   <NuxtLink :to="to ?? $router.back()">
-    <ArrowLeft class="size-4 -ml-1" />
+    <ArrowLeft/>
     {{ label }}
   </NuxtLink>
 </Button>

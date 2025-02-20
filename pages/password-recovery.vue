@@ -71,7 +71,7 @@ const resetPassword = async () => {
       <Button variant="link" size="sm" class="p-0" as-child>
         <NuxtLink to="/login">
           {{ $t('authentication.password_recovery.back_to_sign_in') }}
-          <ArrowRight class="size-4" aria-hidden="true"/>
+          <ArrowRight aria-hidden="true"/>
         </NuxtLink>
       </Button>
     </template>

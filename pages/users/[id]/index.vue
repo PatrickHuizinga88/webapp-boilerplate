@@ -46,7 +46,7 @@ const deleteUser = async () => {
 <template>
   <Page :title="user.name || `${$t('users.users')} ${user.id}`">
     <PageHeader>
-      <PageBackButton to="/users" :label="$t('common.actions.back_to', {item: lowercase($t('users.users', 2))})"/>
+      <PageBackButton to="/users" :label="capitalizeSentence($t('common.actions.back_to_ITEM', {item: $t('users.users', 2)}))"/>
       <PageActions>
         <Dialog v-model:open="dialogOpen">
           <DialogTrigger as-child>
@@ -54,7 +54,7 @@ const deleteUser = async () => {
                 variant="outline"
                 size="sm"
             >
-              <Trash class="size-4" aria-hidden="true"/>
+              <Trash aria-hidden="true"/>
               {{ $t('common.actions.delete') }}
             </Button>
           </DialogTrigger>
@@ -89,7 +89,7 @@ const deleteUser = async () => {
             asChild
         >
           <NuxtLink :to="`/users/${user.id}/edit`">
-            <Pencil class="size-4" aria-hidden="true"/>
+            <Pencil aria-hidden="true"/>
             {{ $t('common.actions.edit') }}
           </NuxtLink>
         </Button>
@@ -101,7 +101,7 @@ const deleteUser = async () => {
           <CardHeader>
             <CardTitle>{{ $t('users.general_information') }}</CardTitle>
           </CardHeader>
-          <dl class="space-y-4">
+          <dl class="space-y-6">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4">
               <dt class="text-sm font-medium leading-6">{{ $t('common.general.name') }}</dt>
               <dd class="mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">{{ user.name || '-' }}</dd>

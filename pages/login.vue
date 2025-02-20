@@ -91,7 +91,7 @@ const onSubmit = form.handleSubmit(async (values) => {
         <Button variant="link" size="sm" class="h-auto p-0 ml-1" as-child>
           <NuxtLinkLocale to="register">
             {{ $t('authentication.login.register_now') }}
-            <ArrowRight class="size-4" aria-hidden="true"/>
+            <ArrowRight aria-hidden="true"/>
           </NuxtLinkLocale>
         </Button>
       </template>
