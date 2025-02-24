@@ -7,7 +7,7 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient()
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t} = useI18n()
 
 const email = ref('')
@@ -23,7 +23,7 @@ const resetPassword = async () => {
     })
 
     if (error) {
-      notificationStore.createNotification({
+      toastStore.createToast({
         type: 'destructive',
         isError: true,
       })
@@ -33,7 +33,7 @@ const resetPassword = async () => {
 
     success.value = true
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       isError: true,
     })
@@ -69,10 +69,10 @@ const resetPassword = async () => {
 
     <template #footer>
       <Button variant="link" size="sm" class="p-0" as-child>
-        <NuxtLink to="/login">
+        <NuxtLinkLocale to="login">
           {{ $t('authentication.password_recovery.back_to_sign_in') }}
           <ArrowRight aria-hidden="true"/>
-        </NuxtLink>
+        </NuxtLinkLocale>
       </Button>
     </template>
   </Authentication>

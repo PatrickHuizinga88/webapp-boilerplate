@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import Notification from "~/components/ui/notification/Notification.vue";
+import Toast from "~/components/ui/toast/Toast.vue";
 
 defineProps<{
-  notifications: {
+  toasts: {
+    id: string,
     type: 'success' | 'destructive',
     title: string,
     description?: string
@@ -21,18 +22,18 @@ defineProps<{
           leave-active-class="transition ease-in duration-100"
           leave-from-class="opacity-100"
           leave-to-class="translate-x-[400px]">
-          <Notification
-            v-for="(notification, index) in notifications"
-            :type="notification.type"
-            :title="notification.title"
-            :description="notification.description"
-            :key="index"
+          <Toast
+            v-for="toast in toasts"
+            :type="toast.type"
+            :title="toast.title"
+            :description="toast.description"
+            :key="toast.id"
           />
           <!--          <Notification-->
-          <!--              v-for="(notification, index) in notifications"-->
-          <!--              :type="notification.type"-->
-          <!--              :title="notification.title"-->
-          <!--              :description="notification.description"-->
+          <!--              v-for="(toast, index) in notifications"-->
+          <!--              :type="toast.type"-->
+          <!--              :title="toast.title"-->
+          <!--              :description="toast.description"-->
           <!--              :key="index"-->
           <!--              :style="`scale: ${1 - index * 0.1}; z-index: ${notifications.length - index}`"-->
           <!--          />-->

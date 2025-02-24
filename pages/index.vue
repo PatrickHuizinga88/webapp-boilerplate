@@ -12,8 +12,9 @@ definePageMeta({
 
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t, locale} = useI18n()
+const localePath = useLocalePath()
 const dayjs = useDayjs()
 
 const {data: profile} = await useAsyncData('profile', async () => {
@@ -47,7 +48,7 @@ const {data: statistics} = await useLazyAsyncData('statistics', async () => {
       recentCustomers,
     }
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       action: 'retrieve',
       item: t('dashboard.statistics')
@@ -62,7 +63,7 @@ const initials = (firstName: string, lastName: string) => {
 
 <template>
   <Page :title="`${$t('dashboard.welcome')}, ${profile?.first_name || 'common.general.guest'}! 👋`">
-    <div v-if="statistics" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+    <div v-if="statistics" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       <StatCard :title="$t('customers.customers', 2)" :stat="statistics.customersCount" :difference="12.5"
                 :subtitle="lowercase($t('dashboard.compared_to_last_week'))"/>
       <StatCard :title="$t('users.users', 2)" :stat="10"/>
@@ -70,7 +71,7 @@ const initials = (firstName: string, lastName: string) => {
                 :stat="statistics.lastSignIn"/>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-3 gap-6 mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-3 gap-4 mb-4">
       <Card class="col-span-full xl:col-span-2">
         <CardHeader>
           <CardTitle>{{ $t('dashboard.revenue_history') }}</CardTitle>
@@ -90,10 +91,10 @@ const initials = (firstName: string, lastName: string) => {
           </div>
           <CardAction>
             <Button variant="ghost" size="sm" as-child>
-              <NuxtLink to="/customers">
+              <NuxtLinkLocale to="customers">
                 {{ $t('dashboard.view_all') }}
                 <ArrowRight ria-hidden="true"/>
-              </NuxtLink>
+              </NuxtLinkLocale>
             </Button>
           </CardAction>
         </CardHeader>
@@ -103,7 +104,7 @@ const initials = (firstName: string, lastName: string) => {
               <AvatarFallback>{{initials(customer.first_name, customer.last_name)}}</AvatarFallback>
             </Avatar>
             <div class="text-sm ml-4">
-              <NuxtLink :to="`/customers/${customer.id}`"
+              <NuxtLink :to="localePath({name: 'customers-id', params: {id: customer.id}})"
                         class="font-medium hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 {{`${customer.first_name} ${customer.last_name}`}}
               </NuxtLink>

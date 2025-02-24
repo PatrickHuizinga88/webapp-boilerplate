@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {Trash, Pencil} from 'lucide-vue-next'
-import {useNotificationStore} from "~/stores/notificationStore";
+import {useNotificationStore} from "~/stores/toastStore";
 import {Card, CardHeader, CardTitle} from "~/components/ui/card";
 import type {Database} from "~/types/database.types";
 import {Page, PageActions, PageBackButton, PageHeader} from "../../../components/ui/page";
@@ -10,8 +10,9 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient<Database>()
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t} = useI18n()
+const localePath = useLocalePath()
 
 const dialogOpen = ref(false)
 const loadingDelete = ref(false)
@@ -26,14 +27,14 @@ const deleteCustomer = async () => {
     loadingDelete.value = true
     const {error} = await supabase.from('customers').delete().filter('id', 'eq', customer.value.id)
     if (error) throw error
-    await navigateTo('/customers')
-    notificationStore.createNotification({
+    await navigateTo(localePath('customers'))
+    toastStore.createToast({
       type: 'success',
       action: 'delete',
       item: `${customer.value?.first_name} ${customer.value?.last_name}` || t('customers.customers'),
     })
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       action: 'delete',
       item: `${customer.value?.first_name} ${customer.value?.last_name}` || t('customers.customers'),
@@ -92,7 +93,7 @@ const deleteCustomer = async () => {
             size="sm"
             as-child
         >
-          <NuxtLink :to="`/customers/${customer.id}/edit`">
+          <NuxtLink :to="localePath({name: 'customers-id-edit', params: {id: customer.id}})">
             <Pencil aria-hidden="true"/>
             {{ $t('common.actions.edit') }}
           </NuxtLink>

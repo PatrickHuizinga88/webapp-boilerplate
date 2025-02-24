@@ -2,10 +2,12 @@
 import {Home, IdCard, LogOut, User, Users, Settings, MessageSquare, ArrowBigUp, ChevronsUpDown} from "lucide-vue-next";
 import type {Database} from "~/types/database.types";
 import {DropdownMenu, DropdownMenuTrigger} from "~/components/ui/dropdown-menu";
+import FeedbackDialog from "~/components/ui/FeedbackDialog.vue";
 
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
 const {t} = useI18n()
+const localePath = useLocalePath()
 const route = useRoute()
 
 const navigation = [
@@ -39,7 +41,7 @@ const isCurrentOrChildRoute = (path: string) => {
 const signOut = async () => {
   const {error} = await supabase.auth.signOut()
   if (!error) {
-    await navigateTo('/login')
+    await navigateTo(localePath('login'))
   }
 }
 </script>
@@ -69,7 +71,7 @@ const signOut = async () => {
           enter-to-class="opacity-100 scale-100"
       >
         <li v-if="profile && profile.plan === 'free'" class="!mb-5">
-          <NuxtLink to="/pricing"
+          <NuxtLinkLocale to="pricing"
                     class="group relative flex bg-gradient-to-br from-primary to-accent text-primary-foreground rounded-lg px-2 py-4 no-underline">
             <div
                 class="absolute inset-0 bg-background opacity-25 dark:opacity-50 group-hover:opacity-0 dark:group-hover:opacity-25 duration-300"></div>
@@ -78,14 +80,11 @@ const signOut = async () => {
               <span class="block font-semibold mb-1">{{ $t('pricing.upgrade_now') }}</span>
               {{ $t('pricing.check_our_pricing_model') }}
             </div>
-          </NuxtLink>
+          </NuxtLinkLocale>
         </li>
       </transition>
       <li>
-        <Button variant="ghost" class="w-full justify-start hover:bg-foreground/5 p-2">
-          <MessageSquare class="shrink-0" aria-hidden="true"/>
-          <span class="truncate">{{ $t('feedback.give_feedback') }}</span>
-        </Button>
+        <FeedbackDialog/>
       </li>
       <li>
         <DropdownMenu>
@@ -111,10 +110,10 @@ const signOut = async () => {
           <DropdownMenuContent class="min-w-56 rounded-lg">
             <DropdownMenuGroup>
               <DropdownMenuItem as-child>
-                <NuxtLink to="/account">
+                <NuxtLinkLocale to="account">
                   <User/>
                   {{ $t('authentication.common.account') }}
-                </NuxtLink>
+                </NuxtLinkLocale>
               </DropdownMenuItem>
               <DropdownMenuItem @click="signOut">
                 <LogOut/>

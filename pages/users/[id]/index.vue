@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {Trash, Pencil} from 'lucide-vue-next'
-import {useNotificationStore} from "~/stores/notificationStore";
+import {useNotificationStore} from "~/stores/toastStore";
 import {Card, CardHeader, CardTitle} from "~/components/ui/card";
 import type User from "~/types/User";
 import {Page, PageActions, PageBackButton, PageHeader} from "../../../components/ui/page";
@@ -9,8 +9,9 @@ definePageMeta({
   layout: 'default-sidebar',
 })
 
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t} = useI18n()
+const localePath = useLocalePath()
 
 const dialogOpen = ref(false)
 
@@ -26,14 +27,14 @@ const deleteUser = async () => {
 
     // Delete user
 
-    await navigateTo('/users')
-    notificationStore.createNotification({
+    await navigateTo(localePath('users'))
+    toastStore.createToast({
       type: 'success',
       action: 'delete',
       item: user.value?.name || t('users.users'),
     })
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       action: 'delete',
       item: user.value?.name || t('users.users'),
@@ -88,7 +89,7 @@ const deleteUser = async () => {
             size="sm"
             asChild
         >
-          <NuxtLink :to="`/users/${user.id}/edit`">
+          <NuxtLink :to="localePath({name: 'users-id-edit', params: {id: user.id}})">
             <Pencil aria-hidden="true"/>
             {{ $t('common.actions.edit') }}
           </NuxtLink>

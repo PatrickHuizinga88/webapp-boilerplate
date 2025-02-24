@@ -82,7 +82,7 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    strategy: 'no_prefix',
+    strategy: 'prefix_except_default',
     // detectBrowserLanguage: {
     //   useCookie: false
     // },
@@ -99,45 +99,73 @@ export default defineNuxtConfig({
         files: ['nl/common', 'nl/404', 'nl/account', 'nl/authentication', 'nl/customers', 'nl/dashboard', 'nl/feedback', 'nl/pricing', 'nl/settings', 'nl/users']
       },
     ],
-    // customRoutes: 'config',
-    // pages: {
-    //   register: {
-    //     en: '/register',
-    //     nl: '/registreren',
-    //   },
-    //   'password-recovery': {
-    //     en: '/password-recovery',
-    //     nl: '/wachtwoord-herstellen',
-    //   },
-    //   'update-password': {
-    //     en: '/update-password',
-    //     nl: '/wachtwoord-bijwerken',
-    //   },
-    //   users: {
-    //     en: '/users',
-    //     nl: '/gebruikers',
-    //   },
-    //   'users-create': {
-    //     en: '/users/create',
-    //     nl: '/gebruikers/aanmaken',
-    //   },
-    //   'users-id': {
-    //     en: '/users/[id]',
-    //     nl: '/gebruikers/[id]',
-    //   },
-    //   'users-id-edit': {
-    //     en: '/users/[id]/edit',
-    //     nl: '/gebruikers/[id]/bewerken',
-    //   },
-    //   customers: {
-    //     en: '/customers/',
-    //     nl: '/klanten/',
-    //   },
-    //   settings: {
-    //     en: '/settings',
-    //     nl: '/instellingen',
-    //   },
-    // },
+    customRoutes: 'config',
+    pages: {
+      account: {
+        en: '/account',
+        nl: '/account',
+      },
+      customers: {
+        en: '/customers',
+        nl: '/klanten',
+      },
+      'customers-create': {
+        en: '/customers/create',
+        nl: '/klanten/aanmaken',
+      },
+      'customers-[id]': {
+        en: '/customers/[id]',
+        nl: '/klanten/[id]',
+      },
+      'customers-[id]-edit': {
+        en: '/customers/[id]/edit',
+        nl: '/klanten/[id]/bewerken',
+      },
+      intro: {
+        en: '/intro',
+        nl: '/intro',
+      },
+      login: {
+        en: '/login',
+        nl: '/inloggen',
+      },
+      'password-recovery': {
+        en: '/password-recovery',
+        nl: '/wachtwoord-herstellen',
+      },
+      pricing: {
+        en: '/pricing',
+        nl: '/prijzen',
+      },
+      register: {
+        en: '/register',
+        nl: '/registreren',
+      },
+      settings: {
+        en: '/settings',
+        nl: '/instellingen',
+      },
+      'update-password': {
+        en: '/update-password',
+        nl: '/wachtwoord-bijwerken',
+      },
+      users: {
+        en: '/users',
+        nl: '/gebruikers',
+      },
+      'users-create': {
+        en: '/users/create',
+        nl: '/gebruikers/aanmaken',
+      },
+      'users-[id]': {
+        en: '/users/[id]',
+        nl: '/gebruikers/[id]',
+      },
+      'users-[id]-edit': {
+        en: '/users/[id]/edit',
+        nl: '/gebruikers/[id]/bewerken',
+      },
+    },
   },
 
   dayjs: {

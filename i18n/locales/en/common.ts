@@ -9,7 +9,7 @@ export default {
       loading: "Loading",
       name: "Name",
       new: "New {item}",
-      notifications: "Notifications",
+      notifications: "Notification | Notifications",
       search: "Search",
       welcome: "Welcome",
 
@@ -46,7 +46,7 @@ export default {
       required: "This field is required",
     },
 
-    notifications: {
+    toasts: {
       save: {
         success: {
           title: "Save successful",

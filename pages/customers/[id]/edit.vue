@@ -7,7 +7,7 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient<Database>()
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t} = useI18n()
 
 const {data: customer} = await useAsyncData(async () => {
@@ -16,7 +16,7 @@ const {data: customer} = await useAsyncData(async () => {
     if (error) throw error
     return data
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       action: 'retrieve',
       item: t('customers.customers'),

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import NotificationList from "~/components/ui/notification/NotificationList.vue";
-import {useNotificationStore} from "~/stores/notificationStore";
 import {Sidebar} from "~/components/ui/sidebar";
+import {Toaster} from "~/components/ui/toast";
 
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 </script>
 
 <template>
@@ -20,6 +19,6 @@ const notificationStore = useNotificationStore()
     </div>
   </div>
 
-  <NotificationList :notifications="notificationStore.notifications"/>
+  <Toaster :toasts="toastStore.toasts"/>
 
 </template>

@@ -149,10 +149,10 @@ const onSubmit = form.handleSubmit(async (values) => {
     <template v-if="!success" #footer>
       {{ $t('authentication.register.have_account') + ' ' }}
       <Button variant="link" size="sm" class="h-auto p-0 ml-1" as-child>
-        <NuxtLink to="/login">
+        <NuxtLinkLocale to="login">
           {{ $t('authentication.common.sign_in') }}
           <ArrowRight aria-hidden="true"/>
-        </NuxtLink>
+        </NuxtLinkLocale>
       </Button>
     </template>
   </Authentication>

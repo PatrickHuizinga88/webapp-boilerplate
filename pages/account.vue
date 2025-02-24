@@ -9,7 +9,7 @@ definePageMeta({
 
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 
 const {data: profile} = await useAsyncData('accountProfile', async () => {
   const {data} = await supabase.from('profiles').select('first_name,last_name,plan').filter('id', 'eq', user.value?.id).single()
@@ -30,7 +30,7 @@ const navigateToStripeDashboard = async () => {
       external: true,
     })
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       isError: true,
     })

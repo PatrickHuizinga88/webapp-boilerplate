@@ -7,8 +7,9 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient()
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t} = useI18n()
+const localePath = useLocalePath()
 
 const newPassword = ref('')
 const confirmPassword = ref('')
@@ -33,21 +34,21 @@ const updatePassword = async () => {
         errorMessage.value = t('authentication.password_recovery.same_password')
         return
       }
-      notificationStore.createNotification({
+      toastStore.createToast({
         type: 'destructive',
         isError: true,
       })
       console.error(error)
       return
     }
-    await navigateTo('/login')
-    notificationStore.createNotification({
+    await navigateTo(localePath('login'))
+    toastStore.createToast({
       type: 'success',
       action: 'update',
       item: t('authentication.common.password'),
     })
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       isError: true,
     })

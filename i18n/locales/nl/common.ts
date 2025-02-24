@@ -9,7 +9,7 @@ export default {
       loading: "Aan het laden",
       name: "Naam",
       new: "Nieuwe {item}",
-      notifications: "Notificaties",
+      notifications: "Notificatie | Notificaties",
       search: "Zoeken",
       welcome: "Welkom",
 
@@ -46,7 +46,7 @@ export default {
       required: "Dit veld is verplicht",
     },
 
-    notifications: {
+    toasts: {
       save: {
         success: {
           title: "Opslaan geslaagd",

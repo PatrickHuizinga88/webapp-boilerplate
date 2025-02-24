@@ -8,8 +8,9 @@ const props = defineProps<{
   user?: User
 }>()
 
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t} = useI18n()
+const localePath = useLocalePath()
 
 const roleOptions = [
   { value: 'admin', label: t('users.roles.admin') },
@@ -45,15 +46,15 @@ const onSubmit = form.handleSubmit(async (values) => {
       }
     })
 
-    await navigateTo(`/users/${useRoute().params.id}`)
-    notificationStore.createNotification({
+    await navigateTo(localePath({name: 'users-id', params: {id: useRoute().params.id}}))
+    toastStore.createToast({
       type: 'success',
       action: 'save',
       item: values.name
     })
   } catch (error) {
     if (error) {
-      notificationStore.createNotification({
+      toastStore.createToast({
         type: 'destructive',
         action: 'save',
         item: values.name

@@ -8,8 +8,9 @@ const props = defineProps<{
   customer?: Tables<'customers'>
 }>()
 
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const supabase = useSupabaseClient<Database>()
+const localePath = useLocalePath()
 
 const formSchema = toTypedSchema(z.object({
   first_name: z.string(),
@@ -55,14 +56,14 @@ const onSubmit = form.handleSubmit(async (values) => {
       onConflict: 'id'
     }).select()
     if (error) throw error
-    await navigateTo(`/customers/${data[0].id}`)
-    notificationStore.createNotification({
+    await navigateTo(localePath({name: 'customers-id', params: {id: data[0].id}}))
+    toastStore.createToast({
       type: 'success',
       action: 'save',
       item: `${values.first_name} ${values.last_name}`
     })
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       action: 'save',
       item: `${values.first_name} ${values.last_name}`

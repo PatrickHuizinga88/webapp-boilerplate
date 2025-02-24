@@ -7,7 +7,7 @@ const props = defineProps<{
   settings?: any
 }>()
 
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t} = useI18n()
 
 const loading = ref(false)
@@ -30,13 +30,13 @@ const onSubmit = form.handleSubmit(async (values) => {
     // Save settings
     console.log(values)
 
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'success',
       action: 'save',
       item: t('settings.settings', 2)
     })
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       action: 'save',
       item: t('settings.settings', 2)

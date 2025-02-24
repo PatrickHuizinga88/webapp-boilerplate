@@ -15,10 +15,10 @@ definePageMeta({
             <p class="mt-4 text-pretty text-lg font-medium text-muted-foreground">{{ $t('404.page_not_found.description') }}</p>
             <div class="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-x-6 gap-y-4">
               <Button as-child>
-                <NuxtLink to="/">{{ $t('404.back_to_home') }}</NuxtLink>
+                <NuxtLinkLocale to="/">{{ $t('404.back_to_home') }}</NuxtLinkLocale>
               </Button>
               <Button variant="outline" as-child>
-                <NuxtLink to="/support">{{ $t('404.contact_us') }}</NuxtLink>
+                <NuxtLinkLocale to="support">{{ $t('404.contact_us') }}</NuxtLinkLocale>
               </Button>
             </div>
           </div>

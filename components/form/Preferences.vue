@@ -3,7 +3,7 @@ import {toTypedSchema} from "@vee-validate/zod";
 import {z} from "zod";
 import {useForm} from "vee-validate";
 
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const colorMode = useColorMode()
 const {t, locale, locales, setLocale} = useI18n()
 const router = useRouter()
@@ -52,7 +52,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 
 onMounted(() => {
   if (useRoute().query.refresh) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'success',
       action: 'save',
       item: t('account.preferences.preferences', 2)

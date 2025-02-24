@@ -9,7 +9,7 @@ const props = defineProps<{
   email: string
 }>()
 
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
 const {t} = useI18n()
@@ -58,14 +58,14 @@ const onEmailSubmit = async (values: any) => {
     })
     emailDialogOpen.value = false
     if (error) throw error
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'success',
       action: 'save',
       item: t('common.general.email')
     })
     emailSuccess.value = true
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       action: 'save',
       item: t('common.general.email')
@@ -98,7 +98,7 @@ const onPasswordSubmit = async (values: any) => {
     if (updateError) throw updateError
     passwordChangeMessage.value = ''
     passwordDialogOpen.value = false
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'success',
       action: 'save',
       item: t('authentication.common.password'),

@@ -19,8 +19,9 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient<Database>()
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t} = useI18n()
+const localePath = useLocalePath()
 
 const searchQuery = ref('')
 const startRange = ref(0)
@@ -53,7 +54,7 @@ const {data: customers, status} = await useLazyAsyncData(async () => {
       count
     }
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       action: 'retrieve',
       item: t('customers.customers', 2)
@@ -71,13 +72,13 @@ const {data: customers, status} = await useLazyAsyncData(async () => {
       <Input
           v-model="searchQuery"
           :placeholder="$t('common.general.search')"
-          class="w-64"/>
+          class="h-9 w-64"/>
       <PageActions>
         <Button size="sm" as-child>
-          <NuxtLink to="/customers/create">
+          <NuxtLinkLocale to="customers-create">
             <PlusCircle/>
             {{ capitalizeSentence($t('common.actions.add_item', {item: $t('customers.customers')})) }}
-          </NuxtLink>
+          </NuxtLinkLocale>
         </Button>
       </PageActions>
     </PageHeader>
@@ -104,7 +105,7 @@ const {data: customers, status} = await useLazyAsyncData(async () => {
               <tbody class="divide-y divide-border bg-card">
               <tr v-for="customer in customers.data" :key="customer.id">
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
-                  <NuxtLink :to="`/customers/${customer.id}`">
+                  <NuxtLink :to="localePath({name: 'customers-id', params: {id: customer.id}})">
                     <template v-if="customer.first_name || customer.last_name">
                       {{ customer.first_name + ' ' + customer.last_name }}
                     </template>
@@ -115,7 +116,7 @@ const {data: customers, status} = await useLazyAsyncData(async () => {
                   <a :href="`mailto:${customer.email}`">{{ customer.email || '-' }}</a>
                 </td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                  <NuxtLink :to="`/customers/${customer.id}/edit`" class="text-primary hover:underline">
+                  <NuxtLink :to="localePath({name: 'customers-id-edit', params: {id: customer.id}})" class="text-primary hover:underline">
                     {{ $t('common.actions.edit') }}<span
                       class="sr-only">, {{ customer.first_name + ' ' + customer.last_name }}</span>
                   </NuxtLink>

@@ -12,7 +12,7 @@ definePageMeta({
 
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t} = useI18n()
 
 const loading = ref(false)
@@ -54,13 +54,13 @@ const onSubmit = handleSubmit(async (values) => {
         })
     if (error) throw error
     await navigateTo('/')
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'success',
       action: 'save',
       item: t('profiles.profiles'),
     })
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       action: 'save',
       item: t('profiles.profiles'),
@@ -104,9 +104,9 @@ const onSubmit = handleSubmit(async (values) => {
           {{ $t('common.actions.save') }}
         </Button>
         <Button variant="outline" type="button" class="w-full" :loading="loading" as-child>
-          <NuxtLink to="/">
+          <NuxtLinkLocale to="/">
             {{ $t('common.actions.skip') }}
-          </NuxtLink>
+          </NuxtLinkLocale>
         </Button>
       </div>
     </form>

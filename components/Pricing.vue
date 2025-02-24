@@ -5,7 +5,7 @@ import type {Database} from "~/types/database.types";
 
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 const {t} = useI18n()
 const loading = ref('')
 
@@ -76,7 +76,7 @@ const checkout = async (lookupKey?: string) => {
       })
     }
   } catch (error) {
-    notificationStore.createNotification({
+    toastStore.createToast({
       type: 'destructive',
       isError: true,
     })

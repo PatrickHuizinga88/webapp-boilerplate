@@ -6,6 +6,7 @@ import {Eye, EyeOff} from 'lucide-vue-next'
 const props = defineProps<{
   defaultValue?: string | number
   modelValue?: string | number
+  id?: string
   class?: HTMLAttributes['class']
 }>()
 
@@ -25,6 +26,7 @@ const modelValue = useVModel(props, 'modelValue', emits, {
   <div class="relative rounded-md">
     <Input
         v-model="modelValue"
+        :id="props.id"
         :class="cn('pr-10', props.class)"
         :type="!showPassword ? 'password' : 'text'"
         v-bind="$attrs"/>

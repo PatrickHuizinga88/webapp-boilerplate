@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import NotificationList from "~/components/ui/notification/NotificationList.vue";
+import {Toaster} from "~/components/ui/toast";
 
 defineProps<{
   title?: string
   description?: string
 }>()
 
-const notificationStore = useNotificationStore()
+const toastStore = useToastStore()
 </script>
 
 <template>
@@ -60,7 +60,7 @@ const notificationStore = useNotificationStore()
     <img src="../assets/images/logo.svg" alt="" aria-hidden="true" class="fixed left-1/2 -translate-x-1/2 bottom-0 translate-y-3/4 w-screen max-w-2xl aspect-square opacity-[4%] -z-10"/>
   </div>
 
-  <NotificationList :notifications="notificationStore.notifications"/>
+  <Toaster :toasts="toastStore.toasts"/>
 
 </template>
 
