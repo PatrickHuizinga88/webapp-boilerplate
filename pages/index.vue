@@ -5,6 +5,7 @@ import {Avatar, AvatarFallback} from "~/components/ui/avatar";
 import {ArrowRight} from 'lucide-vue-next';
 import {Page} from "../components/ui/page";
 import type {Database} from "~/types/database.types";
+import useErrorHandler from "~/composables/useErrorHandler";
 
 definePageMeta({
   layout: 'default-sidebar'
@@ -36,7 +37,7 @@ const {data: statistics} = await useLazyAsyncData('statistics', async () => {
 
     const lastSignIn = capitalize(dayjs(user.value.last_sign_in_at).locale(locale).fromNow())
 
-    const {data: recentCustomers, error: recentCustomersError} = await supabase.from('customers')
+    const {data: recentCustomers, error: recentCustomersError} = await supabase.from('customer')
         .select('id,first_name,last_name,created_at')
         .order('created_at', {ascending: false})
         .limit(4)
@@ -52,6 +53,11 @@ const {data: statistics} = await useLazyAsyncData('statistics', async () => {
       type: 'destructive',
       action: 'retrieve',
       item: t('dashboard.statistics')
+    })
+
+    await useErrorHandler({
+      error,
+      route: useRoute().fullPath,
     })
   }
 })

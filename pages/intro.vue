@@ -26,8 +26,6 @@ const {handleSubmit} = useForm({
   validationSchema: formSchema,
 })
 
-console.log(user.value)
-
 await useAsyncData('profile', async () => {
   const {data} = await supabase.from('profiles').upsert(
       {
