@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import {useI18n} from 'vue-i18n'
 import Authentication from "~/layouts/authentication.vue";
+import {toTypedSchema} from "@vee-validate/zod";
+import * as z from "zod";
+import {useForm} from "vee-validate";
 
 definePageMeta({
   layout: false
@@ -11,13 +14,24 @@ const toastStore = useToastStore()
 const {t} = useI18n()
 const localePath = useLocalePath()
 
-const newPassword = ref('')
-const confirmPassword = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
 
-const updatePassword = async () => {
-  if (newPassword.value !== confirmPassword.value) {
+const formSchema = toTypedSchema(z.object({
+  new_password: z
+      .string({message: t('common.validations.required')})
+      .min(8, {message: t('authentication.validations.password_length', {length: 8})}),
+  confirm_password: z
+      .string({message: t('common.validations.required')})
+      .min(8, {message: t('authentication.validations.password_length', {length: 8})}),
+}))
+
+const form = useForm({
+  validationSchema: formSchema,
+})
+
+const onSubmit = form.handleSubmit(async (values) => {
+  if (values.new_password !== values.confirm_password) {
     errorMessage.value = t('authentication.password_recovery.passwords_dont_match')
     return
   }
@@ -26,7 +40,7 @@ const updatePassword = async () => {
   try {
     loading.value = true
     const {error} = await supabase.auth.updateUser({
-      password: newPassword.value
+      password: values.new_password
     })
 
     if (error) {
@@ -56,33 +70,31 @@ const updatePassword = async () => {
   } finally {
     loading.value = false
   }
-}
+})
 </script>
 
 <template>
   <Authentication :title="$t('authentication.password_recovery.reset_your_password')">
-    <form class="space-y-6" @submit.prevent="updatePassword">
-      <div>
-        <Label for="new-password" class="block text-sm font-medium leading-6">{{
-            t('authentication.password_recovery.new_password')
-          }}</Label>
-        <PasswordInput
-            v-model="newPassword"
-            id="new-password"
-            name="new-password"
-            required/>
-      </div>
+    <form class="space-y-6" @submit="onSubmit">
+      <FormField v-slot="{componentField}" name="new_password">
+        <FormItem>
+          <FormLabel>{{ $t('authentication.password_recovery.new_password') }}</FormLabel>
+          <FormControl>
+            <PasswordInput v-bind="componentField"/>
+          </FormControl>
+          <FormMessage/>
+        </FormItem>
+      </FormField>
 
-      <div>
-        <Label for="confirm-password" class="block text-sm font-medium leading-6">{{
-            t('authentication.password_recovery.confirm_password')
-          }}</Label>
-        <PasswordInput
-            v-model="confirmPassword"
-            id="confirm-password"
-            name="confirm-password"
-            required/>
-      </div>
+      <FormField v-slot="{componentField}" name="confirm_password">
+        <FormItem>
+          <FormLabel>{{ $t('authentication.password_recovery.confirm_password') }}</FormLabel>
+          <FormControl>
+            <PasswordInput v-bind="componentField"/>
+          </FormControl>
+          <FormMessage/>
+        </FormItem>
+      </FormField>
 
       <Button type="submit" :loading="loading" class="w-full">
         {{ t('authentication.password_recovery.update_password') }}

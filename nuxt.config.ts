@@ -66,7 +66,7 @@ export default defineNuxtConfig({
         '/confirm-registration',
         '/intro',
         '/password-recovery',
-        '/register',
+        '/sign-up',
         '/update-password',
       ],
     }
@@ -91,12 +91,12 @@ export default defineNuxtConfig({
       {
         code: 'en',
         name: 'English',
-        files: ['en/common', 'en/404', 'en/account', 'en/authentication', 'en/customers', 'en/dashboard', 'en/feedback', 'en/pricing', 'en/settings', 'en/users']
+        files: ['en/common.ts', 'en/404.ts', 'en/account.ts', 'en/authentication.ts', 'en/customers.ts', 'en/dashboard.ts', 'en/feedback.ts', 'en/legal.ts', 'en/pricing.ts', 'en/settings.ts', 'en/users.ts']
       },
       {
         code: 'nl',
         name: 'Nederlands',
-        files: ['nl/common', 'nl/404', 'nl/account', 'nl/authentication', 'nl/customers', 'nl/dashboard', 'nl/feedback', 'nl/pricing', 'nl/settings', 'nl/users']
+        files: ['nl/common.ts', 'nl/404.ts', 'nl/account.ts', 'nl/authentication.ts', 'nl/customers.ts', 'nl/dashboard.ts', 'nl/feedback.ts', 'nl/legal.ts', 'nl/pricing.ts', 'nl/settings.ts', 'nl/users.ts']
       },
     ],
     customRoutes: 'config',
@@ -127,7 +127,7 @@ export default defineNuxtConfig({
       },
       login: {
         en: '/login',
-        nl: '/inloggen',
+        nl: '/login',
       },
       'password-recovery': {
         en: '/password-recovery',
@@ -137,8 +137,8 @@ export default defineNuxtConfig({
         en: '/pricing',
         nl: '/prijzen',
       },
-      register: {
-        en: '/register',
+      'sign-up': {
+        en: '/sign-up',
         nl: '/registreren',
       },
       settings: {

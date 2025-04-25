@@ -5,7 +5,6 @@ import {Avatar, AvatarFallback} from "~/components/ui/avatar";
 import {ArrowRight} from 'lucide-vue-next';
 import {Page} from "../components/ui/page";
 import type {Database} from "~/types/database.types";
-import useErrorHandler from "~/composables/useErrorHandler";
 
 definePageMeta({
   layout: 'default-sidebar'
@@ -54,11 +53,7 @@ const {data: statistics} = await useLazyAsyncData('statistics', async () => {
       action: 'retrieve',
       item: t('dashboard.statistics')
     })
-
-    await useErrorHandler({
-      error,
-      route: useRoute().fullPath,
-    })
+    console.error(error)
   }
 })
 

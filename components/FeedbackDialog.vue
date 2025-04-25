@@ -98,6 +98,7 @@ const onSubmit = form.handleSubmit(async (values) => {
                 </SelectGroup>
               </SelectContent>
             </Select>
+            <FormMessage/>
           </FormItem>
         </FormField>
         <FormField v-slot="{ componentField }" name="message">
@@ -106,6 +107,7 @@ const onSubmit = form.handleSubmit(async (values) => {
             <FormControl>
               <Textarea v-bind="componentField" rows="4"/>
             </FormControl>
+            <FormMessage/>
           </FormItem>
         </FormField>
       </form>

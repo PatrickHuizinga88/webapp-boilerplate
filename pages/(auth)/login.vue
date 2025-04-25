@@ -89,8 +89,8 @@ const onSubmit = form.handleSubmit(async (values) => {
       <template #footer>
         {{ $t('authentication.login.no_account') }}
         <Button variant="link" size="sm" class="h-auto p-0 ml-1" as-child>
-          <NuxtLinkLocale to="register">
-            {{ $t('authentication.login.register_now') }}
+          <NuxtLinkLocale to="sign-up">
+            {{ $t('authentication.login.sign_up_now') }}
             <ArrowRight aria-hidden="true"/>
           </NuxtLinkLocale>
         </Button>

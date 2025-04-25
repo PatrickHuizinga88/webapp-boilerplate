@@ -16,7 +16,7 @@ export default {
     login: {
       forgot_password: "Wachtwoord vergeten?",
       no_account: "Heb je geen account?",
-      register_now: "Registreer nu",
+      sign_up_now: "Registreer nu",
       sign_in_failed: "Inloggen mislukt. Controleer je e-mail en wachtwoord.",
       sign_in_to_account: "Log in op je account",
     },

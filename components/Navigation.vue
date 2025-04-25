@@ -2,7 +2,7 @@
 import {Home, IdCard, LogOut, User, Users, Settings, MessageSquare, ArrowBigUp, ChevronsUpDown} from "lucide-vue-next";
 import type {Database} from "~/types/database.types";
 import {DropdownMenu, DropdownMenuTrigger} from "~/components/ui/dropdown-menu";
-import FeedbackDialog from "~/components/ui/FeedbackDialog.vue";
+import FeedbackDialog from "~/components/FeedbackDialog.vue";
 
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
