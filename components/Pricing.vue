@@ -44,7 +44,10 @@ const plans = [
 ]
 
 const {data: profile} = await useAsyncData('profile', async () => {
-  const {data} = await supabase.from('profiles').select('plan').filter('id', 'eq', user.value?.id).single()
+  const {data} = await supabase.from('profiles')
+      .select('plan')
+      .eq('user_id', user.value?.id)
+      .single()
   return data
 })
 

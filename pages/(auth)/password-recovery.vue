@@ -13,6 +13,10 @@ const supabase = useSupabaseClient()
 const toastStore = useToastStore()
 const {t} = useI18n()
 
+useHead({
+  title: t('authentication.password_recovery.reset_your_password'),
+})
+
 const success = ref(false)
 const loading = ref(false)
 

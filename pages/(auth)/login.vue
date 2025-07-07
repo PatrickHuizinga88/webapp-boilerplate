@@ -12,6 +12,10 @@ definePageMeta({
 const supabase = useSupabaseClient()
 const {t} = useI18n()
 
+useHead({
+  title: t('authentication.common.sign_in'),
+})
+
 const errorMessage = ref('')
 const loading = ref(false)
 

@@ -12,6 +12,10 @@ definePageMeta({
 const supabase = useSupabaseClient()
 const {t} = useI18n()
 
+useHead({
+  title: t('authentication.register.sign_up'),
+})
+
 const errorMessage = ref('')
 const success = ref(false)
 const resendDelay = ref(10)
@@ -62,7 +66,7 @@ const signUp = async (email: string, password: string) => {
   })
   if (error) throw error
 
-  resendDelay.value = 10
+  resendDelay.value = 20
   countDown()
 }
 
@@ -89,7 +93,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 <template>
   <Authentication :title="$t('authentication.register.create_new_account')">
     <form v-show="!success" class="space-y-6" @submit="onSubmit">
-      <FormField v-slot="{ componentField }" :validate-on-blur="false" name="email">
+      <FormField v-slot="{ componentField }" :validate-on-model-update="false" name="email">
         <FormItem>
           <FormLabel>{{ $t('common.general.email') }}</FormLabel>
           <FormControl>

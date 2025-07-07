@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import {Trash, Pencil} from 'lucide-vue-next'
-import {useNotificationStore} from "~/stores/toastStore";
 import {Card, CardHeader, CardTitle} from "~/components/ui/card";
 import type {Database} from "~/types/database.types";
 import {Page, PageActions, PageBackButton, PageHeader} from "../../../components/ui/page";
-
-definePageMeta({
-  layout: 'default-sidebar',
-})
 
 const supabase = useSupabaseClient<Database>()
 const toastStore = useToastStore()
@@ -18,8 +13,15 @@ const dialogOpen = ref(false)
 const loadingDelete = ref(false)
 
 const {data: customer} = await useAsyncData(async () => {
-  const {data} = await supabase.from('customers').select('*').filter('id', 'eq', useRoute().params.id).single()
+  const {data} = await supabase.from('customers')
+      .select('*')
+      .eq('id', useRoute().params.id)
+      .single()
   return data
+})
+
+useHead({
+  title: `${customer.value?.first_name} ${customer.value?.last_name}`,
 })
 
 const deleteCustomer = async () => {

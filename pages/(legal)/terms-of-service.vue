@@ -1,23 +1,27 @@
 <script setup lang="ts">
-import {APP_NAME, SUPPORT_EMAIL} from '~/constants'
+import {APP_NAME as appName, SUPPORT_EMAIL as supportEmail} from '~/constants'
 
 const lastUpdated = '01-01-2025'
+const {t} = useI18n()
+
+useHead({
+  title: t('legal.terms_of_service.terms_of_service'),
+})
 </script>
 
 <template>
   <div class="container max-w-3xl mx-auto">
-    <h1 class="text-4xl mb-4">{{ APP_NAME }} Terms of Service</h1>
+    <h1 class="text-4xl mb-4">{{ appName }} Terms of Service</h1>
     <p><strong>Last Updated: {{lastUpdated}}</strong></p>
     <p>
-      Welcome to {{ APP_NAME }}! These Terms of Service ("Terms") govern your access to and use of {{ APP_NAME }} ("Service"),
-      operated by Patrick Huizinga ("we," "us," "our"). By using {{ APP_NAME }}, you agree to
+      Welcome to {{ appName }}! These Terms of Service ("Terms") govern your access to and use of {{ appName }} ("Service"),
+      operated by Patrick Huizinga ("we," "us," "our"). By using {{ appName }}, you agree to
       these Terms. If you do not agree, please do not use the Service.
     </p>
     <hr/>
     <h2 class="text-3xl mt-6 mb-2">1. Introduction</h2>
     <p>
-      {{ APP_NAME }} is a personalized nutrition planning platform that helps users create meal plans based on their dietary
-      preferences and goals. The Service is available worldwide and can be accessed by all ages. Some features require
+      {{ appName }} is a ... platform that .... The Service is available worldwide and can be accessed by all ages. Some features require
       account registration.
     </p>
     <h2 class="text-3xl mt-6 mb-2">2. User Accounts & Eligibility</h2>
@@ -27,15 +31,15 @@ const lastUpdated = '01-01-2025'
       <li>We reserve the right to suspend or terminate accounts for violations of these Terms.</li>
     </ul>
     <h2 class="text-3xl mt-6 mb-2">3. Services & Subscriptions</h2>
-    <p>{{ APP_NAME }} offers both free and paid subscription plans.</p>
+    <p>{{ appName }} offers both free and paid subscription plans.</p>
     <ul>
       <li><strong>Free Plan</strong>: Limited access to features.</li>
       <li><strong>Paid Plan</strong>: Additional features unlocked through a subscription.</li>
       <li><strong>Payment & Billing</strong>: Payments are processed via Stripe and charged upfront.</li>
       <li><strong>Auto-Renewal</strong>: Subscriptions automatically renew unless canceled.</li>
       <li>
-        <strong>Cancellation & Refunds</strong>: Users can cancel through their account page (via Stripe portal). Refunds
-        may be issued according to our refund policy.
+        <strong>Cancellation & Refunds</strong>: Users can cancel through their account page (via Stripe portal).
+        Refunds may be issued according to our refund policy.
       </li>
     </ul>
     <h2 class="text-3xl mt-6 mb-2">4. User Responsibilities</h2>
@@ -46,7 +50,7 @@ const lastUpdated = '01-01-2025'
     </ul>
     <h2 class="text-3xl mt-6 mb-2">5. Disclaimers & Liability</h2>
     <ul>
-      <li><strong>No Medical Advice</strong>: {{ APP_NAME }} does not provide medical or dietary advice. Consult a
+      <li><strong>No Medical Advice</strong>: {{ appName }} does not provide medical or dietary advice. Consult a
         professional before making health-related decisions.
       </li>
       <li><strong>No Guarantees</strong>: We do not guarantee the accuracy or effectiveness of meal plans.</li>
@@ -55,8 +59,8 @@ const lastUpdated = '01-01-2025'
       </li>
     </ul>
     <h2 class="text-3xl mt-6 mb-2">6. Privacy & Data Handling</h2>
-    <p>Your use of {{ APP_NAME }} is subject to our <strong>Privacy Policy</strong>, which explains how we collect and handle
-      your data.</p>
+    <p>Your use of {{ appName }} is subject to our <strong>Privacy Policy</strong>, which explains how we collect and
+      handle your data.</p>
     <h2 class="text-3xl mt-6 mb-2">7. Termination & Changes</h2>
     <ul>
       <li>We may suspend or terminate accounts that violate these Terms.</li>
@@ -72,9 +76,9 @@ const lastUpdated = '01-01-2025'
     <hr/>
     <p>
       If you have any questions, please contact us at
-      <a :href="`mailto:${SUPPORT_EMAIL}`">{{ SUPPORT_EMAIL }}</a>.
+      <a :href="`mailto:${supportEmail}`">{{ supportEmail }}</a>.
     </p>
-    <p><strong>Thank you for using {{ APP_NAME }}!</strong></p>
+    <p><strong>Thank you for using {{ appName }}!</strong></p>
   </div>
 </template>
 

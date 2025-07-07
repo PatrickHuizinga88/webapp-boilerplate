@@ -6,6 +6,12 @@ import Authentication from "~/layouts/authentication.vue";
 definePageMeta({
   layout: false,
 })
+
+const {t} = useI18n()
+
+useHead({
+  title: t('authentication.register.account_activated'),
+})
 </script>
 
 <template>

@@ -3,16 +3,20 @@ import {Page} from "../components/ui/page";
 import {ExternalLink} from "lucide-vue-next";
 import type {Database} from "~/types/database.types";
 
-definePageMeta({
-  layout: 'default-sidebar'
-})
-
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
+const {t} = useI18n()
 const toastStore = useToastStore()
 
+useHead({
+  title: t("account.account"),
+})
+
 const {data: profile} = await useAsyncData('accountProfile', async () => {
-  const {data} = await supabase.from('profiles').select('first_name,last_name,plan').filter('id', 'eq', user.value?.id).single()
+  const {data} = await supabase.from('profiles')
+      .select('first_name,last_name,plan')
+      .eq('user_id', user.value?.id)
+      .single()
   return data
 })
 
@@ -70,7 +74,7 @@ const navigateToStripeDashboard = async () => {
                 {{ $t('account.billing.view_plans') }}
               </Button>
             </DialogTrigger>
-            <DialogContent class="grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] max-w-3xl p-0">
+            <DialogContent class="grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] sm:max-w-3xl p-0">
               <DialogHeader class="p-6 pb-0">
                 <DialogTitle>{{ $t('account.billing.view_plans') }}</DialogTitle>
               </DialogHeader>

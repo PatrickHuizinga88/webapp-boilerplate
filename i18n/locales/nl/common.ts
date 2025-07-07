@@ -3,8 +3,6 @@ export default {
     general: {
       breadcrumbs: "Kruimelpad",
       email: "E-mailadres",
-      dashboard: "Dashboard",
-      general: "Algemeen",
       guest: "Gast",
       loading: "Aan het laden",
       name: "Naam",
@@ -15,6 +13,12 @@ export default {
 
       no_records_found: "Geen {item} gevonden",
       not_found: "{item} niet gevonden",
+    },
+
+    navigation: {
+      management: "Beheer",
+      dashboard: "Dashboard",
+      general: "Algemeen",
     },
 
     actions: {
@@ -31,6 +35,8 @@ export default {
       delete_item: "{item} verwijderen",
       edit: "Bewerken",
       edit_item: "{item} bewerken",
+      invite: "Uitnodigen",
+      invite_item: "{item} uitnodigen",
       save: "Opslaan",
       save_item: "{item} opslaan",
       send: "Versturen",
@@ -47,6 +53,7 @@ export default {
     },
 
     toasts: {
+      close_notification: "Sluit notificatie",
       save: {
         success: {
           title: "Opslaan geslaagd",

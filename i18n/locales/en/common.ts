@@ -3,8 +3,6 @@ export default {
     general: {
       breadcrumbs: "Breadcrumbs",
       email: "Email",
-      dashboard: "Dashboard",
-      general: "General",
       guest: "Guest",
       loading: "Loading",
       name: "Name",
@@ -15,6 +13,12 @@ export default {
 
       no_records_found: "No {item} found",
       not_found: "{item} not found",
+    },
+
+    navigation: {
+      management: "Management",
+      dashboard: "Dashboard",
+      general: "General",
     },
 
     actions: {
@@ -31,6 +35,8 @@ export default {
       delete_item: "Delete {item}",
       edit: "Edit",
       edit_item: "Edit {item}",
+      invite: "Invite",
+      invite_item: "Invite {item}",
       save: "Save",
       save_item: "Save {item}",
       send: "Send",
@@ -47,6 +53,7 @@ export default {
     },
 
     toasts: {
+      close_notification: "Close notification",
       save: {
         success: {
           title: "Save successful",

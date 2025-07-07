@@ -7,7 +7,7 @@ import Navigation from "../../Navigation.vue";
     <div class="flex grow flex-col overflow-y-auto border-r border-border px-6 pb-4">
       <div class="flex shrink-0 items-center pt-6 pb-14">
         <NuxtLinkLocale to="/">
-          <img src="../../../assets/images/logo.svg" alt="Logo" class="h-10">
+          <img src="/logo.svg" alt="Logo" class="h-10">
         </NuxtLinkLocale>
       </div>
 

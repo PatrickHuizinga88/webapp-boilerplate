@@ -2,12 +2,13 @@
 import {Page} from "../components/ui/page";
 import {Dialog, DialogHeader, DialogTitle, DialogFooter} from "~/components/ui/dialog";
 
-definePageMeta({
-  layout: 'default-sidebar'
-})
-
 const user = useSupabaseUser()
 const route = useRoute()
+const {t} = useI18n()
+
+useHead({
+  title: t('pricing.choose_your_plan'),
+})
 
 const open = ref(false)
 const transactionSuccess = ref(false)

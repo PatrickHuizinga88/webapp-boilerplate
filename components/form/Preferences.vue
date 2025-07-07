@@ -69,7 +69,7 @@ onMounted(() => {
           <FormLabel>{{ $t('account.preferences.language') }}</FormLabel>
           <Select v-bind="componentField">
             <FormControl>
-              <SelectTrigger>
+              <SelectTrigger class="w-full">
                 <SelectValue :placeholder="$t('account.preferences.select_a_language')"/>
               </SelectTrigger>
             </FormControl>
@@ -86,7 +86,7 @@ onMounted(() => {
           <FormLabel>{{ $t('account.preferences.theme') }}</FormLabel>
           <Select v-bind="componentField">
             <FormControl>
-              <SelectTrigger>
+              <SelectTrigger class="w-full">
                 <SelectValue :placeholder="$t('account.preferences.select_a_theme')"/>
               </SelectTrigger>
             </FormControl>

@@ -14,6 +14,10 @@ const toastStore = useToastStore()
 const {t} = useI18n()
 const localePath = useLocalePath()
 
+useHead({
+  title: t('authentication.password_recovery.reset_your_password'),
+})
+
 const errorMessage = ref('')
 const loading = ref(false)
 

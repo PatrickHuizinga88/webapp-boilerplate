@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import {Page} from "../../components/ui/page";
 
-definePageMeta({
-  layout: 'default-sidebar'
+const {t} = useI18n()
+
+useHead({
+  title: t('common.general.new', {item: lowercase(t('customers.customers'))}),
 })
 </script>
 

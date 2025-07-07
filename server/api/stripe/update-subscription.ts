@@ -23,9 +23,11 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const {error} = await client.from('profiles').update({
-    plan: 'premium_monthly'
-  }).filter('id', 'eq', user.id)
+  const {error} = await client.from('profiles')
+    .update({
+      plan: 'premium_monthly'
+    })
+    .eq('user_id', user.id)
 
   if (error) {
     throw createError({

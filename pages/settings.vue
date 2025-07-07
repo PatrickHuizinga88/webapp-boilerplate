@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import {Page} from "../components/ui/page";
 
-definePageMeta({
-  layout: 'default-sidebar'
+const {t} = useI18n()
+
+useHead({
+  title: t('settings.settings', 2),
 })
 </script>
 

@@ -70,7 +70,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <Button variant="ghost" class="w-full justify-start hover:bg-foreground/5 p-2">
+      <Button variant="ghost" size="sm" class="w-full justify-start font-normal hover:bg-foreground/5 p-2">
         <MessageSquare class="shrink-0" aria-hidden="true"/>
         <span class="truncate">{{ $t('feedback.give_feedback') }}</span>
       </Button>
@@ -86,7 +86,7 @@ const onSubmit = form.handleSubmit(async (values) => {
             <FormLabel>{{ $t('feedback.category') }}</FormLabel>
             <Select v-bind="componentField">
               <FormControl>
-                <SelectTrigger>
+                <SelectTrigger class="w-full">
                   <SelectValue :placeholder="$t('feedback.select_a_category')"/>
                 </SelectTrigger>
               </FormControl>

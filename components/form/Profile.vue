@@ -32,10 +32,12 @@ const form = useForm({
 const onSubmit = form.handleSubmit(async (values) => {
   try {
     loading.value = true
-    const {error} = await supabase.from('profiles').update({
-      first_name: values.first_name,
-      last_name: values.last_name,
-    }).eq('id', user.value?.id)
+    const {error} = await supabase.from('profiles')
+        .update({
+          first_name: values.first_name,
+          last_name: values.last_name,
+        })
+        .eq('user_id', user.value?.id)
     if (error) throw error
     toastStore.createToast({
       type: 'success',

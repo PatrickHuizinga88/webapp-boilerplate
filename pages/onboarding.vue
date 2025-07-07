@@ -15,6 +15,10 @@ const user = useSupabaseUser()
 const toastStore = useToastStore()
 const {t} = useI18n()
 
+useHead({
+  title: t("onboarding.onboarding"),
+})
+
 const loading = ref(false)
 
 const formSchema = toTypedSchema(z.object({
@@ -29,10 +33,10 @@ const {handleSubmit} = useForm({
 await useAsyncData('profile', async () => {
   const {data} = await supabase.from('profiles').upsert(
       {
-        id: user.value?.id
+        user_id: user.value?.id
       },
       {
-        onConflict: 'id'
+        onConflict: 'user_id'
       }
   )
   return data
@@ -44,11 +48,11 @@ const onSubmit = handleSubmit(async (values) => {
     const {error} = await supabase
         .from('profiles')
         .upsert({
-          id: user.value?.id,
+          user_id: user.value?.id,
           first_name: values.first_name,
           last_name: values.last_name,
         }, {
-          onConflict: 'id'
+          onConflict: 'user_id'
         })
     if (error) throw error
     await navigateTo('/')

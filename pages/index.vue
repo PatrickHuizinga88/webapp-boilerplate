@@ -6,10 +6,6 @@ import {ArrowRight} from 'lucide-vue-next';
 import {Page} from "../components/ui/page";
 import type {Database} from "~/types/database.types";
 
-definePageMeta({
-  layout: 'default-sidebar'
-})
-
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
 const toastStore = useToastStore()
@@ -17,11 +13,15 @@ const {t, locale} = useI18n()
 const localePath = useLocalePath()
 const dayjs = useDayjs()
 
+useHead({
+  title: t("common.navigation.dashboard"),
+})
+
 const {data: profile} = await useAsyncData('profile', async () => {
   if (!user.value) return
   const {data, error} = await supabase.from('profiles')
       .select('*')
-      .eq('id', user.value.id)
+      .eq('user_id', user.value.id)
       .single()
   if (error) throw error
   return data
